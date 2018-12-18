@@ -25,6 +25,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Player player;
     private Point playerPoint;
     private Floor floor;
+    private Background bg;
+
+    public static final int WIDTH = 1024,HEIGHT = 512;
+
+    PlayerHP playerHP;
     Bitmap joystick;
 
 
@@ -32,11 +37,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     static int floorHeight = 20;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GamePanel(Context context) {
         super(context);
         init(context);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GamePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -45,9 +52,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+
         thread = new MainThread(getHolder(),this);
         thread.setRunning(true);
         thread.start();
+
+
 
     }
 
@@ -70,18 +81,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    PlayerGunShot playerGunShot;
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void init(Context context){
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
-        player = new Player(new Rect(100,100,200,200), Color.BLUE,new Point(100,100));
+        playerHP = MainActivity.playerHP;
+        bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
+        player = new Player(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
         //System.out.println(joystick);
-        playerGunShot = new PlayerGunShot(context);
+        //playerHP = new PlayerHP(context,Player.PLAYERMAXHP);
+        //playerHP.setAlpha(0.1f);
 
     }
 
@@ -116,17 +129,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        //final float scaleFactorX = MainActivity.SCREEN_WIDTH/WIDTH;
+        //final float scaleFactorY = MainActivity.SCREEN_HEIGHT/HEIGHT;
+        //canvas.scale(scaleFactorX,scaleFactorY);
 
         canvas.drawColor(Color.WHITE);
+        bg.draw(canvas);
         player.draw(canvas);
         floor.draw(canvas);
-
-        playerGunShot.draw(canvas);
-
-
-        //canvas.drawBitmap(joystick,0,0,null);
-
-
+        //playerHP.draw(canvas);
         //Paint temp = new Paint();
         //temp.setColor(Color.GREEN);
         //canvas.drawRect(0,canvas.getHeight()-floorHeight,getWidth(),canvas.getHeight(),temp);
@@ -134,9 +145,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
     public void update(){
-        //player.update(playerPoint);
+        bg.update();
         player.update();
         floor.update();
+        playerHP.update();
 
 
     }
@@ -144,4 +156,5 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public Player getPlayer(){
         return this.player;
     }
+    public Background getBg(){return this.bg;}
 }

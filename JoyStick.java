@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class JoyStick extends View implements GestureDetector.OnGestureListener {
-    public static int JOYSTICK_WIDTH = 300;
-    public static int JOYSTICK_HEIGHT = 300;
-    public static int JOYSTICK_LEFT_MARGIN = 40;
-    public static int JOYSTICK_YPOS = MainActivity.SCREEN_HEIGHT - 400;
+    public static int JOYSTICK_WIDTH = 500;
+    public static int JOYSTICK_HEIGHT = 500;
+    public static int JOYSTICK_LEFT_MARGIN = 100;
+    public static int JOYSTICK_YPOS = MainActivity.SCREEN_HEIGHT - 500;
 
 
     private GestureDetector gestureDetector;
@@ -41,7 +41,35 @@ public class JoyStick extends View implements GestureDetector.OnGestureListener 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
-        double xPos = (event.getX()-150);
+        float xPos = (event.getX()-JOYSTICK_WIDTH/2);
+        float yPos = (event.getY()-JOYSTICK_HEIGHT/2)*-1;
+
+        float hypotenuse = (float)(Math.sqrt(xPos*xPos+yPos+yPos));
+
+
+
+        float temp = (float) Math.atan(yPos/xPos);
+        //System.out.println("xPos = "+xPos+" yPos = "+yPos+" hypo : "+hypotenuse);
+        //System.out.println(temp/Math.PI*180);
+
+
+
+        if(xPos<0 && yPos>0){
+            temp +=Math.PI;
+        }else if(xPos<0 &&yPos <0){
+            temp +=Math.PI;
+        }
+        /*if(Math.atan(yPos/xPos)/Math.PI*180 < 0 && Math.atan(yPos/xPos)/Math.PI*180>= -90){
+            temp +=Math.PI;
+        }//else if(temp>=180 && temp <270){
+*/
+        //}
+        temp *=-1;
+        player.setPlayerRotation(temp);
+
+        //System.out.println(Math.acos(xPos/hypotenuse));
+        //System.out.println("AFTER = "+temp/Math.PI*180*-1);
+
         player.moveHorizontal((xPos/150.0)*Player.PlayerMaxHorizontalSpeed);
         int action = event.getAction();
 

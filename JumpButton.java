@@ -8,16 +8,18 @@ import android.view.View;
 
 public class JumpButton extends View {
 
-    public static int JUMPBUTTON_WIDTH = 100;
-    public static int JUMPBUTTON_HEIGHT = 100;
+    public static int JUMPBUTTON_WIDTH = MainActivity.SCREEN_WIDTH/8;
+    public static int JUMPBUTTON_HEIGHT = MainActivity.SCREEN_HEIGHT/8;
 
-    public static int JUMPBUTTON_XPOS = MainActivity.SCREEN_WIDTH-700;
-    public static int JUMPBUTTON_YPOS = MainActivity.SCREEN_HEIGHT-150;
+    public static int JUMPBUTTON_XPOS = MainActivity.SCREEN_WIDTH-(JUMPBUTTON_WIDTH*2)-AttackButton.ATTACKBUTTON_WIDTH*2;
+    public static int JUMPBUTTON_YPOS = MainActivity.SCREEN_HEIGHT-(JUMPBUTTON_HEIGHT*2);
     GamePanel gamePanel;
+
     public JumpButton(Context context,GamePanel gamePanel) {
         super(context);
         this.gamePanel  = gamePanel;
         init(context);
+        System.out.println(JUMPBUTTON_XPOS+" "+JUMPBUTTON_YPOS);
     }
 
     public JumpButton(Context context,@Nullable AttributeSet attrs) {
