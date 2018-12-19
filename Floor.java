@@ -9,22 +9,22 @@ import android.widget.ImageView;
 public class Floor {
 
     public static int FLOORHEIGHT = 20;
-    Player player;
+    Hero hero;
     public Floor(Rect floor,int color,GamePanel gamePanel){
         this.floor = floor;
         this.floorColor = color;
-        player = gamePanel.getPlayer();
+        hero = gamePanel.getPlayer();
     }
 
 
     int floorColor;
     private Rect floor;
-    public boolean playerCollide(Player player){
-        if(floor.contains(player.getPlayer().left,player.getPlayer().top)||
-        floor.contains(player.getPlayer().right,player.getPlayer().top)||
-                floor.contains(player.getPlayer().left,player.getPlayer().bottom)||
-                floor.contains(player.getPlayer().right,player.getPlayer().bottom) ||
-                player.playerPos.y>=MainActivity.SCREEN_HEIGHT-50){
+    public boolean playerCollide(Hero hero){
+        if(floor.contains(hero.getHero().left,hero.getHero().top)||
+        floor.contains(hero.getHero().right,hero.getHero().top)||
+                floor.contains(hero.getHero().left,hero.getHero().bottom)||
+                floor.contains(hero.getHero().right,hero.getHero().bottom) ||
+                hero.getHeroPos().y>=MainActivity.SCREEN_HEIGHT-50){
             return true;
         }
         return  false;
@@ -40,8 +40,8 @@ public class Floor {
     }
 
     public void update() {
-        if(playerCollide(player)) {
-            player.setPlayerLanded(true);
+        if(playerCollide(hero)) {
+            hero.setPlayerLanded(true);
         }
 
     }

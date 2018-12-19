@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 public class MainActivity extends Activity {
 
     public static int SCREEN_WIDTH,SCREEN_HEIGHT;
+    public static int RIGHT_MARGIN_OFFSET = 650;
 
     public static GamePanel gamePanel;
     public static PlayerHP playerHP;
@@ -40,9 +41,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        playerHP =new PlayerHP(getApplicationContext(),Player.PLAYERMAXHP);
+        playerHP =new PlayerHP(getApplicationContext(),Soldier.SOLDIERMAXHP);
         FrameLayout game = new FrameLayout(getApplicationContext());
-        LinearLayout gameWidgets = new LinearLayout(this);
+        FrameLayout gameWidgets = new FrameLayout(this);
         gamePanel = new GamePanel((this));
 
         gameWidgets.setAlpha(0.5f);
@@ -57,8 +58,9 @@ public class MainActivity extends Activity {
         joyStick.setLayoutParams(layoutParamsForJoystick);
 
         JumpButton jumpButton = new JumpButton(this,gamePanel);
-        LinearLayout.LayoutParams layoutParamsForJump = new LinearLayout.LayoutParams(JumpButton.JUMPBUTTON_WIDTH,JumpButton.JUMPBUTTON_HEIGHT);
+        FrameLayout.LayoutParams layoutParamsForJump = new FrameLayout.LayoutParams(JumpButton.JUMPBUTTON_WIDTH,JumpButton.JUMPBUTTON_HEIGHT);
         jumpButton.setLayoutParams(layoutParamsForJump);
+        //layoutParamsForJump.rightMargin = 400;
         jumpButton.setX(JumpButton.JUMPBUTTON_XPOS);
         jumpButton.setY(JumpButton.JUMPBUTTON_YPOS);
 
@@ -69,7 +71,7 @@ public class MainActivity extends Activity {
         attackButton.setX(AttackButton.ATTACKBUTTON_XPOS);
         attackButton.setY(AttackButton.ATTACKBUTTON_YPOS);
 
-        Skill1 skill1 = new Skill1(getApplicationContext());
+        Skill1 skill1 = new Skill1(getApplicationContext(),gamePanel);
         LinearLayout.LayoutParams layoutParamsForSkill1 = new LinearLayout.LayoutParams(Skill1.SKILL1_WIDTH,Skill1.SKILL1_HEIGHT);
         skill1.setLayoutParams(layoutParamsForSkill1);
         skill1.setX(Skill1.SKILL1_XPOS);
@@ -96,16 +98,16 @@ public class MainActivity extends Activity {
 
 
         heroInfoUI.addView(playerHP);
-        heroInfoUI.setX(0);
+        //heroInfoUI.setX(0);
 
 
 
         gameWidgets.addView(joyStick);
         gameWidgets.addView(jumpButton);
         gameWidgets.addView(attackButton);
-       // gameWidgets.addView(skill1);
-        //gameWidgets.addView(skill2);
-        //gameWidgets.addView(skill3);
+        gameWidgets.addView(skill1);
+        gameWidgets.addView(skill2);
+        gameWidgets.addView(skill3);
         gameWidgets.addView(heroInfoUI);
         game.addView(gamePanel);
         game.addView(gameWidgets);

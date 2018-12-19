@@ -11,8 +11,8 @@ public class JumpButton extends View {
     public static int JUMPBUTTON_WIDTH = MainActivity.SCREEN_WIDTH/8;
     public static int JUMPBUTTON_HEIGHT = MainActivity.SCREEN_HEIGHT/8;
 
-    public static int JUMPBUTTON_XPOS = MainActivity.SCREEN_WIDTH-(JUMPBUTTON_WIDTH*2)-AttackButton.ATTACKBUTTON_WIDTH*2;
-    public static int JUMPBUTTON_YPOS = MainActivity.SCREEN_HEIGHT-(JUMPBUTTON_HEIGHT*2);
+    public static int JUMPBUTTON_XPOS = MainActivity.SCREEN_WIDTH-JUMPBUTTON_WIDTH-AttackButton.ATTACKBUTTON_WIDTH;
+    public static int JUMPBUTTON_YPOS = MainActivity.SCREEN_HEIGHT-JUMPBUTTON_HEIGHT-50;
     GamePanel gamePanel;
 
     public JumpButton(Context context,GamePanel gamePanel) {
@@ -20,6 +20,7 @@ public class JumpButton extends View {
         this.gamePanel  = gamePanel;
         init(context);
         System.out.println(JUMPBUTTON_XPOS+" "+JUMPBUTTON_YPOS);
+
     }
 
     public JumpButton(Context context,@Nullable AttributeSet attrs) {

@@ -22,7 +22,7 @@ import android.widget.ImageView;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-    private Player player;
+    private Soldier soldier;
     private Point playerPoint;
     private Floor floor;
     private Background bg;
@@ -88,7 +88,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         playerHP = MainActivity.playerHP;
         bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
-        player = new Player(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
+        soldier = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
@@ -135,7 +135,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawColor(Color.WHITE);
         bg.draw(canvas);
-        player.draw(canvas);
+        soldier.draw(canvas);
         floor.draw(canvas);
         //playerHP.draw(canvas);
         //Paint temp = new Paint();
@@ -143,18 +143,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //canvas.drawRect(0,canvas.getHeight()-floorHeight,getWidth(),canvas.getHeight(),temp);
 
 
+
     }
     public void update(){
         bg.update();
-        player.update();
+        soldier.update();
         floor.update();
         playerHP.update();
 
 
     }
 
-    public Player getPlayer(){
-        return this.player;
+    public Soldier getPlayer(){
+        return this.soldier;
     }
     public Background getBg(){return this.bg;}
 }
