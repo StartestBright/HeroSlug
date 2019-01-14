@@ -30,6 +30,14 @@ public class Floor {
         return  false;
     }
 
+    public boolean enemyCollide(int enemyIndex){
+        Enemy enemy = EnemyManager.enemies.get(enemyIndex);
+        if(enemy.enemyPos.y>=MainActivity.SCREEN_HEIGHT-enemy.getEnemySize()){
+            return true;
+        }
+        return false;
+    }
+
 
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
@@ -43,6 +51,13 @@ public class Floor {
         if(playerCollide(hero)) {
             hero.setPlayerLanded(true);
         }
+
+        for(int i=0;i<EnemyManager.enemies.size();i++){
+            Enemy enemy = EnemyManager.enemies.get(i);
+            enemy.setEnemyLanded(true);
+
+        }
+
 
     }
 }

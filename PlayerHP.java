@@ -21,7 +21,7 @@ public class PlayerHP extends View implements UIObject{
     }
 
     public void init(Context context){
-        curHp = maxHp;
+        curHp = 0;
     }
 
     @Override
@@ -45,13 +45,22 @@ public class PlayerHP extends View implements UIObject{
         textPaint.setColor(Color.DKGRAY);
         textPaint.setTextSize(50);
         canvas.drawText("HP",0,50,textPaint);
-        int curHpRatio = curHp/maxHp;
+        float curHpRatio = (float)curHp/maxHp;
         canvas.drawRect( 0,50,width,150,strokePaint);
         canvas.drawRect(0,50,curHpRatio*width,150,solidPaint);
+
 
     }
     public void setCurHp(int curHp){
         this.curHp = curHp;
+    }
+
+    public void getDamage(int damage){
+        curHp -=damage;
+    }
+    public void getHeal(int heal){
+        if(curHp<=maxHp)
+            curHp +=heal;
     }
 
 }

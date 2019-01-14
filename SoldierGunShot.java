@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class PlayerGunShot extends View implements GameObject{
+public class SoldierGunShot extends View implements GameObject{
 
+
+    private int gunShotDamage = 25;
     private int bulletColor;
     private boolean active = true;
     private float bulletSpeed = 150f;
@@ -28,7 +30,7 @@ public class PlayerGunShot extends View implements GameObject{
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public PlayerGunShot(Context context,float velocityX,float velocityY,float xPos,float yPos) {
+    public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context);
         this.velocityX = velocityX;
         this.velocityY = velocityY;
@@ -36,6 +38,7 @@ public class PlayerGunShot extends View implements GameObject{
         this.yPos = yPos;
 
         init(context);
+
 
     }
 
@@ -62,6 +65,7 @@ public class PlayerGunShot extends View implements GameObject{
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;
         }
+        collisionDetect();
     }
 
     @Override
@@ -81,8 +85,33 @@ public class PlayerGunShot extends View implements GameObject{
         p.set((int)xPos,(int)yPos);
         return p;
     }
+    public void setBulletSpeed(float speed){
+        bulletSpeed =speed;
+    }
     public boolean isActive(){
         return active;
+    }
+
+
+    public void collisionDetect(){
+        if(this.active){
+
+            for(int i=0;i<EnemyManager.enemies.size();i++) {
+                Enemy enemy = EnemyManager.enemies.get(i);
+                if(enemy.isAlive()){
+                if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
+                        xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
+                        yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&
+                        yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemySize()) {
+
+                        EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
+                        active = false;
+                        return;
+
+                        }
+                }
+            }
+        }
     }
 
 }

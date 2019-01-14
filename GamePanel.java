@@ -19,8 +19,11 @@ import android.view.SurfaceView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+    //public Canvas canvas;
+
     private MainThread thread;
     private Soldier soldier;
     private Point playerPoint;
@@ -29,7 +32,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int WIDTH = 1024,HEIGHT = 512;
 
-    PlayerHP playerHP;
+    //public static Canvas canvas;
+    public static PlayerHP playerHP;
+    public static EnemyManager enemyManager;
     Bitmap joystick;
 
 
@@ -91,6 +96,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         soldier = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
+        enemyManager = new EnemyManager();
+
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
         //System.out.println(joystick);
         //playerHP = new PlayerHP(context,Player.PLAYERMAXHP);
@@ -137,7 +144,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         bg.draw(canvas);
         soldier.draw(canvas);
         floor.draw(canvas);
-        //playerHP.draw(canvas);
+        playerHP.draw(canvas);
+        enemyManager.draw(canvas);
         //Paint temp = new Paint();
         //temp.setColor(Color.GREEN);
         //canvas.drawRect(0,canvas.getHeight()-floorHeight,getWidth(),canvas.getHeight(),temp);
@@ -150,7 +158,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         soldier.update();
         floor.update();
         playerHP.update();
-
+        enemyManager.update();
 
     }
 

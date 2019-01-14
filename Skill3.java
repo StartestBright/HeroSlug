@@ -16,6 +16,11 @@ public class Skill3 extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if(action == MotionEvent.ACTION_DOWN){
+            if(GamePanel)
+        }
         return super.onTouchEvent(event);
+
     }
 }

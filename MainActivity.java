@@ -2,7 +2,10 @@ package com.jknull.heroslug;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.os.Build;
 import android.provider.SyncStateContract;
 import android.support.annotation.RequiresApi;
@@ -34,9 +37,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-
+        //WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
         SCREEN_WIDTH =dm.widthPixels;
         SCREEN_HEIGHT=dm.heightPixels;
+
 
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -45,6 +49,7 @@ public class MainActivity extends Activity {
         FrameLayout game = new FrameLayout(getApplicationContext());
         FrameLayout gameWidgets = new FrameLayout(this);
         gamePanel = new GamePanel((this));
+
 
         gameWidgets.setAlpha(0.5f);
 
@@ -77,7 +82,7 @@ public class MainActivity extends Activity {
         skill1.setX(Skill1.SKILL1_XPOS);
         skill1.setY(Skill1.SKILL1_YPOS);
 
-        Skill2 skill2 = new Skill2(getApplicationContext());
+        Skill2 skill2 = new Skill2(getApplicationContext(),gamePanel);
         LinearLayout.LayoutParams layoutParamsForSkill2 = new LinearLayout.LayoutParams(Skill2.SKILL2_WIDTH,Skill2.SKILL2_HEIGHT);
         skill2.setLayoutParams(layoutParamsForSkill2);
         skill2.setX(Skill2.SKILL2_XPOS);
@@ -116,4 +121,13 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }
