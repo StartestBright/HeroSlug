@@ -88,6 +88,10 @@ public class Soldier extends Hero{
                     bg.moveBg((float) playerVelocityX * -1);
                     playerPos.x = MainActivity.SCREEN_WIDTH/2;
                 }
+                for(int i=0;i<EnemyManager.enemies.size();i++){
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    //enemy.
+                }
             }
         }
 
@@ -166,8 +170,22 @@ public class Soldier extends Hero{
     public void attack() {
         if(ultimateSkillOn){
             for(int i=0;i<EnemyManager.enemies.size();i++){
+                Enemy enemy = EnemyManager.enemies.get(i);
                 if(EnemyManager.enemies.get(i).isAlive()) {
-                    //SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
+                    int x =enemy.getEnemyPos().x- playerPos.x;
+                    int y = enemy.getEnemyPos().y - playerPos.y;
+                    float temp = (float) Math.atan(y/x);
+                    if(x<0 && y>0){
+                        temp +=Math.PI;
+                    }else if(x<0 &&y <0){
+                        temp +=Math.PI;
+                    }
+                    //temp *=-1;
+
+                    SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), playerPos.x, playerPos.y);
+                    System.out.println(temp);
+                    newBullet.setBulletSpeed(normalBulletSpeed);
+                    playerBullets.add(newBullet);
 
                 }
             }
