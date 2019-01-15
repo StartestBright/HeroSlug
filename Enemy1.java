@@ -22,7 +22,7 @@ public class Enemy1 extends Enemy {
 
     @Override
     public String getCharacterTag() {
-        return "Enemy";
+        return "Enemy1";
     }
 
     @Override
