@@ -21,8 +21,9 @@ public class Skill1 extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction()==MotionEvent.ACTION_DOWN){
 
-            if(gamePanel.getPlayer().getHeroTag() == "Soldier"){
-                gamePanel.getPlayer().setSnipingMode();
+            if(GamePanel.hero.getHeroTag() == "Soldier"){
+                Soldier soldier = (Soldier)GamePanel.hero;
+                soldier.setSnipingMode();
             }
         }
         return super.onTouchEvent(event);

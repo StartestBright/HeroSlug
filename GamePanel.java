@@ -25,7 +25,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     //public Canvas canvas;
 
     private MainThread thread;
-    private Soldier soldier;
+    public static Hero hero;
     private Point playerPoint;
     private Floor floor;
     private Background bg;
@@ -35,6 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     //public static Canvas canvas;
     public static PlayerHP playerHP;
     public static EnemyManager enemyManager;
+    //public static Hero hero;
     Bitmap joystick;
 
 
@@ -93,7 +94,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         playerHP = MainActivity.playerHP;
         bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
-        soldier = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
+        hero = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         enemyManager = new EnemyManager();
@@ -142,7 +143,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawColor(Color.WHITE);
         bg.draw(canvas);
-        soldier.draw(canvas);
+        hero.draw(canvas);
         floor.draw(canvas);
         playerHP.draw(canvas);
         enemyManager.draw(canvas);
@@ -155,15 +156,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
     public void update(){
         bg.update();
-        soldier.update();
+        hero.update();
         floor.update();
         playerHP.update();
         enemyManager.update();
 
     }
 
-    public Soldier getPlayer(){
-        return this.soldier;
+    public Hero getPlayer(){
+        return hero;
     }
     public Background getBg(){return this.bg;}
 }

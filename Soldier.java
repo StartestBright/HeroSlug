@@ -27,7 +27,7 @@ public class Soldier extends Hero{
     private long healPackCoolTimeStart =0;
     private boolean healPackCoolTimeOn = false;
     private boolean ultimateSkillOn = false ,ultimateSkillCoolTimeOn=false;
-    private long ultimateStart,ultimateCoolTime;
+    private long ultimateStart,ultimateCoolTime=15;
 
 
 
@@ -102,6 +102,16 @@ public class Soldier extends Hero{
             healPack.update();
         }
 
+        if(ultimateSkillCoolTimeOn){
+            if( (System.currentTimeMillis()-ultimateStart)/1000>=ultimateCoolTime){
+                ultimateSkillCoolTimeOn = false;
+            }
+            if( (System.currentTimeMillis()-ultimateStart)/1000>=10){
+                ultimateSkillOn = false;
+            }
+        }
+
+
     }
     @Override
     public void draw(Canvas canvas){
@@ -154,6 +164,14 @@ public class Soldier extends Hero{
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack() {
+        if(ultimateSkillOn){
+            for(int i=0;i<EnemyManager.enemies.size();i++){
+                if(EnemyManager.enemies.get(i).isAlive()) {
+                    //SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
+
+                }
+            }
+        }
         SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
         if(!snipingMode) {
             newBullet.setBulletSpeed(normalBulletSpeed);
@@ -162,6 +180,7 @@ public class Soldier extends Hero{
             newBullet.setBulletSpeed(snipingBulletSpeed);
         }
         playerBullets.add(newBullet);
+
     }
 
     @Override
@@ -187,9 +206,11 @@ public class Soldier extends Hero{
     }
 
     public void ultimateSkill(){
-        ultimateStart = System.currentTimeMillis();
-        ultimateSkillCoolTimeOn = true;
-        ultimateSkillOn = true;
+        if(!ultimateSkillCoolTimeOn) {
+            ultimateStart = System.currentTimeMillis();
+            ultimateSkillCoolTimeOn = true;
+            ultimateSkillOn = true;
+        }
     }
 
 
