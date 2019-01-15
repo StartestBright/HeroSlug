@@ -1,28 +1,25 @@
 package com.jknull.heroslug;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-public class Enemy1 extends Enemy {
-    private static int enemy1MaxHp = 250;
-    public int enemySize=50;
+public class Enemy2 extends Enemy{
 
+    private static int enemy2MaxHp = 500;
+    public int enemySize=100;
 
-
-
-    public Enemy1(Point p,int enemyIndex) {
+    public Enemy2(Point p,int enemyIndex) {
         super(p,enemyIndex);
-        curHp = enemy1MaxHp;
+        curHp = enemy2MaxHp;
         enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
         enemyAlive =true;
     }
 
     @Override
     public String getCharacterTag() {
-        return "Enemy1";
+        return "Enemy2";
     }
 
     @Override
@@ -38,7 +35,7 @@ public class Enemy1 extends Enemy {
     @Override
     public void draw(Canvas canvas) {
         Paint p = new Paint();
-        p.setColor(Color.rgb(255,30,30));
+        p.setColor(Color.rgb(255,255,255));
         canvas.drawRect(enemyRect,p);
     }
 
