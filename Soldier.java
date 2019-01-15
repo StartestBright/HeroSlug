@@ -91,6 +91,7 @@ public class Soldier extends Hero{
                 for(int i=0;i<EnemyManager.enemies.size();i++){
                     Enemy enemy = EnemyManager.enemies.get(i);
                     //enemy.
+
                 }
             }
         }
