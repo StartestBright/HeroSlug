@@ -31,6 +31,8 @@ public class EnemyManager {
         spawnEnemy2(new Point(1100,1200));
         spawnEnemy3(new Point(1200,-500));
         spawnEnemy3(new Point(1500,-500));
+        spawnEnemy3(new Point(1800,-500));
+        //test
 
     }
     public void update(){
