@@ -13,6 +13,14 @@ public class EnemyManager {
         enemies.add(new Enemy1(spawnPoint,enemyIndex));
         enemyIndex++;
     }
+    public void spawnEnemy2(Point spawnPoint){
+        enemies.add(new Enemy2(spawnPoint,enemyIndex));
+        enemyIndex++;
+    }
+    public void spawnEnemy3(Point spawnPoint){
+        enemies.add(new Enemy3(spawnPoint,enemyIndex));
+        enemyIndex++;
+    }
 
     EnemyManager(){
         spawnEnemy1(new Point(500,500));
@@ -20,6 +28,8 @@ public class EnemyManager {
         spawnEnemy1(new Point(700,300));
         spawnEnemy1(new Point(800,200));
         spawnEnemy1(new Point(900,100));
+        spawnEnemy2(new Point(1100,1200));
+        spawnEnemy3(new Point(1200,-500));
 
     }
     public void update(){

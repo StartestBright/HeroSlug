@@ -56,9 +56,9 @@ public class Enemy3 extends Enemy {
 
 
         else if (enemyPos.x < GamePanel.hero.getHeroPos().x) {
-            enemyPos.x += 10;
+            enemyPos.x += 5;
         } else if (enemyPos.x > GamePanel.hero.getHeroPos().x) {
-            enemyPos.x -= 10;
+            enemyPos.x -= 5;
 
 
              }
