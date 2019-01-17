@@ -47,8 +47,8 @@ public class Enemy3 extends Enemy {
               enemyVelocityY = -500;
               enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
           }*/
-        enemyVelocityY = -500;
-        enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
+        enemyVelocityY = 10;
+        enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize-400;
        if(enemyPos.x == GamePanel.hero.getHeroPos().x) {
 
 

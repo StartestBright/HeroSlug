@@ -14,10 +14,50 @@ public abstract class Enemy implements Character{
     protected boolean enemyLanded;
     protected boolean enemyAlive;
     protected Rect enemyRect;
+    protected final int walkLength=50;
+    protected int walkAlready = 0;
+    protected int walkBack = 0;
+    protected boolean enemyInWalkMode = true;
 
     public Point getEnemyPos(){
         return this.enemyPos;
 
+    }
+    public void enmyWalk(Enemy enemy){
+        if(enemyInWalkMode == true){
+            if(walkAlready<=walkLength) {
+                enemyPos.x -= enemyVelocityX;
+                walkAlready++;
+            }else if(walkBack<=walkLength){
+                enemyPos.x += enemyVelocityX;
+                walkBack++;
+            }else {
+                walkAlready=0;
+                walkBack=0;
+            }
+        }
+    }
+
+    public void enmyDash(Enemy enemy){
+        if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=50){
+            enemy.enemyInWalkMode =false;
+            if(enemy.enemyPos.x == GamePanel.hero.getHeroPos().x) {
+
+
+            }
+
+
+            else if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
+                enemy.enemyPos.x += enemy.enemyVelocityX*2;
+            } else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
+                enemy.enemyPos.x -=  enemy.enemyVelocityX*2;
+
+
+            }
+
+        }else{
+            enemy.enemyInWalkMode=true;
+        }
     }
 
     public Enemy(Point p,int enemyIndex){
