@@ -22,7 +22,7 @@ public class Soldier extends Hero{
     private Background bg;
     private Canvas canvas;
     private SoldierHealPack healPack;
-    private float snipingBulletSpeed=180f,normalBulletSpeed= 80f;
+    private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
     private int healPackCoolTime = 12;
     private long healPackCoolTimeStart =0;
     private boolean healPackCoolTimeOn = false;
@@ -91,6 +91,7 @@ public class Soldier extends Hero{
                 for(int i=0;i<EnemyManager.enemies.size();i++){
                     Enemy enemy = EnemyManager.enemies.get(i);
                     //enemy.
+
                 }
             }
         }
@@ -174,31 +175,35 @@ public class Soldier extends Hero{
                 if(EnemyManager.enemies.get(i).isAlive()) {
                     int x =enemy.getEnemyPos().x- playerPos.x;
                     int y = enemy.getEnemyPos().y - playerPos.y;
-                    float temp = (float) Math.atan(y/x);
-                    if(x<0 && y>0){
+                    float temp = (float) (Math.atan2(x,y)+Math.PI+Math.PI/2);
+                    //temp += Math.PI/2;
+                    System.out.println("x : "+x + " "+"y : "+y+" temp : " +temp );
+                    System.out.println(Math.atan2(x,y)/Math.PI*180);
+
+
+                    /*if(x<0 && y>0){
                         temp +=Math.PI;
                     }else if(x<0 &&y <0){
                         temp +=Math.PI;
-                    }
-                    //temp *=-1;
+                    }*/
+                    temp *=-1;
 
                     SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), playerPos.x, playerPos.y);
-                    System.out.println(temp);
                     newBullet.setBulletSpeed(normalBulletSpeed);
                     playerBullets.add(newBullet);
 
                 }
             }
-        }
-        SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
-        if(!snipingMode) {
-            newBullet.setBulletSpeed(normalBulletSpeed);
-        }
-        else if(snipingMode){
-            newBullet.setBulletSpeed(snipingBulletSpeed);
-        }
-        playerBullets.add(newBullet);
+        }else {
+            SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
+            if (!snipingMode) {
+                newBullet.setBulletSpeed(normalBulletSpeed);
+            } else if (snipingMode) {
+                newBullet.setBulletSpeed(snipingBulletSpeed);
+            }
+            playerBullets.add(newBullet);
 
+        }
     }
 
     @Override
