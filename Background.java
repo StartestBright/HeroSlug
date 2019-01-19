@@ -29,7 +29,7 @@ public class Background {
     }
 
     public void moveBg(float val){
-        x+= val;
+        x-= val;
     }
 
 }

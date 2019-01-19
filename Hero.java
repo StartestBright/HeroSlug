@@ -57,5 +57,30 @@ public abstract class Hero implements Character{
     public Point getHeroPos() {
         return playerPos;
     }
+    public void heroMoveBeyondHalf(){
+        if(playerVelocityX>0) {
+            if (playerPos.x >= MainActivity.SCREEN_WIDTH / 2) {
+                if(GamePanel.BG!=null) {
+                    GamePanel.BG.moveBg((float) playerVelocityX * 1);
+                    playerPos.x = MainActivity.SCREEN_WIDTH/2;
+                }
+                for(int i=0;i<EnemyManager.enemies.size();i++){
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    enemy.enemyMoveByPlayer((float) playerVelocityX);
+                }
+            }
+        }else if(playerVelocityX<0){
+            if(tempPlayer.left <=0){
+                if(GamePanel.BG!=null){
+                    GamePanel.BG.moveBg((float) playerVelocityX * 1);
+                    playerPos.x = tempPlayer.width()/2;
+                }
+                for(int i=0;i<EnemyManager.enemies.size();i++){
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    enemy.enemyMoveByPlayer((float) playerVelocityX);
+                }
+            }
+        }
+    }
 
 }

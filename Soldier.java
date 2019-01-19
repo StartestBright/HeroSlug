@@ -43,7 +43,6 @@ public class Soldier extends Hero{
         this.tempPlayer = rectangle;
         this.heroColor = color;
         this.gamePanel = gamePanel;
-        this.bg = gamePanel.getBg();
         playerPos = pos;
         playerLanded = false;
 
@@ -82,19 +81,8 @@ public class Soldier extends Hero{
         }
 
 
-        if(playerVelocityX>0) {
-            if (playerPos.x >= MainActivity.SCREEN_WIDTH / 2) {
-                if(bg!=null) {
-                    bg.moveBg((float) playerVelocityX * -1);
-                    playerPos.x = MainActivity.SCREEN_WIDTH/2;
-                }
-                for(int i=0;i<EnemyManager.enemies.size();i++){
-                    Enemy enemy = EnemyManager.enemies.get(i);
-                    //enemy.
+        heroMoveBeyondHalf();
 
-                }
-            }
-        }
 
 
 
@@ -118,6 +106,9 @@ public class Soldier extends Hero{
 
 
     }
+
+
+
     @Override
     public void draw(Canvas canvas){
         this.canvas=canvas;
@@ -177,8 +168,8 @@ public class Soldier extends Hero{
                     int y = enemy.getEnemyPos().y - playerPos.y;
                     float temp = (float) (Math.atan2(x,y)+Math.PI+Math.PI/2);
                     //temp += Math.PI/2;
-                    System.out.println("x : "+x + " "+"y : "+y+" temp : " +temp );
-                    System.out.println(Math.atan2(x,y)/Math.PI*180);
+                    //System.out.println("x : "+x + " "+"y : "+y+" temp : " +temp );
+                    //System.out.println(Math.atan2(x,y)/Math.PI*180);
 
 
                     /*if(x<0 && y>0){
