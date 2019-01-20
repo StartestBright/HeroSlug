@@ -28,7 +28,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static Hero hero;
     private Point playerPoint;
     private Floor floor;
-    private Background bg;
+    public static Background BG;
 
     public static final int WIDTH = 1024,HEIGHT = 512;
 
@@ -93,7 +93,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
         playerHP = MainActivity.playerHP;
-        bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
+        BG = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
         hero = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
@@ -142,7 +142,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //canvas.scale(scaleFactorX,scaleFactorY);
 
         canvas.drawColor(Color.WHITE);
-        bg.draw(canvas);
+        BG.draw(canvas);
         hero.draw(canvas);
         floor.draw(canvas);
         playerHP.draw(canvas);
@@ -155,7 +155,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
     public void update(){
-        bg.update();
+        BG.update();
         hero.update();
         floor.update();
         playerHP.update();
@@ -166,5 +166,4 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public Hero getPlayer(){
         return hero;
     }
-    public Background getBg(){return this.bg;}
 }

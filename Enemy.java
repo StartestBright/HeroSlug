@@ -95,5 +95,7 @@ public abstract class Enemy implements Character{
     public void setEnemyAlive(boolean alive){
         enemyAlive = alive;
     }
-
+    public void enemyMoveByPlayer(float playerVelocityX){
+        enemyPos.x-=playerVelocityX;
+    }
 }

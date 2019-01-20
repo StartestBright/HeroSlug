@@ -7,6 +7,9 @@ public abstract class Hero implements Character{
     public static int PlayerMaxHorizontalSpeed = 15;
     protected Rect tempPlayer;
     protected int heroColor;
+    protected long gunShotDelay;
+    protected long gunShotDelayStartTime;
+    protected boolean canFire;
     //protected float gravity = 9.8f;
     protected String charTag = "Hero";
     protected float playerRotation=0;
@@ -17,6 +20,9 @@ public abstract class Hero implements Character{
     protected boolean playerLanded;
     protected Point playerPos;
     protected  PlayerHP playerHP;
+    protected int playerCurHp;
+
+    private boolean heroDead= false;
 
 
     public abstract int getHeroMaxHP();
@@ -57,5 +63,38 @@ public abstract class Hero implements Character{
     public Point getHeroPos() {
         return playerPos;
     }
+    public void heroMoveBeyondHalf(){
+        if(playerVelocityX>0) {
+            if (playerPos.x >= MainActivity.SCREEN_WIDTH / 2) {
+                if(GamePanel.BG!=null) {
+                    GamePanel.BG.moveBg((float) playerVelocityX * 1);
+                    playerPos.x = MainActivity.SCREEN_WIDTH/2;
+                }
+                for(int i=0;i<EnemyManager.enemies.size();i++){
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    enemy.enemyMoveByPlayer((float) playerVelocityX);
+                }
+            }
+        }else if(playerVelocityX<0){
+            if(tempPlayer.left <=0){
+                if(GamePanel.BG!=null){
+                    GamePanel.BG.moveBg((float) playerVelocityX * 1);
+                    playerPos.x = tempPlayer.width()/2;
+                }
+                for(int i=0;i<EnemyManager.enemies.size();i++){
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    enemy.enemyMoveByPlayer((float) playerVelocityX);
+                }
+            }
+        }
+    }
 
+    @Override
+    public void takeDamage(int damage) {
+        playerCurHp -= damage;
+        GamePanel.playerHP.getDamage(damage);
+        if(playerCurHp<=0){
+            heroDead = true;
+        }
+    }
 }

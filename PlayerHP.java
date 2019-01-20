@@ -21,7 +21,7 @@ public class PlayerHP extends View implements UIObject{
     }
 
     public void init(Context context){
-        curHp = 0;
+        curHp = maxHp;
     }
 
     @Override
