@@ -7,6 +7,9 @@ public abstract class Hero implements Character{
     public static int PlayerMaxHorizontalSpeed = 15;
     protected Rect tempPlayer;
     protected int heroColor;
+    protected long gunShotDelay;
+    protected long gunShotDelayStartTime;
+    protected boolean canFire;
     //protected float gravity = 9.8f;
     protected String charTag = "Hero";
     protected float playerRotation=0;
@@ -17,6 +20,9 @@ public abstract class Hero implements Character{
     protected boolean playerLanded;
     protected Point playerPos;
     protected  PlayerHP playerHP;
+    protected int playerCurHp;
+
+    private boolean heroDead= false;
 
 
     public abstract int getHeroMaxHP();
@@ -83,4 +89,12 @@ public abstract class Hero implements Character{
         }
     }
 
+    @Override
+    public void takeDamage(int damage) {
+        playerCurHp -= damage;
+        GamePanel.playerHP.getDamage(damage);
+        if(playerCurHp<=0){
+            heroDead = true;
+        }
+    }
 }
