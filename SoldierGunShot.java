@@ -88,6 +88,9 @@ public class SoldierGunShot extends View implements GameObject{
     public void setBulletSpeed(float speed){
         bulletSpeed =speed;
     }
+    public void setBulletDamage(int damage){
+        gunShotDamage = damage;
+    }
     public boolean isActive(){
         return active;
     }
@@ -113,5 +116,6 @@ public class SoldierGunShot extends View implements GameObject{
             }
         }
     }
+
 
 }
