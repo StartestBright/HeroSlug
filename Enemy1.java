@@ -5,8 +5,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 public class Enemy1 extends Enemy {
+
+
     private static int enemy1MaxHp = 250;
     public int enemySize=50;
 
@@ -30,10 +34,18 @@ public class Enemy1 extends Enemy {
 
     }
 
-    @Override
-    public void attack() {
 
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void attack(){
+        EnemyGunShot1 newBullet = new EnemyGunShot1( 10, 0, enemyPos.x, enemyPos.y);
+//        if() {
+            newBullet.setBulletSpeed(10);
+  //      }
     }
+
+
 
     @Override
     public void draw(Canvas canvas) {
@@ -42,10 +54,11 @@ public class Enemy1 extends Enemy {
         canvas.drawRect(enemyRect,p);
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
-        enemyVelocityX = 1.0;
+      //  this.attack();
+        enemyVelocityX = 2.0;
         if(!enemyLanded) {
             enemyVelocityY += gravity;
         }else if(enemyLanded){
@@ -78,3 +91,4 @@ public class Enemy1 extends Enemy {
         return enemySize;
     }
 }
+

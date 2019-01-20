@@ -23,14 +23,14 @@ public  abstract class EnemyGunShot implements GameObject{
     protected Bitmap bulletImage;
 
 
-    private int screenWidth = MainActivity.SCREEN_WIDTH;
-    private int screenHeight = MainActivity.SCREEN_HEIGHT;
+    protected int screenWidth = MainActivity.SCREEN_WIDTH;
+    protected int screenHeight = MainActivity.SCREEN_HEIGHT;
 
-    //BitmapFactory.Options opt = new BitmapFactory.Options();
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-        //super(context);
+    public EnemyGunShot( float velocityX, float velocityY, float xPos, float yPos) {
+       // super(context);
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.xPos = xPos;
@@ -49,7 +49,16 @@ public  abstract class EnemyGunShot implements GameObject{
     public abstract void update();
 
     //@Override
-    public abstract void  draw(Canvas canvas);
+    public  void  draw(Canvas canvas){
+        if(active) {
+            //super.draw(canvas);
+            //canvas.drawBitmap(bulletImage,0,0,null);
+            Paint paint = new Paint();
+            paint.setColor(bulletColor);
+            canvas.drawCircle(xPos, yPos, radius, paint);
+
+        }
+    }
 
     public Point getBulletPoint(){
         Point p = new Point();
@@ -66,22 +75,18 @@ public  abstract class EnemyGunShot implements GameObject{
 
     public void collisionDetect(){
         if(this.active){
+                    if (xPos - radius <=GamePanel.hero.playerPos.x+GamePanel.hero.tempPlayer.width()&& //if  collide with enemy
+                            xPos+radius>=GamePanel.hero.playerPos.x-GamePanel.hero.tempPlayer.width()&&
+                            yPos-radius<=GamePanel.hero.playerPos.y+GamePanel.hero.tempPlayer.height()&&
+                            yPos+radius>=GamePanel.hero.playerPos.y-GamePanel.hero.tempPlayer.height()) {
 
-            for(int i=0;i<EnemyManager.enemies.size();i++) {
-                Enemy enemy = EnemyManager.enemies.get(i);
-                if(enemy.isAlive()){
-                    if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
-                            xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
-                            yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&
-                            yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemySize()) {
-
-                        EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
-                        active = false;
+                          //  GamePanel.
+                                active = false;
                         return;
 
                     }
                 }
             }
         }
-    }
-}
+
+

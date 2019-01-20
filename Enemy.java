@@ -14,7 +14,7 @@ public abstract class Enemy implements Character{
     protected boolean enemyLanded;
     protected boolean enemyAlive;
     protected Rect enemyRect;
-    protected final int walkLength=50;
+    protected final int walkLength=200;
     protected int walkAlready = 0;
     protected int walkBack = 0;
     protected boolean enemyInWalkMode = true;
@@ -39,7 +39,8 @@ public abstract class Enemy implements Character{
     }
 
     public void enmyDash(Enemy enemy){
-        if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=50){
+        if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=800
+                &&Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=400){
             enemy.enemyInWalkMode =false;
             if(enemy.enemyPos.x == GamePanel.hero.getHeroPos().x) {
 
@@ -55,7 +56,13 @@ public abstract class Enemy implements Character{
 
             }
 
-        }else{
+        }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400){
+            this.attack();
+
+        }
+
+
+        else{
             enemy.enemyInWalkMode=true;
         }
     }
@@ -67,6 +74,8 @@ public abstract class Enemy implements Character{
     public boolean isAlive(){
         return enemyAlive;
     };
+    public abstract void attack();
+
 
     public abstract void update();
     public abstract void draw(Canvas canvas);
