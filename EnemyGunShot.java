@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public  abstract class EnemyGunShot implements GameObject{
+public  abstract class EnemyGunShot extends View implements GameObject{
     protected int gunShotDamage;
     protected int bulletColor;
     protected boolean active = true;
@@ -29,14 +29,14 @@ public  abstract class EnemyGunShot implements GameObject{
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot( float velocityX, float velocityY, float xPos, float yPos) {
-       // super(context);
+    public EnemyGunShot( Context context,float velocityX, float velocityY, float xPos, float yPos) {
+        super(context);
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.xPos = xPos;
         this.yPos = yPos;
 
-        //init(context);
+        init(context);
 
 
     }
@@ -51,8 +51,8 @@ public  abstract class EnemyGunShot implements GameObject{
     //@Override
     public  void  draw(Canvas canvas){
         if(active) {
-            //super.draw(canvas);
-            //canvas.drawBitmap(bulletImage,0,0,null);
+            super.draw(canvas);
+            canvas.drawBitmap(bulletImage,0,0,null);
             Paint paint = new Paint();
             paint.setColor(bulletColor);
             canvas.drawCircle(xPos, yPos, radius, paint);
@@ -73,7 +73,7 @@ public  abstract class EnemyGunShot implements GameObject{
     }
 
 
-    public void collisionDetect(){
+   public void collisionDetect(){
         if(this.active){
                     if (xPos - radius <=GamePanel.hero.playerPos.x+GamePanel.hero.tempPlayer.width()&& //if  collide with enemy
                             xPos+radius>=GamePanel.hero.playerPos.x-GamePanel.hero.tempPlayer.width()&&

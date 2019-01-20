@@ -1,4 +1,5 @@
 package com.jknull.heroslug;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,8 +10,8 @@ public class Enemy3 extends Enemy {
     private static int enemy3MaxHp = 50;
     public int enemySize = 50;
 
-    public Enemy3(Point p, int enemyIndex) {
-        super(p, enemyIndex);
+    public Enemy3(Context context,Point p, int enemyIndex) {
+        super(context,p, enemyIndex);
         curHp = enemy3MaxHp;
         enemyRect = new Rect(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
         enemyAlive = true;

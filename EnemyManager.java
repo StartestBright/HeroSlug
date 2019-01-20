@@ -1,24 +1,26 @@
 package com.jknull.heroslug;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
 import java.util.ArrayList;
 
 public class EnemyManager {
+    private Context context;
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private int enemyIndex= 0;
 
     public void spawnEnemy1(Point spawnPoint){
-        enemies.add(new Enemy1(spawnPoint,enemyIndex));
+        enemies.add(new Enemy1(context,spawnPoint,enemyIndex));
         enemyIndex++;
     }
     public void spawnEnemy2(Point spawnPoint){
-        enemies.add(new Enemy2(spawnPoint,enemyIndex));
+        enemies.add(new Enemy2(context,spawnPoint,enemyIndex));
         enemyIndex++;
     }
     public void spawnEnemy3(Point spawnPoint){
-        enemies.add(new Enemy3(spawnPoint,enemyIndex));
+        enemies.add(new Enemy3(context,spawnPoint,enemyIndex));
         enemyIndex++;
     }
 

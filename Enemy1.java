@@ -1,5 +1,6 @@
 package com.jknull.heroslug;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,14 +12,17 @@ import android.support.annotation.RequiresApi;
 public class Enemy1 extends Enemy {
 
 
+    private Context context;
+
+
     private static int enemy1MaxHp = 250;
     public int enemySize=50;
 
 
 
 
-    public Enemy1(Point p,int enemyIndex) {
-        super(p,enemyIndex);
+    public Enemy1(Context context,Point p,int enemyIndex) {
+        super(context,p,enemyIndex);
         curHp = enemy1MaxHp;
         enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
         enemyAlive =true;
@@ -39,7 +43,7 @@ public class Enemy1 extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
-        EnemyGunShot1 newBullet = new EnemyGunShot1( 10, 0, enemyPos.x, enemyPos.y);
+        EnemyGunShot1 newBullet = new EnemyGunShot1( context,10, 0, enemyPos.x, enemyPos.y);
 //        if() {
             newBullet.setBulletSpeed(10);
   //      }

@@ -15,12 +15,13 @@ import android.widget.Toast;
 
 public class EnemyGunShot1 extends EnemyGunShot {
 
+
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot1( float velocityX, float velocityY, float xPos, float yPos) {
-        // super(context);
-        super(velocityX,velocityY,xPos,yPos);
+    public EnemyGunShot1(Context context, float velocityX, float velocityY, float xPos, float yPos) {
+         super(context,velocityX,velocityY,xPos,yPos);
+        //super(velocityX,velocityY,xPos,yPos);
 
         //init(context);
 

@@ -1,5 +1,6 @@
 package com.jknull.heroslug;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -18,6 +19,10 @@ public abstract class Enemy implements Character{
     protected int walkAlready = 0;
     protected int walkBack = 0;
     protected boolean enemyInWalkMode = true;
+    protected Context context;
+    protected Boolean canFire = true;
+    private long gunShotDelayStartTime;
+    private long gunShotDelay = 10;
 
     public Point getEnemyPos(){
         return this.enemyPos;
@@ -57,7 +62,16 @@ public abstract class Enemy implements Character{
             }
 
         }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400){
-            this.attack();
+            if(canFire == true){
+                this.attack();
+                canFire = false;
+                gunShotDelayStartTime = System.currentTimeMillis();
+
+            }
+            else if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
+
+                canFire =true;
+            }
 
         }
 
@@ -67,7 +81,8 @@ public abstract class Enemy implements Character{
         }
     }
 
-    public Enemy(Point p,int enemyIndex){
+    public Enemy(Context context,Point p, int enemyIndex){
+        this.context = context;
         enemyPos = p;
         this.enemyIndex = enemyIndex;
     }
@@ -98,4 +113,7 @@ public abstract class Enemy implements Character{
     public void enemyMoveByPlayer(float playerVelocityX){
         enemyPos.x-=playerVelocityX;
     }
+
+    //
+
 }
