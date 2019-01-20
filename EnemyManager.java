@@ -24,14 +24,14 @@ public class EnemyManager {
 
     EnemyManager(){
         spawnEnemy1(new Point(500,500));
-        spawnEnemy1(new Point(600,400));
-        spawnEnemy1(new Point(700,300));
-        spawnEnemy1(new Point(800,200));
-        spawnEnemy1(new Point(900,100));
-        spawnEnemy2(new Point(1100,1200));
-        spawnEnemy3(new Point(1200,-500));
-        spawnEnemy3(new Point(1500,-500));
-        spawnEnemy3(new Point(1800,-500));
+        spawnEnemy1(new Point(900,400));
+        spawnEnemy1(new Point(1500,300));
+        spawnEnemy1(new Point(1600,200));
+        spawnEnemy1(new Point(2000,100));
+        spawnEnemy2(new Point(2200,1200));
+        spawnEnemy3(new Point(2500,-500));
+        spawnEnemy3(new Point(3600,-500));
+        spawnEnemy3(new Point(4000,-500));
         //test
 
     }

@@ -45,6 +45,7 @@ public class Enemy1 extends Enemy {
 
     @Override
     public void update() {
+        enemyVelocityX = 1.0;
         if(!enemyLanded) {
             enemyVelocityY += gravity;
         }else if(enemyLanded){
@@ -52,7 +53,10 @@ public class Enemy1 extends Enemy {
             enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
         }
         enemyPos.y += enemyVelocityY;
-        enemyPos.x += enemyVelocityX;
+        enmyWalk(this);
+        enmyDash(this);
+
+
         enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
 
 
