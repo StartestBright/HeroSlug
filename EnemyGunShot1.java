@@ -16,14 +16,14 @@ import android.widget.Toast;
 public class EnemyGunShot1 extends EnemyGunShot {
 
 
-    BitmapFactory.Options opt = new BitmapFactory.Options();
+  //  BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public EnemyGunShot1(Context context, float velocityX, float velocityY, float xPos, float yPos) {
          super(context,velocityX,velocityY,xPos,yPos);
         //super(velocityX,velocityY,xPos,yPos);
 
-        //init(context);
+     //   init(context);
 
     }
 
@@ -37,13 +37,14 @@ public class EnemyGunShot1 extends EnemyGunShot {
         bulletImage.setWidth(800);
         bulletImage.setHeight(800);
         bulletColor = Color.RED;
+        System.out.println("gunshot made!");
     }
 
     @Override
     public void update(){
         if(active) {
             xPos += (velocityX * bulletSpeed);
-         //   yPos += (velocityY * bulletSpeed);
+            yPos += (velocityY * bulletSpeed);
         }
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;

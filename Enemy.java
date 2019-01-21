@@ -21,8 +21,8 @@ public abstract class Enemy implements Character{
     protected boolean enemyInWalkMode = true;
     protected Context context;
     protected Boolean canFire = true;
-    private long gunShotDelayStartTime;
-    private long gunShotDelay = 10;
+    protected long gunShotDelayStartTime;
+    protected long gunShotDelay = 50000;
 
     public Point getEnemyPos(){
         return this.enemyPos;
@@ -64,8 +64,8 @@ public abstract class Enemy implements Character{
         }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400){
             if(canFire == true){
                 this.attack();
-                canFire = false;
-                gunShotDelayStartTime = System.currentTimeMillis();
+            //    canFire = false;
+           //     gunShotDelayStartTime = System.currentTimeMillis();
 
             }
             else if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){

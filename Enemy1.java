@@ -9,10 +9,14 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import java.util.ArrayList;
+
 public class Enemy1 extends Enemy {
 
 
-    private Context context;
+    private ArrayList<EnemyGunShot> enemy1Bullets;
+    //private Context context;
+    private Canvas canvas;
 
 
     private static int enemy1MaxHp = 250;
@@ -23,6 +27,8 @@ public class Enemy1 extends Enemy {
 
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
+        //this.context = context;
+        enemy1Bullets = new ArrayList<EnemyGunShot>();
         curHp = enemy1MaxHp;
         enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
         enemyAlive =true;
@@ -43,19 +49,32 @@ public class Enemy1 extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
-        EnemyGunShot1 newBullet = new EnemyGunShot1( context,10, 0, enemyPos.x, enemyPos.y);
-//        if() {
+
+        if(canFire) {
+            canFire = false;
+            gunShotDelayStartTime = System.currentTimeMillis();
+
+            EnemyGunShot newBullet = new EnemyGunShot( context,10, 0, enemyPos.x, enemyPos.y);
+
             newBullet.setBulletSpeed(10);
-  //      }
+            enemy1Bullets.add(newBullet);
+            System.out.println("enemy attack!");
+         }
     }
 
 
 
     @Override
     public void draw(Canvas canvas) {
+        this.canvas = canvas;
         Paint p = new Paint();
         p.setColor(Color.rgb(255,30,30));
         canvas.drawRect(enemyRect,p);
+
+       for(int i=0;i<enemy1Bullets.size();i++){
+            if(enemy1Bullets.get(i).isActive())
+               enemy1Bullets.get(i).draw(canvas);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -72,6 +91,12 @@ public class Enemy1 extends Enemy {
         enemyPos.y += enemyVelocityY;
         enmyWalk(this);
         enmyDash(this);
+
+        for(int i=0;i<enemy1Bullets.size();i++){
+            enemy1Bullets.get(i).update();
+           if(!enemy1Bullets.get(i).isActive())
+                enemy1Bullets.remove(i);
+        }
 
 
         enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
