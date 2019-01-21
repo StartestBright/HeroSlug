@@ -29,6 +29,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Point playerPoint;
     private Floor floor;
     public static Background BG;
+    public static Payload PAYLOAD;
+    private PayloadMap payloadMap;
 
     public static final int WIDTH = 1024,HEIGHT = 512;
 
@@ -98,7 +100,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         enemyManager = new EnemyManager();
-
+        PAYLOAD = new Payload();
+        payloadMap = MainActivity.payloadMap;
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
         //System.out.println(joystick);
         //playerHP = new PlayerHP(context,Player.PLAYERMAXHP);
@@ -147,6 +150,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         floor.draw(canvas);
         playerHP.draw(canvas);
         enemyManager.draw(canvas);
+        PAYLOAD.draw(canvas);
+        payloadMap.draw(canvas);
         //Paint temp = new Paint();
         //temp.setColor(Color.GREEN);
         //canvas.drawRect(0,canvas.getHeight()-floorHeight,getWidth(),canvas.getHeight(),temp);
@@ -160,6 +165,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         floor.update();
         playerHP.update();
         enemyManager.update();
+        PAYLOAD.update();
 
     }
 

@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
 
     public static GamePanel gamePanel;
     public static PlayerHP playerHP;
+    public static PayloadMap payloadMap;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -100,12 +101,14 @@ public class MainActivity extends Activity {
 
 
         heroInfoUI.setLayoutParams(layoutParamsForHeroUI);
-
-
         heroInfoUI.addView(playerHP);
-        //heroInfoUI.setX(0);
 
 
+        payloadMap = new PayloadMap(getApplicationContext());
+        LinearLayout.LayoutParams layoutParamsForPayloadMap = new LinearLayout.LayoutParams(PayloadMap.PAYLOADMAPWIDTH,PayloadMap.PAYLOADMAPHEIGHT);
+        payloadMap.setLayoutParams(layoutParamsForPayloadMap);
+        payloadMap.setX(PayloadMap.PAYLOADMAPX);
+        payloadMap.setY(PayloadMap.PAYLOADMAPY);
 
         gameWidgets.addView(joyStick);
         gameWidgets.addView(jumpButton);
@@ -114,9 +117,11 @@ public class MainActivity extends Activity {
         gameWidgets.addView(skill2);
         gameWidgets.addView(skill3);
         gameWidgets.addView(heroInfoUI);
+        gameWidgets.addView(payloadMap);
         game.addView(gamePanel);
         game.addView(gameWidgets);
         setContentView(game);
+
 
 
     }

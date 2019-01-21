@@ -4,7 +4,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 public abstract class Hero implements Character{
-    public static int PlayerMaxHorizontalSpeed = 15;
+    public static int PLAYERMAXHORIZONTALSPEED = 15;
     protected Rect tempPlayer;
     protected int heroColor;
     protected long gunShotDelay;
@@ -45,8 +45,10 @@ public abstract class Hero implements Character{
     }
     public void moveHorizontal(double value){
         playerVelocityX=value;
-        if(playerVelocityX>=PlayerMaxHorizontalSpeed)
-            playerVelocityX = PlayerMaxHorizontalSpeed;
+        if(playerVelocityX>= PLAYERMAXHORIZONTALSPEED)
+            playerVelocityX = PLAYERMAXHORIZONTALSPEED;
+        else if(playerVelocityX<= -1* PLAYERMAXHORIZONTALSPEED)
+            playerVelocityX = -1* PLAYERMAXHORIZONTALSPEED;
     }
     public String getCharacterTag() {
         return charTag;
@@ -66,14 +68,18 @@ public abstract class Hero implements Character{
     public void heroMoveBeyondHalf(){
         if(playerVelocityX>0) {
             if (playerPos.x >= MainActivity.SCREEN_WIDTH / 2) {
+
                 if(GamePanel.BG!=null) {
                     GamePanel.BG.moveBg((float) playerVelocityX * 1);
                     playerPos.x = MainActivity.SCREEN_WIDTH/2;
                 }
+
                 for(int i=0;i<EnemyManager.enemies.size();i++){
                     Enemy enemy = EnemyManager.enemies.get(i);
                     enemy.enemyMoveByPlayer((float) playerVelocityX);
                 }
+
+                GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
             }
         }else if(playerVelocityX<0){
             if(tempPlayer.left <=0){
@@ -81,10 +87,13 @@ public abstract class Hero implements Character{
                     GamePanel.BG.moveBg((float) playerVelocityX * 1);
                     playerPos.x = tempPlayer.width()/2;
                 }
+
                 for(int i=0;i<EnemyManager.enemies.size();i++){
                     Enemy enemy = EnemyManager.enemies.get(i);
                     enemy.enemyMoveByPlayer((float) playerVelocityX);
                 }
+
+                GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
             }
         }
     }

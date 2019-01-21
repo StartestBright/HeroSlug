@@ -3,7 +3,6 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -53,7 +52,7 @@ public class JoyStick extends View{
             }
             temp *=-1;
             hero.setPlayerRotation(temp);
-            hero.moveHorizontal((xPos/150.0)*hero.PlayerMaxHorizontalSpeed);
+            hero.moveHorizontal((xPos/150.0)*hero.PLAYERMAXHORIZONTALSPEED);
         }
         else if(action == MotionEvent.ACTION_UP) {
             hero.moveHorizontal(0);
@@ -69,7 +68,7 @@ public class JoyStick extends View{
             }
             temp *=-1;
             hero.setPlayerRotation(temp);
-            hero.moveHorizontal((xPos/150.0)*hero.PlayerMaxHorizontalSpeed);
+            hero.moveHorizontal((xPos/150.0)*hero.PLAYERMAXHORIZONTALSPEED);
         }
 
         //gestureDetector.onTouchEvent(event);
