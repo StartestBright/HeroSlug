@@ -13,7 +13,6 @@ public class Skill1 extends View {
     public Skill1(Context context , GamePanel gamePanel) {
         super(context);
         this.setBackgroundResource(R.drawable.attackicon);
-        System.out.println(MainActivity.SCREEN_WIDTH);
         this.gamePanel = gamePanel;
     }
 

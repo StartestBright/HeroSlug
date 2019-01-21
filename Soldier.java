@@ -1,6 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -129,6 +130,7 @@ public class Soldier extends Hero{
         Paint paint = new Paint();
         paint.setColor(heroColor);
         canvas.drawRect(tempPlayer,paint);
+        //canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.joystick),tempPlayer,tempPlayer,paint);
 
         for(int i=0;i<playerBullets.size();i++){
             if(playerBullets.get(i).isActive())
@@ -146,11 +148,14 @@ public class Soldier extends Hero{
             for(int i=0;i<EnemyManager.enemies.size();i++){
                 Enemy enemy = EnemyManager.enemies.get(i);
                 if(enemy != null&&enemy.isAlive()) {
-                    Paint p = new Paint();
-                    p.setColor(Color.RED);
-                    p.setStrokeWidth(8);
-                    canvas.drawLine(playerPos.x, playerPos.y, enemy.getEnemyPos().x, enemy.getEnemyPos().y, p);
+                    if(enemy.getEnemyPos().x<=MainActivity.SCREEN_WIDTH && enemy.getEnemyPos().x>=0
+                            && enemy.getEnemyPos().y<=MainActivity.SCREEN_HEIGHT && enemy.getEnemyPos().y>=0) {
+                        Paint p = new Paint();
+                        p.setColor(Color.RED);
+                        p.setStrokeWidth(8);
+                        canvas.drawLine(playerPos.x, playerPos.y, enemy.getEnemyPos().x, enemy.getEnemyPos().y, p);
 
+                    }
                 }
             }
 
@@ -177,12 +182,14 @@ public class Soldier extends Hero{
                 for (int i = 0; i < EnemyManager.enemies.size(); i++) {
                     Enemy enemy = EnemyManager.enemies.get(i);
                     if (EnemyManager.enemies.get(i).isAlive()) {
-                        int x = enemy.getEnemyPos().x - playerPos.x;
-                        int y = enemy.getEnemyPos().y - playerPos.y;
-                        float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
-                        //temp += Math.PI/2;
-                        //System.out.println("x : "+x + " "+"y : "+y+" temp : " +temp );
-                        //System.out.println(Math.atan2(x,y)/Math.PI*180);
+                        if(enemy.getEnemyPos().x<=MainActivity.SCREEN_WIDTH && enemy.getEnemyPos().x>=0
+                                && enemy.getEnemyPos().y<=MainActivity.SCREEN_HEIGHT && enemy.getEnemyPos().y>=0) {
+                            int x = enemy.getEnemyPos().x - playerPos.x;
+                            int y = enemy.getEnemyPos().y - playerPos.y;
+                            float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
+                            //temp += Math.PI/2;
+                            //System.out.println("x : "+x + " "+"y : "+y+" temp : " +temp );
+                            //System.out.println(Math.atan2(x,y)/Math.PI*180);
 
 
                     /*if(x<0 && y>0){
@@ -190,13 +197,14 @@ public class Soldier extends Hero{
                     }else if(x<0 &&y <0){
                         temp +=Math.PI;
                     }*/
-                        temp *= -1;
+                            temp *= -1;
 
-                        SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), playerPos.x, playerPos.y);
-                        newBullet.setBulletSpeed(bulletSpeed);
-                        newBullet.setBulletDamage(bulletDamge);
-                        playerBullets.add(newBullet);
+                            SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), playerPos.x, playerPos.y);
+                            newBullet.setBulletSpeed(bulletSpeed);
+                            newBullet.setBulletDamage(bulletDamge);
+                            playerBullets.add(newBullet);
 
+                        }
                     }
                 }
             } else {
