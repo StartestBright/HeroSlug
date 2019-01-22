@@ -110,8 +110,8 @@ public class Enemy2 extends Enemy{
                    }
 
 
-               if ((Math.abs(enemy.enemyPos.x - enemy.getEnemySize() - GamePanel.hero.tempPlayer.right)<=20) ||(
-                       Math.abs( enemy.enemyPos.x + enemy.getEnemySize() -GamePanel.hero.tempPlayer.left)<=20)) {
+               if ((Math.abs(enemy.enemyPos.x - enemy.getEnemySize() - GamePanel.hero.tempPlayer.right)<=25) ||(
+                       Math.abs( enemy.enemyPos.x + enemy.getEnemySize() -GamePanel.hero.tempPlayer.left)<=25)) {
 
                    enemy.enemyVelocityX = 0;
                    System.out.println(this.enemyVelocityX);
