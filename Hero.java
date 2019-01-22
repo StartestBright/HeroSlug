@@ -19,12 +19,37 @@ public abstract class Hero implements Character{
     protected  int jumpPower;
     protected boolean playerLanded;
     protected Point playerPos;
+    protected boolean flying;
     //protected int playerCurHp;
 
     public static boolean HERODEAD= false;
 
 
     public abstract int getHeroMaxHP();
+
+
+    public void getDashed() {
+
+
+        // startedFlyTime = System.currentTimeMillis();
+
+        flying = true;
+        playerLanded = false;
+        playerVelocityX = -30;
+        playerVelocityY = -80;
+
+    }
+
+
+    public void flyFinished() {
+        if ((flying) && (playerLanded)) {
+            playerVelocityX = 0;
+            flying = false;
+            System.out.println("finishd");
+
+
+        }
+    }
 
 
     public void jump(){
