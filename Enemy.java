@@ -22,7 +22,7 @@ public abstract class Enemy implements Character{
     protected Context context;
     protected Boolean canFire = true;
     protected long gunShotDelayStartTime;
-    protected long gunShotDelay = 50000;
+    protected long gunShotDelay = 50;
 
     public Point getEnemyPos(){
         return this.enemyPos;
@@ -43,7 +43,7 @@ public abstract class Enemy implements Character{
         }
     }
 
-    public void enmyDash(Enemy enemy){
+    public void enmyFollow(Enemy enemy){
         if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=800
                 &&Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=400){
             enemy.enemyInWalkMode =false;
