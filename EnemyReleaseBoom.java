@@ -3,26 +3,19 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-public class EnemyGunShot1 extends EnemyGunShot {
-
-
-  //  BitmapFactory.Options opt = new BitmapFactory.Options();
+public class EnemyReleaseBoom extends EnemyGunShot {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot1(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-         super(context,velocityX,velocityY,xPos,yPos);
+    public EnemyReleaseBoom(Context context, float velocityX, float velocityY, float xPos, float yPos) {
+        super(context,velocityX,velocityY,xPos,yPos);
+        radius = 100;
+        bulletSpeed = 1;
+        velocityY = 1;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -37,31 +30,23 @@ public class EnemyGunShot1 extends EnemyGunShot {
 
     @Override
     public void update(){
-        if(xPos>= GamePanel.hero.getHeroPos().x) {
-            directLeft = true;
-        }
+    //    if(xPos>= GamePanel.hero.getHeroPos().x) {
+    //        directLeft = true;
+     //   }
 
         if(active) {
-            if(directLeft) {
-                xPos -= (velocityX * bulletSpeed);
-                yPos += (velocityY * bulletSpeed);
-            }
-            else{
-                xPos += (velocityX * bulletSpeed);
-           //     yPos += (velocityY * bulletSpeed);
+
+              //  xPos -= (velocityX * bulletSpeed);
+                     yPos += (velocityY * bulletSpeed);
+
 
             }
-        }
+
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;
         }
         collisionDetect();
 
     }
-
-
-
-
-
 
 }

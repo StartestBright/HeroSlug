@@ -14,11 +14,9 @@ import java.util.ArrayList;
 public class Enemy1 extends Enemy {
 
 
-    private ArrayList<EnemyGunShot> enemy1Bullets;
+    private ArrayList<EnemyGunShot1> enemy1Bullets;
     //private Context context;
     private Canvas canvas;
-
-
     private static int enemy1MaxHp = 250;
     public int enemySize=50;
 
@@ -28,7 +26,7 @@ public class Enemy1 extends Enemy {
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
         //this.context = context;
-        enemy1Bullets = new ArrayList<EnemyGunShot>();
+        enemy1Bullets = new ArrayList<EnemyGunShot1>();
         curHp = enemy1MaxHp;
         enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
         enemyAlive =true;
@@ -54,7 +52,7 @@ public class Enemy1 extends Enemy {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
 
-            EnemyGunShot newBullet = new EnemyGunShot( context,10, 0, enemyPos.x, enemyPos.y);
+            EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
 
             newBullet.setBulletSpeed(10);
             enemy1Bullets.add(newBullet);
@@ -89,7 +87,7 @@ public class Enemy1 extends Enemy {
         }
         enemyPos.y += enemyVelocityY;
         enmyWalk(this);
-        enmyDash(this);
+        enmyFollow(this);
 
         for(int i=0;i<enemy1Bullets.size();i++){
             enemy1Bullets.get(i).update();

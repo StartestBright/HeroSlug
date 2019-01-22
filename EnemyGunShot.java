@@ -13,14 +13,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public  class EnemyGunShot extends View implements GameObject{
+public abstract class EnemyGunShot extends View implements GameObject{
    // protected int gunShotDamage;
     protected int bulletColor;
     protected boolean active = true;
-    protected float bulletSpeed = 150f;
+    protected float bulletSpeed = 10;
     protected float xPos =500,yPos=500,velocityX=0,velocityY=0;
     protected float radius=10;
     protected Bitmap bulletImage;
+    protected boolean directLeft;
 
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
@@ -41,10 +42,6 @@ public  class EnemyGunShot extends View implements GameObject{
         this.velocityY = velocityY;
         this.xPos = xPos;
         this.yPos = yPos;
-
-
-
-
     }
 
 
@@ -59,6 +56,8 @@ public  class EnemyGunShot extends View implements GameObject{
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;
         }
+
+        collisionDetect();
     }
 
     @Override
@@ -87,27 +86,19 @@ public  class EnemyGunShot extends View implements GameObject{
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void init(Context context){
-        opt.inMutable = true;
-        bulletImage = BitmapFactory.decodeResource(context.getResources(),R.drawable.gunshot);
-        bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
-        bulletImage.setWidth(800);
-        bulletImage.setHeight(800);
-        bulletColor = Color.RED;
-
-    }
+    public abstract void init(Context context);
 
 
    public void collisionDetect(){
         if(this.active){
-                    if (xPos - radius <=GamePanel.hero.playerPos.x+GamePanel.hero.tempPlayer.width()&& //if  collide with enemy
-                            xPos+radius>=GamePanel.hero.playerPos.x-GamePanel.hero.tempPlayer.width()&&
-                            yPos-radius<=GamePanel.hero.playerPos.y+GamePanel.hero.tempPlayer.height()&&
-                            yPos+radius>=GamePanel.hero.playerPos.y-GamePanel.hero.tempPlayer.height()) {
+                    if (xPos+radius >=GamePanel.hero.getHero().left && //if  collide with enemy
+                            xPos-radius<=GamePanel.hero.getHero().right&&
+                            yPos+radius>=GamePanel.hero.getHero().top&&
+                            yPos-radius<=GamePanel.hero.getHero().bottom) {
 
                           //  GamePanel.
-                   //             active = false;
-                        return;
+                               active = false;
+                  //      return;
 
                     }
                 }
