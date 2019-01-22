@@ -12,9 +12,9 @@ public class Enemy2 extends Enemy{
     public int enemySize=100;
     public Canvas canvas;
     private boolean canDush = true;
-    private  long dushDelay = 50000;
+    private  long dushDelay = 5;
     private  long startedDushTime;
-    private  long flyDelay = 50;
+//    private  long flyDelay = 50;
    // private  long flyTime;
     private boolean canFly = true;
 
@@ -40,26 +40,11 @@ public class Enemy2 extends Enemy{
 
     @Override
     public void attack() {
+        canDush = false;
+        System.out.println("attcoooj!");
         GamePanel.hero.takeDamage(50);
-        while(canFly = true) {
-            startedDushTime= System.currentTimeMillis();
-            GamePanel.hero.playerVelocityX = -10;
-            GamePanel.hero.playerPos.x+=GamePanel.hero.playerVelocityX;
-            GamePanel.hero.playerVelocityY = -15;
-            GamePanel.hero.playerPos.y+=GamePanel.hero.playerVelocityY;
-            if(System.currentTimeMillis()-startedDushTime<=flyDelay) {
-                canFly = false;
-            }
-
-
-
-
-
-        }
-
-
-
-
+        GamePanel.hero.getDashed();
+        enemyVelocityX = 2;
     }
 
     @Override
@@ -80,6 +65,7 @@ public class Enemy2 extends Enemy{
             enemyVelocityY = 0;
             enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
         }
+
         //   enemyPos.y += enemyVelocityY;
         enmyWalk(this);
         enmyFollow(this);
@@ -106,32 +92,43 @@ public class Enemy2 extends Enemy{
            enemy.enemyInWalkMode = false;
            if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
                enemy.enemyPos.x += enemy.enemyVelocityX * 2;
-               canDush = false;
+           //    canDush = false;
            } else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
                enemy.enemyPos.x -= enemy.enemyVelocityX * 2;
-               canDush = false;
+            //   canDush = false;
            }
        }
-       else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400) {
+       else if((Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400)){
+
 
            if (canDush) {
-               if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
-                   enemy.enemyPos.x += enemy.enemyVelocityX * 5;
-                   canDush = false;
-               } else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
-                   enemy.enemyPos.x -= enemy.enemyVelocityX * 5;
-                   canDush = false;
+                   if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
+                       enemy.enemyPos.x += enemy.enemyVelocityX * 10;
+
+                   } else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
+                       enemy.enemyPos.x -= enemy.enemyVelocityX * 10;
+                   }
+
+
+               if ((Math.abs(enemy.enemyPos.x - enemy.getEnemySize() - GamePanel.hero.tempPlayer.right)<=20) ||(
+                       Math.abs( enemy.enemyPos.x + enemy.getEnemySize() -GamePanel.hero.tempPlayer.left)<=20)) {
+
+                   enemy.enemyVelocityX = 0;
+                   System.out.println(this.enemyVelocityX);
+                   startedDushTime= System.currentTimeMillis();
+                   attack();
+                   System.out.println(this.enemyVelocityX);
+                   enemy.enemyPos.x +=enemy.enemyVelocityX;
+
                }
            }
-           if ((enemy.enemyPos.x - enemy.getEnemySize()  == GamePanel.hero.tempPlayer.right) ||
-                   (enemy.enemyPos.x + enemy.getEnemySize()  == GamePanel.hero.tempPlayer.left)) {
-               attack();
-               enemyVelocityX = 0;
-           }
-           else if(System.currentTimeMillis()-startedDushTime/100 >=dushDelay){
+           else if((System.currentTimeMillis()-startedDushTime)/100 >=dushDelay){
+               System.out.println("canDush");
 
                canDush = true;
+               System.out.println("canDush");
            }
+           enemy.enemyInWalkMode = false;
        }
 
 
