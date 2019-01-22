@@ -21,11 +21,32 @@ public abstract class Hero implements Character{
     protected Point playerPos;
     protected  PlayerHP playerHP;
     protected int playerCurHp;
+    protected   long startedFlyTime;
+ //   protected   long flyDelay = 50;
+    protected  boolean flying = false;
 
     public static boolean HERODEAD= false;
 
 
     public abstract int getHeroMaxHP();
+
+    public void getDashed() {
+
+
+       // startedFlyTime = System.currentTimeMillis();
+
+            flying = true;
+            playerLanded = false;
+            playerVelocityX = -30;
+            playerVelocityY = -50;
+
+        }
+
+
+
+
+
+
 
 
     public void jump(){

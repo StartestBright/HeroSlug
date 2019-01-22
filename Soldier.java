@@ -91,6 +91,7 @@ public class Soldier extends Hero{
         }
 
 
+
         heroMoveBeyondHalf();
 
 
