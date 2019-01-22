@@ -22,6 +22,7 @@ public abstract class EnemyGunShot extends View implements GameObject{
     protected float radius=10;
     protected Bitmap bulletImage;
     protected boolean directLeft;
+    protected int damage = 25;
 
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
@@ -97,6 +98,7 @@ public abstract class EnemyGunShot extends View implements GameObject{
                             yPos-radius<=GamePanel.hero.getHero().bottom) {
 
                           //  GamePanel.
+                               GamePanel.hero.takeDamage(damage);
                                active = false;
                   //      return;
 

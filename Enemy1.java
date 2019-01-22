@@ -17,7 +17,7 @@ public class Enemy1 extends Enemy {
     private ArrayList<EnemyGunShot1> enemy1Bullets;
     //private Context context;
     private Canvas canvas;
-    private static int enemy1MaxHp = 250;
+    private static int enemy1MaxHp = 50;
     public int enemySize=50;
 
 
@@ -85,7 +85,7 @@ public class Enemy1 extends Enemy {
             enemyVelocityY = 0;
             enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
         }
-        enemyPos.y += enemyVelocityY;
+     //   enemyPos.y += enemyVelocityY;
         enmyWalk(this);
         enmyFollow(this);
 

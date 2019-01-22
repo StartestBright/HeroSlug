@@ -15,6 +15,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         radius = 100;
         bulletSpeed = 1;
         velocityY = 1;
+        damage = 50;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -42,7 +43,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
             }
 
-        if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
+        if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
             active = false;
         }
         collisionDetect();

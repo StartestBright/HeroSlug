@@ -79,6 +79,7 @@ public abstract class Hero implements Character{
                     enemy.enemyMoveByPlayer((float) playerVelocityX);
                 }
 
+
                 GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
             }
         }else if(playerVelocityX<0){
