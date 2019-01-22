@@ -22,7 +22,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
-    //public Canvas canvas;
+    public static int GAMESTAGE = 1;
+    public static int MAPSIZE =10000;
 
     private MainThread thread;
     public static Hero hero;
@@ -34,10 +35,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int WIDTH = 1024,HEIGHT = 512;
 
-    //public static Canvas canvas;
     public static PlayerHP playerHP;
     public static EnemyManager enemyManager;
-    //public static Hero hero;
     Bitmap joystick;
 
 
@@ -45,10 +44,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     static int floorHeight = 20;
 
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GamePanel(Context context) {
         super(context);
         init(context);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -61,6 +63,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
+
+        payloadMap = MainActivity.payloadMap;
 
         thread = new MainThread(getHolder(),this);
         thread.setRunning(true);
@@ -101,7 +105,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         enemyManager = new EnemyManager(context);
         PAYLOAD = new Payload();
-        payloadMap = MainActivity.payloadMap;
+        //payloadMap = MainActivity.payloadMap;
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
         //System.out.println(joystick);
         //playerHP = new PlayerHP(context,Player.PLAYERMAXHP);

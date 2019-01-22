@@ -42,6 +42,11 @@ public class Payload implements GameObject {
             payloadPos.x += payloadVelocityX;
         }
 
+
+        float ratio = (float)payloadPos.x/GamePanel.MAPSIZE;
+        PayloadMap.movePayloadPointer(ratio);
+
+
     }
 
     public void payloadMoveByPlayer(float playerVelocity){
@@ -68,5 +73,6 @@ public class Payload implements GameObject {
         }
         return true;
     }
+
 
 }
