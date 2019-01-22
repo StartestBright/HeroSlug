@@ -8,7 +8,7 @@ import android.graphics.Rect;
 
 public class Enemy2 extends Enemy{
 
-    private static int enemy2MaxHp = 500;
+    private static int enemy2MaxHp = 250;
     public int enemySize=100;
 
     public Enemy2(Context context,Point p, int enemyIndex) {

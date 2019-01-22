@@ -17,7 +17,7 @@ public class Enemy1 extends Enemy {
     private ArrayList<EnemyGunShot1> enemy1Bullets;
     //private Context context;
     private Canvas canvas;
-    private static int enemy1MaxHp = 250;
+    private static int enemy1MaxHp = 50;
     public int enemySize=50;
 
 

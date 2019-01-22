@@ -15,6 +15,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         radius = 100;
         bulletSpeed = 1;
         velocityY = 1;
+        damage = 50;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
