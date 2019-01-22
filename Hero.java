@@ -22,7 +22,7 @@ public abstract class Hero implements Character{
     protected  PlayerHP playerHP;
     protected int playerCurHp;
 
-    private boolean heroDead= false;
+    public static boolean HERODEAD= false;
 
 
     public abstract int getHeroMaxHP();
@@ -94,7 +94,10 @@ public abstract class Hero implements Character{
                 }
 
                 GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
+
+
             }
+
         }
     }
 
@@ -103,7 +106,7 @@ public abstract class Hero implements Character{
         playerCurHp -= damage;
         GamePanel.playerHP.getDamage(damage);
         if(playerCurHp<=0){
-            heroDead = true;
+            HERODEAD = true;
         }
     }
 }

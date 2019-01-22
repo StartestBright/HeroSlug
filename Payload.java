@@ -14,6 +14,7 @@ public class Payload implements GameObject {
     private float payloadVelocityX ,getPayloadVelocityY;
     private float payloadContestRange = 150;
     private int payloadWidth= 200, payloadHeight=100;
+    public static int PAYLOADPROGRESS = 0;
 
 
     public Payload(){
@@ -40,10 +41,14 @@ public class Payload implements GameObject {
         payloadRect.set(payloadPos.x-payloadWidth/2,payloadPos.y-payloadHeight/2,payloadPos.x+payloadWidth/2,payloadPos.y+payloadHeight/2);
         if(!contestCheck()){
             payloadPos.x += payloadVelocityX;
+            PAYLOADPROGRESS += payloadVelocityX;
         }
 
 
-        float ratio = (float)payloadPos.x/GamePanel.MAPSIZE;
+        float ratio = (float)Payload.PAYLOADPROGRESS/GamePanel.MAPSIZE;
+        if(Payload.PAYLOADPROGRESS == GamePanel.MAPSIZE){
+            GamePanel.ClearStage();
+        }
         PayloadMap.movePayloadPointer(ratio);
 
 

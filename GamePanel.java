@@ -25,6 +25,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static int GAMESTAGE = 1;
     public static int MAPSIZE =10000;
 
+    private static boolean STAGECLEAR = false;
     private MainThread thread;
     public static Hero hero;
     private Point playerPoint;
@@ -153,7 +154,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         hero.draw(canvas);
         floor.draw(canvas);
         playerHP.draw(canvas);
-        enemyManager.draw(canvas);
+        if(!STAGECLEAR)
+            enemyManager.draw(canvas);
         PAYLOAD.draw(canvas);
         payloadMap.draw(canvas);
         //Paint temp = new Paint();
@@ -164,16 +166,30 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
     public void update(){
-        BG.update();
-        hero.update();
-        floor.update();
-        playerHP.update();
-        enemyManager.update();
-        PAYLOAD.update();
+        if(!STAGECLEAR) {
+            BG.update();
+            if(!Hero.HERODEAD&&!STAGECLEAR) {
+                hero.update();
+                playerHP.update();
+            }
+            floor.update();
+            if(!STAGECLEAR) {
+                enemyManager.update();
+                PAYLOAD.update();
+            }
+        }
 
     }
 
     public Hero getPlayer(){
         return hero;
     }
+
+    public static void ClearStage(){
+        STAGECLEAR = true;
+    }
+    public static void GameOver(){
+
+    }
+
 }
