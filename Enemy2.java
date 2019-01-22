@@ -12,7 +12,7 @@ public class Enemy2 extends Enemy{
     public int enemySize=100;
     public Canvas canvas;
     private boolean canDush = true;
-    private  long dushDelay = 5;
+    private  long dushDelay = 30;
     private  long startedDushTime;
 //    private  long flyDelay = 50;
    // private  long flyTime;
@@ -43,7 +43,12 @@ public class Enemy2 extends Enemy{
         canDush = false;
         System.out.println("attcoooj!");
         GamePanel.hero.takeDamage(50);
-        GamePanel.hero.getDashed();
+        if(GamePanel.hero.playerPos.x<=enemyPos.x) {
+            GamePanel.hero.getDashed(1);
+        }else{
+            GamePanel.hero.getDashed(0);
+        }
+
         enemyVelocityX = 2;
     }
 
@@ -110,8 +115,12 @@ public class Enemy2 extends Enemy{
                    }
 
 
-               if ((Math.abs(enemy.enemyPos.x - enemy.getEnemySize() - GamePanel.hero.tempPlayer.right)<=25) ||(
-                       Math.abs( enemy.enemyPos.x + enemy.getEnemySize() -GamePanel.hero.tempPlayer.left)<=25)) {
+               if (((enemy.enemyPos.x >=GamePanel.hero.playerPos.x)&&
+                       (enemy.enemyPos.x - enemy.getEnemySize() - GamePanel.hero.tempPlayer.right<=10)) ||
+
+
+                       ((enemy.enemyPos.x <=GamePanel.hero.playerPos.x)&&
+                               (GamePanel.hero.tempPlayer.left-enemy.enemyPos.x- enemy.getEnemySize() <=10))) {
 
                    enemy.enemyVelocityX = 0;
                    System.out.println(this.enemyVelocityX);

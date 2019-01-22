@@ -28,14 +28,18 @@ public abstract class Hero implements Character{
     public abstract int getHeroMaxHP();
 
 
-    public void getDashed() {
+    public void getDashed(int l) {
 
 
         // startedFlyTime = System.currentTimeMillis();
 
         flying = true;
         playerLanded = false;
-        playerVelocityX = -30;
+        if(l==1) {
+            playerVelocityX = -30;
+        }else{
+            playerVelocityX = 30;
+        }
         playerVelocityY = -80;
 
     }
