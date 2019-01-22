@@ -20,14 +20,20 @@ public class Floor {
     int floorColor;
     private Rect floor;
     public boolean playerCollide(Hero hero){
+        Rect heroRect = hero.getHero();
+        if(floor.top<=heroRect.bottom && floor.left<=heroRect.right && floor.right >=heroRect.right){
+            return true;
+        }
+        return false;
+        /*
         if(floor.contains(hero.getHero().left,hero.getHero().top)||
         floor.contains(hero.getHero().right,hero.getHero().top)||
                 floor.contains(hero.getHero().left,hero.getHero().bottom)||
                 floor.contains(hero.getHero().right,hero.getHero().bottom) ||
                 hero.getHeroPos().y>=MainActivity.SCREEN_HEIGHT-50){
             return true;
-        }
-        return  false;
+
+        return  false;*/
     }
 
     public boolean enemyCollide(int enemyIndex){
