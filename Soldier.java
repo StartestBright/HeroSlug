@@ -90,6 +90,7 @@ public class Soldier extends Hero{
         }
 
 
+
         heroMoveBeyondHalf();
 
 
@@ -118,6 +119,7 @@ public class Soldier extends Hero{
 
             canFire =true;
         }
+        flyFinished();
 
     }
 

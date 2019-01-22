@@ -26,7 +26,7 @@ public class EnemyManager {
 
     EnemyManager(Context context){
         this.context = context;
-        spawnEnemy1(new Point(900,500));
+        spawnEnemy2(new Point(2000,500));
         spawnEnemy1(new Point(1800,400));
         spawnEnemy1(new Point(2200,300));
         spawnEnemy1(new Point(3300,200));
