@@ -23,6 +23,7 @@ public abstract class Enemy implements Character{
     protected Boolean canFire = true;
     protected long gunShotDelayStartTime;
     protected long gunShotDelay = 50;
+ //   protected int dushSpeed = 1;
 
     public Point getEnemyPos(){
         return this.enemyPos;
