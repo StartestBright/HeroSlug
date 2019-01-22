@@ -68,11 +68,13 @@ public abstract class Hero implements Character{
         return this.tempPlayer;
     }
     public void moveHorizontal(double value){
-        playerVelocityX=value;
-        if(playerVelocityX>= PLAYERMAXHORIZONTALSPEED)
-            playerVelocityX = PLAYERMAXHORIZONTALSPEED;
-        else if(playerVelocityX<= -1* PLAYERMAXHORIZONTALSPEED)
-            playerVelocityX = -1* PLAYERMAXHORIZONTALSPEED;
+        if(!flying) {
+            playerVelocityX = value;
+            if (playerVelocityX >= PLAYERMAXHORIZONTALSPEED)
+                playerVelocityX = PLAYERMAXHORIZONTALSPEED;
+            else if (playerVelocityX <= -1 * PLAYERMAXHORIZONTALSPEED)
+                playerVelocityX = -1 * PLAYERMAXHORIZONTALSPEED;
+        }
     }
     public String getCharacterTag() {
         return charTag;
