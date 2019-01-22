@@ -120,6 +120,7 @@ public class Soldier extends Hero{
 
             canFire =true;
         }
+        flyFinished();
 
     }
 

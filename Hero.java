@@ -38,8 +38,18 @@ public abstract class Hero implements Character{
             flying = true;
             playerLanded = false;
             playerVelocityX = -30;
-            playerVelocityY = -50;
+            playerVelocityY = -80;
 
+        }
+
+        public void flyFinished(){
+        if((flying)&&(playerLanded)){
+            playerVelocityX = 0;
+            flying = false;
+            System.out.println("finishd");
+
+
+        }
         }
 
 
