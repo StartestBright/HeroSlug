@@ -58,9 +58,6 @@ public class SoldierHealPack implements GameObject{
         if((System.currentTimeMillis()-healpackStartTime)/1000<=5){
             if(tempHero.right>=healpack.left&&tempHero.left<=healpack.right &&tempHero.top<=healpack.bottom &&tempHero.bottom>=healpack.top) {
                 GamePanel.playerHP.getHeal(1);
-                Soldier soldier = (Soldier)hero;
-
-
             }
         }else{
             Soldier soldier = (Soldier) hero;

@@ -12,6 +12,7 @@ public class PlayerHP extends View implements UIObject{
     private int maxHp;
     private int curHp;
     private int hegith,width = MainActivity.SCREEN_WIDTH/2;
+    public static boolean HERODEAD =false;
 
 
     public PlayerHP(Context context,int maxHp) {
@@ -57,6 +58,9 @@ public class PlayerHP extends View implements UIObject{
 
     public void getDamage(int damage){
         curHp -=damage;
+        if(curHp<=0){
+            HERODEAD  = true;
+        }
     }
     public void getHeal(int heal){
         if(curHp<=maxHp)

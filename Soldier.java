@@ -63,7 +63,6 @@ public class Soldier extends Hero{
         jumpPower = 100;
         heroTag = "Soldier";
 
-        playerHP = MainActivity.playerHP;
 
 
         //healPack = new SoldierHealPack(playerPos,this);
@@ -268,12 +267,12 @@ public class Soldier extends Hero{
         }
     }
 
-    public void soldierGetHeal(){
+    /*public void soldierGetHeal(){
         if(playerCurHp<SOLDIERMAXHP) {
             playerCurHp += 1;
         }else if(playerCurHp>= SOLDIERMAXHP)
             playerCurHp = SOLDIERMAXHP;
-    }
+    }*/
 
 
 

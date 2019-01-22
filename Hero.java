@@ -19,8 +19,7 @@ public abstract class Hero implements Character{
     protected  int jumpPower;
     protected boolean playerLanded;
     protected Point playerPos;
-    protected  PlayerHP playerHP;
-    protected int playerCurHp;
+    //protected int playerCurHp;
 
     public static boolean HERODEAD= false;
 
@@ -38,7 +37,7 @@ public abstract class Hero implements Character{
     }
     protected boolean isLaneded(){
         return playerLanded;
-    }
+}
 
     protected Rect getHero(){
         return this.tempPlayer;
@@ -101,13 +100,15 @@ public abstract class Hero implements Character{
 
         }
     }
-
+/*
     @Override
     public void takeDamage(int damage) {
         playerCurHp -= damage;
         GamePanel.playerHP.getDamage(damage);
+        System.out.println("HP = "+playerCurHp+" "+ HERODEAD);
         if(playerCurHp<=0){
             HERODEAD = true;
         }
     }
+    */
 }
