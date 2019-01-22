@@ -85,7 +85,7 @@ public class Enemy1 extends Enemy {
             enemyVelocityY = 0;
             enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
         }
-        enemyPos.y += enemyVelocityY;
+     //   enemyPos.y += enemyVelocityY;
         enmyWalk(this);
         enmyFollow(this);
 

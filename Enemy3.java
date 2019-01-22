@@ -84,8 +84,8 @@ public class Enemy3 extends Enemy {
             if(!enemyBoom.get(i).isActive())
                 enemyBoom.remove(i);
         }
-            enemyPos.y += enemyVelocityY;
-            enemyPos.x += enemyVelocityX;
+       //     enemyPos.y += enemyVelocityY;
+       //     enemyPos.x += enemyVelocityX;
             enemyRect.set(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
 
 
@@ -111,12 +111,13 @@ public class Enemy3 extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void enmyFollow(Enemy enemy){
-        if((Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=800)&&(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=10)) {
+        if((Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=800)
+                &&(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=10)) {
             enemy.enemyInWalkMode = false;
             if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
-                enemy.enemyPos.x += enemy.enemyVelocityX * 1;
+                enemy.enemyPos.x += enemy.enemyVelocityX * 2;
             }else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
-                enemy.enemyPos.x -= enemy.enemyVelocityX * 1;
+                enemy.enemyPos.x -= enemy.enemyVelocityX * 2;
             }
         }
        else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=10){

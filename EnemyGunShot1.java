@@ -52,7 +52,7 @@ public class EnemyGunShot1 extends EnemyGunShot {
 
             }
         }
-        if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
+        if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
             active = false;
         }
         collisionDetect();
