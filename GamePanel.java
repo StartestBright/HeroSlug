@@ -99,7 +99,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         hero = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
-        enemyManager = new EnemyManager();
+        enemyManager = new EnemyManager(context);
         PAYLOAD = new Payload();
         payloadMap = MainActivity.payloadMap;
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);

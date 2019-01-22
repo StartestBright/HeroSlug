@@ -58,7 +58,6 @@ public class Enemy1 extends Enemy {
 
             newBullet.setBulletSpeed(10);
             enemy1Bullets.add(newBullet);
-            System.out.println("enemy attack!");
          }
     }
 

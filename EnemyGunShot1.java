@@ -37,7 +37,6 @@ public class EnemyGunShot1 extends EnemyGunShot {
         bulletImage.setWidth(800);
         bulletImage.setHeight(800);
         bulletColor = Color.RED;
-        System.out.println("gunshot made!");
     }
 
     @Override

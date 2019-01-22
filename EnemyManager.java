@@ -24,7 +24,8 @@ public class EnemyManager {
         enemyIndex++;
     }
 
-    EnemyManager(){
+    EnemyManager(Context context){
+        this.context = context;
         spawnEnemy1(new Point(900,500));
         spawnEnemy1(new Point(1800,400));
         spawnEnemy1(new Point(2200,300));
