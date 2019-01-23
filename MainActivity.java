@@ -33,6 +33,11 @@ public class MainActivity extends Activity {
     public static PayloadMap payloadMap;
 
 
+    public static Skill1 skill1;
+    public static Skill2 skill2;
+    public static Skill3 ultimateSkill;
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,23 +82,23 @@ public class MainActivity extends Activity {
         attackButton.setX(AttackButton.ATTACKBUTTON_XPOS);
         attackButton.setY(AttackButton.ATTACKBUTTON_YPOS);
 
-        Skill1 skill1 = new Skill1(getApplicationContext(),gamePanel);
+        skill1 = new Skill1(getApplicationContext(),gamePanel);
         LinearLayout.LayoutParams layoutParamsForSkill1 = new LinearLayout.LayoutParams(Skill1.SKILL1_WIDTH,Skill1.SKILL1_HEIGHT);
         skill1.setLayoutParams(layoutParamsForSkill1);
         skill1.setX(Skill1.SKILL1_XPOS);
         skill1.setY(Skill1.SKILL1_YPOS);
 
-        Skill2 skill2 = new Skill2(getApplicationContext(),gamePanel);
+        skill2 = new Skill2(getApplicationContext(),gamePanel);
         LinearLayout.LayoutParams layoutParamsForSkill2 = new LinearLayout.LayoutParams(Skill2.SKILL2_WIDTH,Skill2.SKILL2_HEIGHT);
         skill2.setLayoutParams(layoutParamsForSkill2);
         skill2.setX(Skill2.SKILL2_XPOS);
         skill2.setY(Skill2.SKILL2_YPOS);
 
-        Skill3 skill3 = new Skill3(getApplicationContext());
+        ultimateSkill = new Skill3(getApplicationContext());
         LinearLayout.LayoutParams layoutParamsForSkill3 = new LinearLayout.LayoutParams(Skill3.SKILL3_WIDTH,Skill3.SKILL3_HEIGHT);
-        skill3.setLayoutParams(layoutParamsForSkill3);
-        skill3.setX(Skill3.SKILL3_XPOS);
-        skill3.setY(Skill3.SKILL3_YPOS);
+        ultimateSkill.setLayoutParams(layoutParamsForSkill3);
+        ultimateSkill.setX(Skill3.SKILL3_XPOS);
+        ultimateSkill.setY(Skill3.SKILL3_YPOS);
 
 
         RelativeLayout heroInfoUI = new RelativeLayout(getApplicationContext());
@@ -115,7 +120,7 @@ public class MainActivity extends Activity {
         gameWidgets.addView(attackButton);
         gameWidgets.addView(skill1);
         gameWidgets.addView(skill2);
-        gameWidgets.addView(skill3);
+        gameWidgets.addView(ultimateSkill);
         gameWidgets.addView(heroInfoUI);
         gameWidgets.addView(payloadMap);
         game.addView(gamePanel);

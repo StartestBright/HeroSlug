@@ -10,19 +10,15 @@ import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-public class SoldierGunShot extends HeroGunShot implements GameObject{
-
-
-    //private int gunShotDamage = 25;
-    //private int bulletColor;
-    //private boolean active = true;
-    //private float bulletSpeed = 150f;
-    //private float xPos =500,yPos=500,velocityX=0,velocityY=0;
-
-    //private Bitmap bulletImage;
+public class HeroGunShot extends View implements GameObject{
+    protected int gunShotDamage = 25;
+    protected int bulletColor;
+    protected boolean active = true;
+    protected float bulletSpeed = 150f;
+    protected float xPos ,yPos,velocityX=0,velocityY=0;
+    protected float radius;
+    protected Bitmap bulletImage;
 
     private int screenWidth = MainActivity.SCREEN_WIDTH;
     private int screenHeight = MainActivity.SCREEN_HEIGHT;
@@ -30,34 +26,21 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-        //super(context,velocityX,velocityY,xPos,yPos);
+    public HeroGunShot(Context context) {
         super(context);
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        radius = 10;
-        gunShotDamage =25;
-        active = true;
-        bulletColor = Color.YELLOW;
-        bulletSpeed = 150f;
-
-
-
         init(context);
 
 
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void init(Context context){
-        //opt.inMutable = true;
+        opt.inMutable = true;
         bulletImage = BitmapFactory.decodeResource(getResources(),R.drawable.gunshot);
         bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
-        //bulletImage.setWidth(800);
-        //bulletImage.setHeight(800);
-        //bulletColor = Color.YELLOW;
+        bulletImage.setWidth(800);
+        bulletImage.setHeight(800);
+        bulletColor = Color.YELLOW;
 
 
 
@@ -66,8 +49,7 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
 
     @Override
     public void update() {
-        super.update();
-        /*if(active) {
+        if(active) {
             xPos += (velocityX * bulletSpeed);
             yPos += (velocityY * bulletSpeed);
         }
@@ -75,7 +57,6 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
             active = false;
         }
         collisionDetect();
-        */
     }
 
     @Override
@@ -83,14 +64,14 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
         if(active) {
             super.draw(canvas);
             //canvas.drawBitmap(bulletImage,0,0,null);
-            /*Paint paint = new Paint();
+            Paint paint = new Paint();
             paint.setColor(bulletColor);
-            canvas.drawCircle(xPos, yPos, radius, paint);*/
+            canvas.drawCircle(xPos, yPos, radius, paint);
 
         }
 
     }
-    /*public Point getBulletPoint(){
+    public Point getBulletPoint(){
         Point p = new Point();
         p.set((int)xPos,(int)yPos);
         return p;
@@ -103,29 +84,27 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
     }
     public boolean isActive(){
         return active;
-    }*/
+    }
 
-/*
+
     public void collisionDetect(){
         if(this.active){
 
             for(int i=0;i<EnemyManager.enemies.size();i++) {
                 Enemy enemy = EnemyManager.enemies.get(i);
                 if(enemy.isAlive()){
-                if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
-                        xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
-                        yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&
-                        yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemySize()) {
+                    if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
+                            xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
+                            yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&
+                            yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemySize()) {
 
                         EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
                         active = false;
                         return;
 
-                        }
+                    }
                 }
             }
         }
     }
-*/
-
 }

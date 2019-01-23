@@ -29,7 +29,7 @@ public class AttackButton extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN)
-            gamePanel.getPlayer().attack();
+            gamePanel.hero.attack();
         return true;
     }
 }

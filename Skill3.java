@@ -18,8 +18,7 @@ public class Skill3 extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if(action == MotionEvent.ACTION_DOWN){
-            Soldier soldier = (Soldier)GamePanel.hero;
-            soldier.ultimateSkill();
+            GamePanel.hero.setUltimateSkillOn();
         }
         return true;
 

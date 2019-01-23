@@ -166,23 +166,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
     public void update(){
+
+        if(!PlayerHP.HERODEAD&&!STAGECLEAR) {
+            hero.update();
+            playerHP.update();
             BG.update();
-            if(!PlayerHP.HERODEAD&&!STAGECLEAR) {
-                hero.update();
-                playerHP.update();
-            }
-
             floor.update();
-            if(!STAGECLEAR) {
-                enemyManager.update();
-                PAYLOAD.update();
-            }
+            enemyManager.update();
+            PAYLOAD.update();
+        }
 
-
-    }
-
-    public Hero getPlayer(){
-        return hero;
     }
 
     public static void ClearStage(){

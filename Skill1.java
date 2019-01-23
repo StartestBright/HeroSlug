@@ -19,12 +19,9 @@ public class Skill1 extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction()==MotionEvent.ACTION_DOWN){
-
-            if(GamePanel.hero.getHeroTag() == "Soldier"){
-                Soldier soldier = (Soldier)GamePanel.hero;
-                soldier.setSnipingMode();
-            }
+            GamePanel.hero.setSkill1On();
         }
-        return super.onTouchEvent(event);
+        return true;
+
     }
 }
