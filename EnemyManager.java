@@ -23,10 +23,14 @@ public class EnemyManager {
         enemies.add(new Enemy3(context,spawnPoint,enemyIndex));
         enemyIndex++;
     }
+    public void Boss1(Point spawnPoint){
+        enemies.add(new Boss(context,spawnPoint,enemyIndex));
+        enemyIndex++;
+    }
 
     EnemyManager(Context context){
         this.context = context;
-        spawnEnemy2(new Point(2000,500));
+        Boss1(new Point(2000,500));
     //    spawnEnemy1(new Point(1800,400));
     //    spawnEnemy1(new Point(2200,300));
         spawnEnemy1(new Point(3300,200));
