@@ -13,7 +13,7 @@ public class Floor {
     public Floor(Rect floor,int color,GamePanel gamePanel){
         this.floor = floor;
         this.floorColor = color;
-        hero = gamePanel.getPlayer();
+        hero = gamePanel.hero;
     }
 
 
