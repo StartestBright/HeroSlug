@@ -59,7 +59,7 @@ public class Boss extends Enemy {
 
 
 
-            EnemyGunShot1 newBullet = new EnemyGunShot1( context, (float) Math.cos(temp), (float) Math.sin(temp),  enemyPos.x, enemyPos.y);
+            EnemyGunShot1 newBullet = new EnemyGunShot1( context, (float) Math.cos(temp)/10, (float) Math.sin(temp)/10,  enemyPos.x, enemyPos.y);
 
             newBullet.setBulletSpeed(2);
             bossBullets.add(newBullet);
