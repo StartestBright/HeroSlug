@@ -15,13 +15,6 @@ public class Enemy1 extends Enemy {
 
 
     private ArrayList<EnemyGunShot1> enemy1Bullets;
-    //private Context context;
-    private Canvas canvas;
-
-
-
-
-
 
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
@@ -71,10 +64,7 @@ public class Enemy1 extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
-      //  this.attack();
-       // enemyVelocityX = 2.0;
         landDetect();
-     //   enemyPos.y += enemyVelocityY;
         enmyWalk(this);
         enmyFollow(this);
 
@@ -83,26 +73,7 @@ public class Enemy1 extends Enemy {
            if(!enemy1Bullets.get(i).isActive())
                 enemy1Bullets.remove(i);
         }
-
         super.update();
-
-
-        //System.out.println(enemyVelocityY);
-
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        curHp -= damage;
-        if(curHp<=0) {
-            EnemyManager.killEnemy(enemyIndex);
-            enemyAlive = false;
-        }
-    }
-
-    @Override
-    public int getEnemySize() {
-        return enemySize;
     }
 }
 

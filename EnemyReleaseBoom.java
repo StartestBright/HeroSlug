@@ -12,7 +12,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public EnemyReleaseBoom(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context,velocityX,velocityY,xPos,yPos);
-        radius = 100;
+        radius = 50;
         bulletSpeed = 1;
         velocityY = 1;
         damage = 50;

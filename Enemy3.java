@@ -20,6 +20,7 @@ public class Enemy3 extends Enemy {
         enemyBoom = new ArrayList<EnemyReleaseBoom>();
         curHp = enemyMaxHp;
         enemySize = 50;
+        enemyVelocityX = 2.0;
     }
 
     @Override
@@ -49,13 +50,10 @@ public class Enemy3 extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
-
         if(canFire) {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
-
             EnemyReleaseBoom newBoom = new EnemyReleaseBoom( context,0, 1, enemyPos.x, enemyPos.y);
-
             newBoom.setBulletSpeed(1);
             enemyBoom.add(newBoom);
         }
@@ -64,43 +62,17 @@ public class Enemy3 extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
-    /*      if(!enemyLanded) {
-         enemyVelocityY += gravity;
-           }else if(enemyLanded) {
-              enemyVelocityY = -500;
-              enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
-          }*/
-        enemyVelocityY = 10;
-        enemyVelocityX = 2.0;
         enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize-400;
-
         enmyWalk(this);
         enmyFollow(this);
-
         for(int i=0;i<enemyBoom.size();i++){
-
             enemyBoom.get(i).update();
             if(!enemyBoom.get(i).isActive())
                 enemyBoom.remove(i);
         }
-       //     enemyPos.y += enemyVelocityY;
-       //     enemyPos.x += enemyVelocityX;
-            enemyRect.set(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
-
-
-
-    //System.out.println(enemyVelocityY);
-
-}
-
-    @Override
-    public void takeDamage(int damage) {
-        curHp -= damage;
-        if(curHp<=0) {
-            EnemyManager.killEnemy(enemyIndex);
-            enemyAlive = false;
-        }
+        enemyRect.set(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
     }
+
 
     @Override
     public int getEnemySize() {
@@ -123,17 +95,11 @@ public class Enemy3 extends Enemy {
                 if (canFire == true) {
                     this.attack();
                 } else if ((System.currentTimeMillis() - gunShotDelayStartTime) / 100 >= gunShotDelay) {
-
                     canFire = true;
                 }
         }
-
-
         else{
             enemy.enemyInWalkMode=true;
         }
-
-
-
-        }
+    }
 }

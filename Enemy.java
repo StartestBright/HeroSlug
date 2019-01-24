@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.shapes.RectShape;
 
+import java.util.ArrayList;
+
 public abstract class Enemy implements Character{
     protected Point enemyPos;
     protected int enemyIndex;
@@ -25,6 +27,9 @@ public abstract class Enemy implements Character{
     protected long gunShotDelayStartTime;
     protected long gunShotDelay = 50;
     protected static int enemyMaxHp;
+    protected Canvas canvas;
+
+   // public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
 
 
     public Point getEnemyPos(){
@@ -115,7 +120,9 @@ public abstract class Enemy implements Character{
 
 
 
-    public abstract int getEnemySize();
+    public int getEnemySize() {
+        return enemySize;
+    }
     public Rect getEnemyRect(){
         return enemyRect;
     }
@@ -131,6 +138,13 @@ public abstract class Enemy implements Character{
     }
     public void enemyMoveByPlayer(float playerVelocityX){
         enemyPos.x-=playerVelocityX;
+    }
+    public void takeDamage(int damage) {
+        curHp -= damage;
+        if(curHp<=0) {
+            EnemyManager.killEnemy(enemyIndex);
+            enemyAlive = false;
+        }
     }
 
     //
