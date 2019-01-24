@@ -35,6 +35,7 @@ public abstract class Hero implements Character{
     protected boolean skill1OnCoolTime=false,skill1On=false;
     protected boolean skill2OnCoolTime=false,skill2On=false;
     protected boolean ultimateSkillOnCoolTime= false,ultimateSkillOn=false;
+    protected SoldierHealPack healPack;
 
     protected ArrayList playerBullets;
 
@@ -51,6 +52,7 @@ public abstract class Hero implements Character{
 
     public Hero(Point heroSpawnPos){
         playerPos = heroSpawnPos;
+
         heroWeaponRect = new Rect();
         playerLanded = false;
         playerVelocityY =0;
@@ -255,6 +257,15 @@ public abstract class Hero implements Character{
                     Enemy enemy = EnemyManager.enemies.get(i);
                     enemy.enemyMoveByPlayer((float) playerVelocityX);
                 }
+                for(int i=0;i<Enemy.enemyGunShots.size();i++){
+                    EnemyGunShot gunShot = Enemy.enemyGunShots.get(i);
+                    gunShot.moveByHero((float) playerVelocityX);
+                }
+
+                if(getHeroTag()=="Soldier"){
+                    if(healPack!=null)
+                        healPack.moveByHero((float) playerVelocityX);
+                }
 
 
                 GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
@@ -271,7 +282,18 @@ public abstract class Hero implements Character{
                     enemy.enemyMoveByPlayer((float) playerVelocityX);
                 }
 
+                for(int i=0;i<Enemy.enemyGunShots.size();i++){
+                    EnemyGunShot gunShot = Enemy.enemyGunShots.get(i);
+                    gunShot.moveByHero((float) playerVelocityX);
+                }
+
+                if(getHeroTag()=="Soldier"){
+                    if(healPack!=null)
+                        healPack.moveByHero((float) playerVelocityX);
+                }
+
                 GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
+
 
 
             }

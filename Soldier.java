@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Soldier extends Hero{
     public static int SOLDIERMAXHP = 250;
     private Context context;
-    private SoldierHealPack healPack;
+
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
@@ -217,4 +217,5 @@ public class Soldier extends Hero{
     public void setHealPackNull(){
         healPack = null;
     }
+
 }

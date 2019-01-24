@@ -109,6 +109,9 @@ public abstract class EnemyGunShot extends View implements GameObject {
             }
         }
     }
+    public void moveByHero(float velocityX){
+        xPos -= velocityX;
+    }
 }
 
 
