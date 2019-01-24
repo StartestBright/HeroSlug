@@ -1,5 +1,7 @@
 package com.jknull.heroslug;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,26 +15,29 @@ public class Payload implements GameObject {
     private float payloadSpeed = 20;
     private float payloadVelocityX ,getPayloadVelocityY;
     private float payloadContestRange = 150;
-    private int payloadWidth= 200, payloadHeight=100;
+    private int payloadWidth= 250, payloadHeight=140;
+    private Bitmap payloadBitmap;
     public static int PAYLOADPROGRESS = 0;
 
 
-    public Payload(){
-        init();
+    public Payload(Context context){
+        init(context);
     }
-    public void init(){
+    public void init(Context context){
         payloadRect = new Rect();
         payloadPos = new Point();
         payloadPos.x = payloadWidth/2;
         payloadPos.y = MainActivity.SCREEN_HEIGHT-payloadHeight/2-Floor.FLOORHEIGHT;
         payloadVelocityX = 5;
+        payloadBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.payloadimage);
     }
 
     @Override
     public void draw(Canvas canvas) {
         Paint p = new Paint();
         p.setColor(Color.CYAN);
-        canvas.drawRect(payloadRect,p);
+        //canvas.drawRect(payloadRect,p);
+        canvas.drawBitmap(payloadBitmap,null,payloadRect,p);
 
     }
 
@@ -59,8 +64,8 @@ public class Payload implements GameObject {
     }
 
     public boolean contestCheck(){
-        Hero hero = GamePanel.hero;
-        Rect heroRect = GamePanel.hero.getHero();
+        Hero hero = GamePanel.HERO;
+        Rect heroRect = GamePanel.HERO.getHero();
 
         for(int i=0;i<EnemyManager.enemies.size();i++){
             Rect enemyRect = EnemyManager.enemies.get(i).enemyRect;

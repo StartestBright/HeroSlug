@@ -51,8 +51,8 @@ public class Boss extends Enemy {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
 
-            int x = GamePanel.hero.playerPos.x-enemyPos.x;
-            int y = GamePanel.hero.playerPos.y-enemyPos.y;
+            int x = GamePanel.HERO.playerPos.x-enemyPos.x;
+            int y = GamePanel.HERO.playerPos.y-enemyPos.y;
             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
 
             temp *= -1;
@@ -90,8 +90,8 @@ public class Boss extends Enemy {
         if(canFlash){
             canFlash = false;
             final int random = new Random().nextInt(61) + 20; // [0, 60] + 20 => [20, 80]
-            enemyPos.x = GamePanel.hero.playerPos.x + random;
-            enemyPos.y = GamePanel.hero.playerPos.y - random;
+            enemyPos.x = GamePanel.HERO.playerPos.x + random;
+            enemyPos.y = GamePanel.HERO.playerPos.y - random;
             attack();
             flashStartedTime = System.currentTimeMillis();
         }else if((System.currentTimeMillis()-flashStartedTime)/100>=flashDelay){

@@ -1,6 +1,8 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,41 +17,32 @@ import java.util.ArrayList;
 public class Soldier extends Hero{
     public static int SOLDIERMAXHP = 250;
     private Context context;
-    private GamePanel gamePanel;
-    private Background bg;
-    private Canvas canvas;
     private SoldierHealPack healPack;
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
     private int snipingBulletDamage = 150,normalBulletDamage = 25;
 
-
-
-
     int rayLength = 3000;
 
-
-    boolean onFloor;
     Handler handler;
-    public Soldier(Rect rectangle,int color,Point pos,Context context,GamePanel gamePanel){
-
-
+    public Soldier(int color,Point pos,Context context,GamePanel gamePanel){
+        super(pos);
+        heroBitmaps = new Bitmap[2];
+        heroBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
+        heroWeaponBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        heroWeaponSizeX = 120;
+        heroWeaponSizeY = 70;
+        heroSizeX =60;
+        heroSizeY =100;
         this.context = context;
-        this.tempPlayer = rectangle;
-        this.heroColor = color;
-        this.gamePanel = gamePanel;
+        super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
+        super.heroColor = color;
         playerPos = pos;
-        playerLanded = false;
-
-        playerVelocityY =0;
-        playerVelocityX =0;
 
         gunShotDelay = 3;
         bulletSpeed = normalBulletSpeed;
         bulletDamge = normalBulletDamage;
-        canFire = true;
-
         playerBullets = new ArrayList<SoldierGunShot>();
 
         jumpPower = 100;
@@ -63,8 +56,8 @@ public class Soldier extends Hero{
 
         ultimateSkillCoolTime = 30;
         ultimateSkillOnCoolTime = true;
-        ultimateSkillStartTime = System.currentTimeMillis();
         ultimateSkillLastingTime = 10;
+
 
 
 
@@ -75,7 +68,6 @@ public class Soldier extends Hero{
     @Override
     public void update() {
         super.update();
-
         if(healPack !=null){
             healPack.update();
         }
@@ -98,11 +90,7 @@ public class Soldier extends Hero{
 
     @Override
     public void draw(Canvas canvas){
-        this.canvas=canvas;
-        Paint paint = new Paint();
-        paint.setColor(heroColor);
-        canvas.drawRect(tempPlayer,paint);
-        //canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.joystick),tempPlayer,tempPlayer,paint);
+        super.draw(canvas);
 
         for(int i=0;i<playerBullets.size();i++){
             SoldierGunShot gunShot = (SoldierGunShot)playerBullets.get(i);
@@ -184,7 +172,7 @@ public class Soldier extends Hero{
 
     @Override
     public void takeDamage(int damage) {
-        GamePanel.playerHP.getDamage(damage);
+        GamePanel.HEROHP.getDamage(damage);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.jknull.heroslug;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 
 public abstract class Hero implements Character{
     public static int PLAYERMAXHORIZONTALSPEED = 15;
-    protected Rect tempPlayer;
+    protected Rect heroRect;
     protected int heroColor;
     protected long gunShotDelay;
     protected long gunShotDelayStartTime;
@@ -22,6 +25,7 @@ public abstract class Hero implements Character{
     protected  int jumpPower;
     protected boolean playerLanded;
     protected Point playerPos;
+    protected int heroSizeX,heroSizeY;
     protected boolean flying;
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
@@ -34,24 +38,67 @@ public abstract class Hero implements Character{
 
     protected ArrayList playerBullets;
 
-    public static boolean HERODEAD= false;
-
+    protected Bitmap heroBitmaps[];
+    protected Bitmap heroWeaponBitmap;
+    protected int heroWeaponSizeX,heroWeaponSizeY;
+    protected Point heroWeaponPos;
+    protected Rect heroWeaponRect;
+    //Matrix heroWeaponMatrix;
+    protected int heroBitmapIndex=0;
 
     public abstract int getHeroMaxHP();
 
+
+    public Hero(Point heroSpawnPos){
+        playerPos = heroSpawnPos;
+        heroWeaponRect = new Rect();
+        playerLanded = false;
+        playerVelocityY =0;
+        playerVelocityX =0;
+        canFire = true;
+        ultimateSkillStartTime = System.currentTimeMillis();
+        heroWeaponPos = new Point();
+
+        heroWeaponPos.x = playerPos.x+20;
+        heroWeaponPos.y = playerPos.y+10;
+        //heroWeaponMatrix = new Matrix();
+        //Matrix mat = new Matrix();
+        //mat.setRotate(56,heroWeaponRect.centerX(),heroWeaponRect.centerY());
+        //mat.mapRect(heroWeaponRect);
+
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        Paint paint = new Paint();
+        paint.setColor(heroColor);
+        //canvas.drawRect(heroRect,paint);
+        canvas.drawBitmap(heroBitmaps[heroBitmapIndex],null,heroRect,paint);
+        //canvas.save();
+        //canvas.translate(heroWeaponPos.x,heroWeaponPos.y);
+        //canvas.rotate(45);
+        canvas.drawBitmap(heroWeaponBitmap,null,heroWeaponRect,paint);
+        //canvas.restore();
+    }
+
+
+
     public void update(){
+        heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
         if(!playerLanded) {
             playerVelocityY += gravity;
         }else if(playerLanded){
             playerVelocityY = 0;
-            playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-tempPlayer.height()/2;
+            playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-heroRect.height()/2;
         }
         playerPos.y += playerVelocityY;
         playerPos.x += playerVelocityX;
 
-        tempPlayer.set(playerPos.x - tempPlayer.width()/2
-                ,playerPos.y-tempPlayer.height()/2
-                ,playerPos.x+tempPlayer.width()/2,playerPos.y+tempPlayer.height()/2);
+        heroWeaponPos.x = playerPos.x+20;
+        heroWeaponPos.y = playerPos.y+10;
+        heroRect.set(playerPos.x - heroRect.width()/2
+                ,playerPos.y-heroRect.height()/2
+                ,playerPos.x+heroRect.width()/2,playerPos.y+heroRect.height()/2);
 
 
         heroMoveBeyondHalf();
@@ -63,15 +110,12 @@ public abstract class Hero implements Character{
         flyFinished();
 
         for(int i=0;i<playerBullets.size();i++){
-            /*if(getHeroTag()== "Soldier") {
-                SoldierGunShot gunShot = (SoldierGunShot) playerBullets.get(i);
-                gunShot.update();
-            }*/
             HeroGunShot gunShot = (HeroGunShot) playerBullets.get(i);
             gunShot.update();
 
 
         }
+
 
 
         if (skill1OnCoolTime) {
@@ -106,6 +150,8 @@ public abstract class Hero implements Character{
             MainActivity.ultimateSkill.setAlpha(((float) (System.currentTimeMillis() - ultimateSkillStartTime) / 1000) / ultimateSkillCoolTime);
         }
     }
+
+
 
 
 
@@ -166,7 +212,7 @@ public abstract class Hero implements Character{
 }
 
     protected Rect getHero(){
-        return this.tempPlayer;
+        return this.heroRect;
     }
     public void moveHorizontal(double value){
         if(!flying) {
@@ -185,6 +231,10 @@ public abstract class Hero implements Character{
     }
     protected void setPlayerRotation(float rotation) {
         playerRotation = rotation;
+        //heroWeaponMatrix.postRotate((float) (playerRotation/Math.PI*180));
+
+        //Bitmap scaledBitmap = Bitmap.createScaledBitmap(heroWeaponBitmap,heroWeaponSizeX,heroWeaponSizeY,true);
+        //heroWeaponBitmap = Bitmap.createBitmap(scaledBitmap,0,0,heroWeaponRect.width(),heroWeaponRect.height(),heroWeaponMatrix,true);
     }
     protected String getHeroTag(){
         return this.heroTag;
@@ -210,10 +260,10 @@ public abstract class Hero implements Character{
                 GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
             }
         }else if(playerVelocityX<0){
-            if(tempPlayer.left <=0){
+            if(heroRect.left <=0){
                 if(GamePanel.BG!=null){
                     GamePanel.BG.moveBg((float) playerVelocityX * 1);
-                    playerPos.x = tempPlayer.width()/2;
+                    playerPos.x = heroRect.width()/2;
                 }
 
                 for(int i=0;i<EnemyManager.enemies.size();i++){

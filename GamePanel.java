@@ -3,23 +3,15 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static int GAMESTAGE = 1;
@@ -27,7 +19,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private static boolean STAGECLEAR = false;
     private MainThread thread;
-    public static Hero hero;
+    public static Hero HERO;
     private Point playerPoint;
     private Floor floor;
     public static Background BG;
@@ -36,7 +28,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final int WIDTH = 1024,HEIGHT = 512;
 
-    public static PlayerHP playerHP;
+    public static PlayerHP HEROHP;
     public static EnemyManager enemyManager;
     Bitmap joystick;
 
@@ -83,13 +75,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        Boolean retry = true;
         while(true){
             try{
                 thread.setRunning(false);
                 thread.join();
             }catch (Exception e){e.printStackTrace();}
-            retry = false;
 
         }
     }
@@ -99,18 +89,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
-        playerHP = MainActivity.playerHP;
+        HEROHP = MainActivity.playerHP;
         BG = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
-        hero = new Soldier(new Rect(100,100,200,200), Color.BLUE,new Point(100,100),context,this);
+        HERO = new Soldier(Color.BLUE,new Point(100,100),context,this);
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         enemyManager = new EnemyManager(context);
-        PAYLOAD = new Payload();
+        PAYLOAD = new Payload(context);
         //payloadMap = MainActivity.payloadMap;
         //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
         //System.out.println(joystick);
-        //playerHP = new PlayerHP(context,Player.PLAYERMAXHP);
-        //playerHP.setAlpha(0.1f);
+        //HEROHP = new PlayerHP(context,Player.PLAYERMAXHP);
+        //HEROHP.setAlpha(0.1f);
 
     }
 
@@ -151,9 +141,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawColor(Color.WHITE);
         BG.draw(canvas);
-        hero.draw(canvas);
+        HERO.draw(canvas);
         floor.draw(canvas);
-        playerHP.draw(canvas);
+        HEROHP.draw(canvas);
         if(!STAGECLEAR)
             enemyManager.draw(canvas);
         PAYLOAD.draw(canvas);
@@ -168,8 +158,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void update(){
 
         if(!PlayerHP.HERODEAD&&!STAGECLEAR) {
-            hero.update();
-            playerHP.update();
+            HERO.update();
+            HEROHP.update();
             BG.update();
             floor.update();
             enemyManager.update();

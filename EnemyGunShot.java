@@ -4,14 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 public abstract class EnemyGunShot extends View implements GameObject{
    // protected int gunShotDamage;
@@ -92,13 +89,13 @@ public abstract class EnemyGunShot extends View implements GameObject{
 
    public void collisionDetect(){
         if(this.active){
-                    if (xPos+radius >=GamePanel.hero.getHero().left && //if  collide with enemy
-                            xPos-radius<=GamePanel.hero.getHero().right&&
-                            yPos+radius>=GamePanel.hero.getHero().top&&
-                            yPos-radius<=GamePanel.hero.getHero().bottom) {
+                    if (xPos+radius >=GamePanel.HERO.getHero().left && //if  collide with enemy
+                            xPos-radius<=GamePanel.HERO.getHero().right&&
+                            yPos+radius>=GamePanel.HERO.getHero().top&&
+                            yPos-radius<=GamePanel.HERO.getHero().bottom) {
 
                           //  GamePanel.
-                               GamePanel.hero.takeDamage(damage);
+                               GamePanel.HERO.takeDamage(damage);
                                active = false;
                   //      return;
 

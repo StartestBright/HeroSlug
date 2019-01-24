@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.widget.RelativeLayout;
 
 public class SoldierHealPack implements GameObject{
     private Point healpackPos;
@@ -57,7 +56,7 @@ public class SoldierHealPack implements GameObject{
         healpack.set(healpackPos.x-healpackRange,healpackPos.y+20,healpackPos.x+healpackRange,healpackPos.y+40);
         if((System.currentTimeMillis()-healpackStartTime)/1000<=5){
             if(tempHero.right>=healpack.left&&tempHero.left<=healpack.right &&tempHero.top<=healpack.bottom &&tempHero.bottom>=healpack.top) {
-                GamePanel.playerHP.getHeal(1);
+                GamePanel.HEROHP.getHeal(1);
             }
         }else{
             Soldier soldier = (Soldier) hero;

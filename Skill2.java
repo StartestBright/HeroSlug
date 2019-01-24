@@ -20,12 +20,12 @@ public class Skill2 extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction()==MotionEvent.ACTION_DOWN){
 
-            /*if(GamePanel.hero.getHeroTag() == "Soldier"){
-                Soldier soldier = (Soldier)GamePanel.hero;
+            /*if(GamePanel.HERO.getHeroTag() == "Soldier"){
+                Soldier soldier = (Soldier)GamePanel.HERO;
                 soldier.healPack();
 
             }*/
-            GamePanel.hero.setSkill2On();
+            GamePanel.HERO.setSkill2On();
         }
         return true;
     }
