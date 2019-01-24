@@ -26,8 +26,12 @@ public class HeroGunShot extends View implements GameObject{
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public HeroGunShot(Context context) {
+    public HeroGunShot(Context context,float velocityX,float velocityY,float xPos,float yPos) {
         super(context);
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+        this.xPos = xPos;
+        this.yPos = yPos;
         init(context);
 
 
@@ -35,7 +39,9 @@ public class HeroGunShot extends View implements GameObject{
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void init(Context context){
+
         opt.inMutable = true;
+
         bulletImage = BitmapFactory.decodeResource(getResources(),R.drawable.gunshot);
         bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
         bulletImage.setWidth(800);

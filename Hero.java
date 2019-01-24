@@ -23,6 +23,8 @@ public abstract class Hero implements Character{
     protected boolean playerLanded;
     protected Point playerPos;
     protected boolean flying;
+    protected float bulletSpeed;
+    protected int bulletDamge;
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
     protected long skill2CoolTime,skill2StartTime,skill2LastingTime;
@@ -57,9 +59,9 @@ public abstract class Hero implements Character{
         heroMoveBeyondHalf();
 
         if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
-
             canFire =true;
         }
+
         flyFinished();
 
         for(int i=0;i<playerBullets.size();i++){
@@ -191,6 +193,10 @@ public abstract class Hero implements Character{
     }
     public Point getHeroPos() {
         return playerPos;
+    }
+    @Override
+    public void takeDamage(int damage) {
+        GamePanel.playerHP.getDamage(damage);
     }
     public void heroMoveBeyondHalf(){
         if(playerVelocityX>0) {

@@ -15,12 +15,7 @@ import java.util.ArrayList;
 public class Soldier extends Hero{
     public static int SOLDIERMAXHP = 250;
     private Context context;
-    private GamePanel gamePanel;
-    private Background bg;
-    private Canvas canvas;
     private SoldierHealPack healPack;
-    private float bulletSpeed;
-    private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
     private int snipingBulletDamage = 150,normalBulletDamage = 25;
 
@@ -28,17 +23,13 @@ public class Soldier extends Hero{
 
 
     int rayLength = 3000;
-
-
-    boolean onFloor;
     Handler handler;
-    public Soldier(Rect rectangle,int color,Point pos,Context context,GamePanel gamePanel){
+    public Soldier(Rect rectangle,int color,Point pos,Context context){
 
 
         this.context = context;
         this.tempPlayer = rectangle;
         this.heroColor = color;
-        this.gamePanel = gamePanel;
         playerPos = pos;
         playerLanded = false;
 
@@ -66,10 +57,6 @@ public class Soldier extends Hero{
         ultimateSkillStartTime = System.currentTimeMillis();
         ultimateSkillLastingTime = 10;
 
-
-
-
-        //healPack = new SoldierHealPack(playerPos,this);
     }
 
     @Override
@@ -98,12 +85,9 @@ public class Soldier extends Hero{
 
     @Override
     public void draw(Canvas canvas){
-        this.canvas=canvas;
         Paint paint = new Paint();
         paint.setColor(heroColor);
         canvas.drawRect(tempPlayer,paint);
-        //canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.joystick),tempPlayer,tempPlayer,paint);
-
         for(int i=0;i<playerBullets.size();i++){
             SoldierGunShot gunShot = (SoldierGunShot)playerBullets.get(i);
             if(gunShot.isActive())
@@ -138,8 +122,6 @@ public class Soldier extends Hero{
         if(healPack!=null){
             healPack.draw(canvas);
         }
-
-
 
     }
 
@@ -181,30 +163,19 @@ public class Soldier extends Hero{
             gunShotDelayStartTime = System.currentTimeMillis();
         }
     }
-
+    /*
     @Override
     public void takeDamage(int damage) {
         GamePanel.playerHP.getDamage(damage);
     }
+    */
 
     @Override
     public void setSkill1On(){
         if(!ultimateSkillOn) {
             super.setSkill1On();
-            //this.skill1On = !this.skill1On;
-            //if (skill1On) {
             skill1On = true;
-            //gunShotDelay = 10;
-            //bulletSpeed = snipingBulletSpeed;
-            //bulletDamge = snipingBulletDamage;
-
-            //} else {
-                //gunShotDelay = 3;
-                //bulletSpeed =normalBulletSpeed;
-                //bulletDamge = normalBulletDamage;
-            //}
         }
-
     }
 
     @Override

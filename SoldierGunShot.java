@@ -14,16 +14,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SoldierGunShot extends HeroGunShot implements GameObject{
-
-
-    //private int gunShotDamage = 25;
-    //private int bulletColor;
-    //private boolean active = true;
-    //private float bulletSpeed = 150f;
-    //private float xPos =500,yPos=500,velocityX=0,velocityY=0;
-
-    //private Bitmap bulletImage;
-
     private int screenWidth = MainActivity.SCREEN_WIDTH;
     private int screenHeight = MainActivity.SCREEN_HEIGHT;
 
@@ -32,11 +22,7 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         //super(context,velocityX,velocityY,xPos,yPos);
-        super(context);
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        super(context,velocityX,velocityY,xPos,yPos);
         radius = 10;
         gunShotDamage =25;
         active = true;
@@ -66,7 +52,8 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
 
     @Override
     public void update() {
-        super.update();
+        if(active)
+            super.update();
         /*if(active) {
             xPos += (velocityX * bulletSpeed);
             yPos += (velocityY * bulletSpeed);
