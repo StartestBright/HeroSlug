@@ -23,35 +23,9 @@ public class EnemyGunShot1 extends EnemyGunShot {
          super(context,velocityX,velocityY,xPos,yPos);
     }
 
-
-
     @Override
     public void update(){
-        if(xPos>= GamePanel.hero.getHeroPos().x) {
-            directLeft = true;
-        }
-
-        if(active) {
-            if(directLeft) {
-                xPos -= (velocityX * bulletSpeed);
-             //   yPos += (velocityY * bulletSpeed);
-            }
-            else{      xPos += (velocityX * bulletSpeed);
-              //  yPos += -(velocityY * bulletSpeed);
-
-            }
-
-        }
-        if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
-            active = false;
-        }
-        collisionDetect();
-
+        detectLeft();
+        super.update();
     }
-
-
-
-
-
-
 }

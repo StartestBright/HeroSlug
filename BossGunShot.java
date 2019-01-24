@@ -16,37 +16,17 @@ import android.widget.Toast;
 
 public class BossGunShot extends EnemyGunShot {
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public BossGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context,velocityX,velocityY,xPos,yPos);
     }
 
-
     @Override
     public void update(){
-        if(xPos>= GamePanel.hero.getHeroPos().x) {
-            directLeft = true;
-        }
-
+        super.update();
         if(active) {
-            //      if(directLeft) {
-            //         xPos -= (velocityX * bulletSpeed);
-            //   yPos += (velocityY * bulletSpeed);
-            //       }
-            //     else{
-            //        xPos += (velocityX * bulletSpeed);
-            //  yPos += -(velocityY * bulletSpeed);
-
-            //   }
             xPos += (velocityX * bulletSpeed);
             yPos += -(velocityY * bulletSpeed);
         }
-        if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
-            active = false;
-        }
-        collisionDetect();
-
     }
 }
