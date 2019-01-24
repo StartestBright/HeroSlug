@@ -93,10 +93,10 @@ public class Enemy2 extends Enemy {
                         ((enemy.enemyPos.x <= GamePanel.hero.playerPos.x) &&
                                 (GamePanel.hero.tempPlayer.left - enemy.enemyPos.x - enemy.getEnemySize() <= 10))) {
                     enemy.enemyVelocityX = 0;
-                    System.out.println(this.enemyVelocityX);
+                  //  System.out.println(this.enemyVelocityX);
                     startedDushTime = System.currentTimeMillis();
                     attack();
-                    System.out.println(this.enemyVelocityX);
+                 //   System.out.println(this.enemyVelocityX);
                     enemy.enemyPos.x += enemy.enemyVelocityX;
                 }
             } else if ((System.currentTimeMillis() - startedDushTime) / 100 >= dushDelay) {
