@@ -13,49 +13,13 @@ public class EnemyGunShot1 extends EnemyGunShot {
   //  BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot1(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-         super(context,velocityX,velocityY,xPos,yPos);
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public  void   init(Context context){
-        opt.inMutable = true;
-        bulletImage = BitmapFactory.decodeResource(context.getResources(),R.drawable.gunshot);
-        bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
-        bulletImage.setWidth(800);
-        bulletImage.setHeight(800);
-        bulletColor = Color.RED;
+    public EnemyGunShot1(Context context, float velocityX, float velocityY, float xPos, float yPos,int speed) {
+         super(context,velocityX,velocityY,xPos,yPos,speed);
     }
 
     @Override
     public void update(){
-        if(xPos>= GamePanel.HERO.getHeroPos().x) {
-            directLeft = true;
-        }
-
-        if(active) {
-            if(directLeft) {
-                xPos -= (velocityX * bulletSpeed);
-                yPos += (velocityY * bulletSpeed);
-            }
-            else{
-                xPos += (velocityX * bulletSpeed);
-           //     yPos += (velocityY * bulletSpeed);
-
-            }
-        }
-        if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
-            active = false;
-        }
-        collisionDetect();
-
+        detectLeft();
+        super.update();
     }
-
-
-
-
-
-
 }

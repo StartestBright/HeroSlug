@@ -10,11 +10,9 @@ import android.support.annotation.RequiresApi;
 public class EnemyReleaseBoom extends EnemyGunShot {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyReleaseBoom(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-        super(context,velocityX,velocityY,xPos,yPos);
-        radius = 100;
-        bulletSpeed = 1;
-        velocityY = 1;
+    public EnemyReleaseBoom(Context context, float velocityX, float velocityY, float xPos, float yPos,int speed) {
+        super(context,velocityX,velocityY,xPos,yPos,speed);
+        radius = 50;
         damage = 50;
     }
 

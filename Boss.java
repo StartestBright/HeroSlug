@@ -13,22 +13,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Boss extends Enemy {
-    private Canvas canvas;
-    private static int enemy1MaxHp = 50;
-    public int enemySize = 50;
-    private ArrayList<EnemyGunShot1> bossBullets;
+    private ArrayList<BossGunShot > bossBullets;
     private long flashStartedTime;
-    private long flashDelay = 100;
+    private long flashDelay = 20;
     private boolean canFlash = true;
+    private boolean bossActive = false;
+
 
     public Boss(Context context, Point p, int enemyIndex) {
         super(context,p,enemyIndex);
-        //this.context = context;
-        bossBullets = new ArrayList<EnemyGunShot1>();
-        curHp = enemy1MaxHp;
-        enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-        enemyAlive =true;
-
+        curHp = 1000;
+        enemySize = 50;
     }
 
     @Override
@@ -47,51 +42,40 @@ public class Boss extends Enemy {
     @Override
     public void attack(){
 
-        if(canFire) {
-            canFire = false;
-            gunShotDelayStartTime = System.currentTimeMillis();
-
             int x = GamePanel.HERO.playerPos.x-enemyPos.x;
             int y = GamePanel.HERO.playerPos.y-enemyPos.y;
+
             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
-
             temp *= -1;
-
-
-
-            EnemyGunShot1 newBullet = new EnemyGunShot1( context, (float) Math.cos(temp)/10, (float) Math.sin(temp)/10,  enemyPos.x, enemyPos.y);
-
-            newBullet.setBulletSpeed(2);
-            bossBullets.add(newBullet);
-
-
-        } else if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
-
-            canFire =true;
-        }
+            enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos.x, enemyPos.y,2));
+            bulletIndex++;
     }
 
 
 
     @Override
     public void draw(Canvas canvas) {
+        super.draw(canvas);
         this.canvas = canvas;
         Paint p = new Paint();
-        p.setColor(Color.rgb(255,30,30));
-        canvas.drawRect(enemyRect,p);
+        p.setColor(Color.rgb(255, 30, 30));
+        canvas.drawRect(enemyRect, p);
 
-        for(int i=0;i<bossBullets.size();i++){
-            if(bossBullets.get(i).isActive())
-                bossBullets.get(i).draw(canvas);
-        }
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void falsh(Enemy enemy){
         if(canFlash){
             canFlash = false;
-            final int random = new Random().nextInt(61) + 20; // [0, 60] + 20 => [20, 80]
-            enemyPos.x = GamePanel.HERO.playerPos.x + random;
+
+            final int randomX = new Random().nextInt(2); // [0, 60] + 20 => [20, 80]
+            final int random = new Random().nextInt(450) + 100; // [0, 60] + 20 => [20, 80]
+            if(randomX==0) {
+                enemyPos.x = GamePanel.HERO.playerPos.x + random;
+            }else{
+                enemyPos.x = GamePanel.HERO.playerPos.x - random;
+            }
             enemyPos.y = GamePanel.HERO.playerPos.y - random;
+
             attack();
             flashStartedTime = System.currentTimeMillis();
         }else if((System.currentTimeMillis()-flashStartedTime)/100>=flashDelay){
@@ -102,36 +86,11 @@ public class Boss extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
-        falsh(this);
-
-
-        for(int i=0;i<bossBullets.size();i++){
-            bossBullets.get(i).update();
-            if(!bossBullets.get(i).isActive())
-                bossBullets.remove(i);
+        if (bossActive) {
+            falsh(this);
+        }else if (Math.abs(enemyPos.x-GamePanel.HERO.playerPos.x)<=300){
+            bossActive = true;
         }
-
-
-        enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-
-
-        //System.out.println(enemyVelocityY);
-
+        super.update();
     }
-
-    @Override
-    public void takeDamage(int damage) {
-        curHp -= damage;
-        if(curHp<=0) {
-            EnemyManager.killEnemy(enemyIndex);
-            enemyAlive = false;
-        }
-    }
-
-    @Override
-    public int getEnemySize() {
-        return enemySize;
-    }
-
-
 }

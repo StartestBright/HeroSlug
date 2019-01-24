@@ -65,4 +65,8 @@ public class SoldierHealPack implements GameObject{
 
     }
 
+    public void moveByHero(float heroVelocityX){
+        healpackPos.x -= heroVelocityX;
+    }
+
 }
