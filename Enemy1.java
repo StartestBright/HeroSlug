@@ -14,14 +14,14 @@ import java.util.ArrayList;
 public class Enemy1 extends Enemy {
 
 
-    private ArrayList<EnemyGunShot1> enemy1Bullets;
+//    private ArrayList<EnemyGunShot1> enemy1Bullets;
 
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
         enemyVelocityX=4.0;
-        enemyMaxHp = 50;
+        enemyMaxHp = 100;
         enemySize = 50;
-        enemy1Bullets = new ArrayList<EnemyGunShot1>();
+   //     enemy1Bullets = new ArrayList<EnemyGunShot1>();
     }
 
     @Override
@@ -40,9 +40,8 @@ public class Enemy1 extends Enemy {
         if(canFire) {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
-            EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
-            newBullet.setBulletSpeed(10);
-            enemy1Bullets.add(newBullet);
+           // EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
+            enemyGunShots.add(new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y,10));
          }
     }
 
@@ -55,10 +54,7 @@ public class Enemy1 extends Enemy {
         p.setColor(Color.rgb(255,30,30));
         canvas.drawRect(enemyRect,p);
 
-       for(int i=0;i<enemy1Bullets.size();i++){
-            if(enemy1Bullets.get(i).isActive())
-               enemy1Bullets.get(i).draw(canvas);
-        }
+        super.draw(canvas);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -68,11 +64,7 @@ public class Enemy1 extends Enemy {
         enmyWalk(this);
         enmyFollow(this);
 
-        for(int i=0;i<enemy1Bullets.size();i++){
-            enemy1Bullets.get(i).update();
-           if(!enemy1Bullets.get(i).isActive())
-                enemy1Bullets.remove(i);
-        }
+
         super.update();
     }
 }

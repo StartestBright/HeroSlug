@@ -28,13 +28,14 @@ public abstract class EnemyGunShot extends View implements GameObject {
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
+    public EnemyGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos, int speed) {
         super(context);
         init(context);
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.xPos = xPos;
         this.yPos = yPos;
+        this.bulletSpeed = speed;
     }
 
     public void detectLeft() {

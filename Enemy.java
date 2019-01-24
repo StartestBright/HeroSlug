@@ -29,7 +29,11 @@ public abstract class Enemy implements Character{
     protected static int enemyMaxHp;
     protected Canvas canvas;
 
-   // public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
+    public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
+   // public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+
+
+    protected  int bulletIndex = 0;
 
 
     public Point getEnemyPos(){
@@ -54,8 +58,8 @@ public abstract class Enemy implements Character{
     }
 
     public void enmyFollow(Enemy enemy){
-        if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=800
-                &&Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=400){
+        if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=1000
+                &&Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=600){
             enemy.enemyInWalkMode =false;
             if(enemy.enemyPos.x == GamePanel.hero.getHeroPos().x) {
 
@@ -67,7 +71,7 @@ public abstract class Enemy implements Character{
                 enemy.enemyPos.x -=  enemy.enemyVelocityX*2;
             }
 
-        }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400){
+        }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=600){
             if(canFire == true){
                 this.attack();
             //    canFire = false;
@@ -114,8 +118,20 @@ public abstract class Enemy implements Character{
 
     public  void update(){
         enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
+        for(int i=0;i<enemyGunShots.size();i++){
+            enemyGunShots.get(i).update();
+            if(!enemyGunShots.get(i).isActive())
+                enemyGunShots.remove(i);
+        }
     }
-    public abstract void draw(Canvas canvas);
+
+    public void draw(Canvas canvas){
+        for(int i=0;i<enemyGunShots.size();i++){
+            if(enemyGunShots.get(i).isActive()) {
+                enemyGunShots.get(i).draw(canvas);
+            }
+        }
+    }
 
 
 

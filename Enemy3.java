@@ -13,11 +13,10 @@ import java.util.ArrayList;
 public class Enemy3 extends Enemy {
 
 
-    private ArrayList<EnemyReleaseBoom> enemyBoom;
+
 
     public Enemy3(Context context,Point p, int enemyIndex) {
         super(context,p, enemyIndex);
-        enemyBoom = new ArrayList<EnemyReleaseBoom>();
         curHp = enemyMaxHp;
         enemySize = 50;
         enemyVelocityX = 2.0;
@@ -41,10 +40,7 @@ public class Enemy3 extends Enemy {
         p.setColor(Color.rgb(200, 200, 200));
         canvas.drawRect(enemyRect, p);
 
-        for(int i=0;i<enemyBoom.size();i++){
-            if(enemyBoom.get(i).isActive())
-                enemyBoom.get(i).draw(canvas);
-        }
+        super.draw(canvas);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -53,9 +49,8 @@ public class Enemy3 extends Enemy {
         if(canFire) {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
-            EnemyReleaseBoom newBoom = new EnemyReleaseBoom( context,0, 1, enemyPos.x, enemyPos.y);
-            newBoom.setBulletSpeed(1);
-            enemyBoom.add(newBoom);
+            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, enemyPos.x, enemyPos.y,2));
+            bulletIndex++;
         }
     }
 
@@ -65,12 +60,7 @@ public class Enemy3 extends Enemy {
         enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize-400;
         enmyWalk(this);
         enmyFollow(this);
-        for(int i=0;i<enemyBoom.size();i++){
-            enemyBoom.get(i).update();
-            if(!enemyBoom.get(i).isActive())
-                enemyBoom.remove(i);
-        }
-        enemyRect.set(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
+        super.update();
     }
 
 

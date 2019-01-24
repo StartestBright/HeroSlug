@@ -17,8 +17,8 @@ import android.widget.Toast;
 public class BossGunShot extends EnemyGunShot {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public BossGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-        super(context,velocityX,velocityY,xPos,yPos);
+    public BossGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos, int speed) {
+        super(context,velocityX,velocityY,xPos,yPos,speed);
     }
 
     @Override

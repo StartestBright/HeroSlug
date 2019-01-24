@@ -22,9 +22,7 @@ public class Boss extends Enemy {
 
     public Boss(Context context, Point p, int enemyIndex) {
         super(context,p,enemyIndex);
-        //this.context = context;
-        bossBullets = new ArrayList<BossGunShot>();
-        curHp = enemyMaxHp*10;
+        curHp = 1000;
         enemySize = 50;
     }
 
@@ -47,9 +45,8 @@ public class Boss extends Enemy {
             int y = GamePanel.hero.playerPos.y-enemyPos.y;
             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
             temp *= -1;
-            BossGunShot newBullet = new BossGunShot ( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos.x, enemyPos.y);
-            newBullet.setBulletSpeed(4);
-            bossBullets.add(newBullet);
+            enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos.x, enemyPos.y,2));
+            bulletIndex++;
     }
 
 
@@ -60,10 +57,7 @@ public class Boss extends Enemy {
             Paint p = new Paint();
             p.setColor(Color.rgb(255, 30, 30));
             canvas.drawRect(enemyRect, p);
-            for (int i = 0; i < bossBullets.size(); i++) {
-                if (bossBullets.get(i).isActive())
-                    bossBullets.get(i).draw(canvas);
-            }
+            super.draw(canvas);
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void falsh(Enemy enemy){
@@ -92,12 +86,6 @@ public class Boss extends Enemy {
         }else if (Math.abs(enemyPos.x-GamePanel.hero.playerPos.x)<=300){
             bossActive = true;
         }
-        for(int i=0;i<bossBullets.size();i++){
-            bossBullets.get(i).update();
-            if(!bossBullets.get(i).isActive())
-                bossBullets.remove(i);
-        }
-        enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-        //System.out.println(enemyVelocityY);
+        super.update();
     }
 }
