@@ -246,7 +246,7 @@ public abstract class Hero implements Character{
     }
     @Override
     public void takeDamage(int damage) {
-        GamePanel.playerHP.getDamage(damage);
+        GamePanel.HEROHP.getDamage(damage);
     }
     public void heroMoveBeyondHalf(){
         if(playerVelocityX>0) {

@@ -1,6 +1,8 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -16,25 +18,38 @@ public class RocketMan extends Hero {
     private Context context;
 
 
-    public RocketMan(Rect rectangle, int color, Point pos, Context context){
+    public RocketMan(int color, Point pos, Context context){
+        super(pos);
+        heroBitmaps = new Bitmap[2];
+        heroBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
+        heroWeaponBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        heroWeaponSizeX = 120;
+        heroWeaponSizeY = 70;
+        heroSizeX =60;
+        heroSizeY =100;
         this.context = context;
-        this.tempPlayer = rectangle;
-        this.heroColor = color;
+        super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
+        super.heroColor = color;
+
         playerPos = pos;
-        playerLanded = false;
-
-        playerVelocityY =0;
-        playerVelocityX =0;
-
-        jumpPower = 100;
-        heroTag = "RocketMan";
 
         gunShotDelay = 3;
         bulletSpeed = rocketSpeed;
         bulletDamge = rocketSpeed;
-        canFire = true;
+        playerBullets = new ArrayList<RocketManGunShot>();
 
-        playerBullets = new ArrayList<SoldierGunShot>();
+        jumpPower = 100;
+        heroTag = "RocketMan";
+
+        skill1CoolTime = 15;
+        skill1LastingTime=5;
+        skill2CoolTime = 12;
+        skill2LastingTime= 0;
+
+
+        ultimateSkillCoolTime = 30;
+        ultimateSkillOnCoolTime = true;
+        ultimateSkillLastingTime = 10;
     }
     @Override
     public int getHeroMaxHP() {
@@ -62,11 +77,9 @@ public class RocketMan extends Hero {
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(heroColor);
-        canvas.drawRect(tempPlayer,paint);
+        super.draw(canvas);
         for(int i=0;i<playerBullets.size();i++){
-            RocketManGunShot gunShot = (RocketManGunShot) playerBullets.get(i);
+            RocketManGunShot gunShot = (RocketManGunShot)playerBullets.get(i);
             if(gunShot.isActive())
                 gunShot.draw(canvas);
         }
