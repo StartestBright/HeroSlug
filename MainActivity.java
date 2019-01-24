@@ -140,4 +140,9 @@ public class MainActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

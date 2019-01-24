@@ -61,7 +61,7 @@ public class Soldier extends Hero{
         skill2LastingTime= 0;
 
 
-        ultimateSkillCoolTime = 5;
+        ultimateSkillCoolTime = 30;
         ultimateSkillOnCoolTime = true;
         ultimateSkillStartTime = System.currentTimeMillis();
         ultimateSkillLastingTime = 10;

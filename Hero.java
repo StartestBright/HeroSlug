@@ -96,14 +96,14 @@ public abstract class Hero implements Character{
             MainActivity.skill2.setAlpha(( (float)(System.currentTimeMillis()-skill2StartTime)/1000 )/skill2CoolTime);
         }
 
-        if(ultimateSkillOnCoolTime){
-            if( (System.currentTimeMillis()- ultimateSkillStartTime)/1000>=ultimateSkillCoolTime){
+        if(ultimateSkillOnCoolTime) {
+            if ((System.currentTimeMillis() - ultimateSkillStartTime) / 1000 >= ultimateSkillCoolTime) {
                 ultimateSkillOnCoolTime = false;
             }
-            if( (System.currentTimeMillis()- ultimateSkillStartTime)/1000>=ultimateSkillLastingTime){
+            if ((System.currentTimeMillis() - ultimateSkillStartTime) / 1000 >= ultimateSkillLastingTime) {
                 ultimateSkillOn = false;
             }
-            MainActivity.ultimateSkill.setAlpha(( (float)(System.currentTimeMillis()- ultimateSkillStartTime)/1000 )/ultimateSkillCoolTime);
+            MainActivity.ultimateSkill.setAlpha(((float) (System.currentTimeMillis() - ultimateSkillStartTime) / 1000) / ultimateSkillCoolTime);
         }
     }
 
