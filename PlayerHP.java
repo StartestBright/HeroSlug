@@ -54,9 +54,6 @@ public class PlayerHP extends View implements UIObject{
 
 
     }
-    public void setCurHp(int curHp){
-        this.curHp = curHp;
-    }
 
     public void getDamage(int damage){
         curHp -=damage;

@@ -19,7 +19,7 @@ public class Skill1 extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction()==MotionEvent.ACTION_DOWN){
-            GamePanel.hero.setSkill1On();
+            GamePanel.HERO.setSkill1On();
         }
         return true;
 

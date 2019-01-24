@@ -28,7 +28,7 @@ public class JoyStick extends View{
     }
     public void init(Context context){
         this.setBackgroundResource(R.drawable.joystick);
-        hero = gamePanel.hero;
+        hero = gamePanel.HERO;
 
     }
 

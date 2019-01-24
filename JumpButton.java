@@ -40,8 +40,8 @@ public class JumpButton extends View {
 
         if(action == MotionEvent.ACTION_UP){
 
-            if(gamePanel.hero.isLaneded()){
-                gamePanel.hero.jump();
+            if(gamePanel.HERO.isLaneded()){
+                gamePanel.HERO.jump();
 
             }
         }
