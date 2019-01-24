@@ -8,7 +8,7 @@ import android.graphics.Rect;
 
 public class Enemy2 extends Enemy{
 
-    private static int enemy2MaxHp = 250;
+
     public int enemySize=100;
     public Canvas canvas;
     private boolean canDush = true;
@@ -18,11 +18,10 @@ public class Enemy2 extends Enemy{
    // private  long flyTime;
     private boolean canFly = true;
 
+
     public Enemy2(Context context,Point p, int enemyIndex) {
         super(context,p,enemyIndex);
-        curHp = enemy2MaxHp;
-        enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-        enemyAlive =true;
+        curHp = enemyMaxHp+200;
         enemyVelocityX = 2.0;
     }
 

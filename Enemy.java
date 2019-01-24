@@ -14,6 +14,7 @@ public abstract class Enemy implements Character{
     protected double enemyVelocityX;
     protected boolean enemyLanded;
     protected boolean enemyAlive;
+    protected  int enemySize;
     protected Rect enemyRect;
     protected final int walkLength=200;
     protected int walkAlready = 0;
@@ -23,12 +24,15 @@ public abstract class Enemy implements Character{
     protected Boolean canFire = true;
     protected long gunShotDelayStartTime;
     protected long gunShotDelay = 50;
- //   protected int dushSpeed = 1;
+    protected static int enemyMaxHp;
+
 
     public Point getEnemyPos(){
         return this.enemyPos;
 
     }
+
+
     public void enmyWalk(Enemy enemy){
         if(enemyInWalkMode == true){
             if(walkAlready<=walkLength) {
@@ -52,14 +56,10 @@ public abstract class Enemy implements Character{
 
 
             }
-
-
             else if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
                 enemy.enemyPos.x += enemy.enemyVelocityX*2;
             } else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
                 enemy.enemyPos.x -=  enemy.enemyVelocityX*2;
-
-
             }
 
         }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=400){
@@ -86,15 +86,33 @@ public abstract class Enemy implements Character{
         this.context = context;
         enemyPos = p;
         this.enemyIndex = enemyIndex;
+        curHp = enemyMaxHp;
+        enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
+        enemyAlive =true;
     }
     public boolean isAlive(){
         return enemyAlive;
     };
+
+
     public abstract void attack();
 
+    public void landDetect(){
+        if(!enemyLanded) {
+            enemyVelocityY += gravity;
+        }else if(enemyLanded){
+            enemyVelocityY = 0;
+            enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
+        }
+    }
 
-    public abstract void update();
+
+    public  void update(){
+        enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
+    }
     public abstract void draw(Canvas canvas);
+
+
 
 
     public abstract int getEnemySize();

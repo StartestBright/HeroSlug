@@ -11,16 +11,15 @@ import android.support.annotation.RequiresApi;
 import java.util.ArrayList;
 
 public class Enemy3 extends Enemy {
-    private static int enemy3MaxHp = 50;
-    public int enemySize = 50;
+
+
     private ArrayList<EnemyReleaseBoom> enemyBoom;
 
     public Enemy3(Context context,Point p, int enemyIndex) {
         super(context,p, enemyIndex);
         enemyBoom = new ArrayList<EnemyReleaseBoom>();
-        curHp = enemy3MaxHp;
-        enemyRect = new Rect(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
-        enemyAlive = true;
+        curHp = enemyMaxHp;
+        enemySize = 50;
     }
 
     @Override

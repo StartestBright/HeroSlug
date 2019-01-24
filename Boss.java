@@ -24,12 +24,8 @@ public class Boss extends Enemy {
     public Boss(Context context, Point p, int enemyIndex) {
         super(context,p,enemyIndex);
         //this.context = context;
-        bossBullets = new ArrayList<BossGunShot >();
-        curHp = enemy1MaxHp;
-        enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-        enemyAlive =true;
-        gunShotDelay = 50;
-
+        bossBullets = new ArrayList<BossGunShot>();
+        curHp = enemyMaxHp*10;
     }
 
     @Override

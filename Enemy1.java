@@ -17,19 +17,18 @@ public class Enemy1 extends Enemy {
     private ArrayList<EnemyGunShot1> enemy1Bullets;
     //private Context context;
     private Canvas canvas;
-    private static int enemy1MaxHp = 50;
-    public int enemySize=50;
+
+
 
 
 
 
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
-        //this.context = context;
+        enemyVelocityX=4.0;
+        enemyMaxHp = 50;
+        enemySize = 50;
         enemy1Bullets = new ArrayList<EnemyGunShot1>();
-        curHp = enemy1MaxHp;
-        enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-        enemyAlive =true;
     }
 
     @Override
@@ -42,18 +41,13 @@ public class Enemy1 extends Enemy {
 
     }
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
-
         if(canFire) {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
-
             EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
-
             newBullet.setBulletSpeed(10);
             enemy1Bullets.add(newBullet);
          }
@@ -78,13 +72,8 @@ public class Enemy1 extends Enemy {
     @Override
     public void update() {
       //  this.attack();
-        enemyVelocityX = 2.0;
-        if(!enemyLanded) {
-            enemyVelocityY += gravity;
-        }else if(enemyLanded){
-            enemyVelocityY = 0;
-            enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
-        }
+       // enemyVelocityX = 2.0;
+        landDetect();
      //   enemyPos.y += enemyVelocityY;
         enmyWalk(this);
         enmyFollow(this);
@@ -95,8 +84,7 @@ public class Enemy1 extends Enemy {
                 enemy1Bullets.remove(i);
         }
 
-
-        enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
+        super.update();
 
 
         //System.out.println(enemyVelocityY);
