@@ -23,8 +23,8 @@ public class EnemyManager {
         enemyIndex++;
     }
     public void Boss1(Point spawnPoint){
-        enemies.add(new Boss(context,spawnPoint,enemyIndex));
-        enemyIndex++;
+        //enemies.add(new Boss(context,spawnPoint,enemyIndex));
+        //enemyIndex++;
     }
     EnemyManager(Context context){
         this.context = context;

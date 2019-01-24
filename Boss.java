@@ -41,8 +41,10 @@ public class Boss extends Enemy {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
-            int x = GamePanel.hero.playerPos.x-enemyPos.x;
-            int y = GamePanel.hero.playerPos.y-enemyPos.y;
+
+            int x = GamePanel.HERO.playerPos.x-enemyPos.x;
+            int y = GamePanel.HERO.playerPos.y-enemyPos.y;
+
             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
             temp *= -1;
             enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos.x, enemyPos.y,2));
@@ -53,24 +55,27 @@ public class Boss extends Enemy {
 
     @Override
     public void draw(Canvas canvas) {
-            this.canvas = canvas;
-            Paint p = new Paint();
-            p.setColor(Color.rgb(255, 30, 30));
-            canvas.drawRect(enemyRect, p);
-            super.draw(canvas);
+        super.draw(canvas);
+        this.canvas = canvas;
+        Paint p = new Paint();
+        p.setColor(Color.rgb(255, 30, 30));
+        canvas.drawRect(enemyRect, p);
+
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void falsh(Enemy enemy){
         if(canFlash){
             canFlash = false;
+
             final int randomX = new Random().nextInt(2); // [0, 60] + 20 => [20, 80]
             final int random = new Random().nextInt(450) + 100; // [0, 60] + 20 => [20, 80]
             if(randomX==0) {
-                enemyPos.x = GamePanel.hero.playerPos.x + random;
+                enemyPos.x = GamePanel.HERO.playerPos.x + random;
             }else{
-                enemyPos.x = GamePanel.hero.playerPos.x - random;
+                enemyPos.x = GamePanel.HERO.playerPos.x - random;
             }
-            enemyPos.y = GamePanel.hero.playerPos.y - random;
+            enemyPos.y = GamePanel.HERO.playerPos.y - random;
+
             attack();
             flashStartedTime = System.currentTimeMillis();
         }else if((System.currentTimeMillis()-flashStartedTime)/100>=flashDelay){
@@ -83,7 +88,7 @@ public class Boss extends Enemy {
     public void update() {
         if (bossActive) {
             falsh(this);
-        }else if (Math.abs(enemyPos.x-GamePanel.hero.playerPos.x)<=300){
+        }else if (Math.abs(enemyPos.x-GamePanel.HERO.playerPos.x)<=300){
             bossActive = true;
         }
         super.update();

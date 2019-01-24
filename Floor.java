@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.widget.ImageView;
 
 public class Floor {
 
@@ -13,7 +12,7 @@ public class Floor {
     public Floor(Rect floor,int color,GamePanel gamePanel){
         this.floor = floor;
         this.floorColor = color;
-        hero = gamePanel.getPlayer();
+        hero = gamePanel.HERO;
     }
 
 
@@ -26,11 +25,11 @@ public class Floor {
         }
         return false;
         /*
-        if(floor.contains(hero.getHero().left,hero.getHero().top)||
-        floor.contains(hero.getHero().right,hero.getHero().top)||
-                floor.contains(hero.getHero().left,hero.getHero().bottom)||
-                floor.contains(hero.getHero().right,hero.getHero().bottom) ||
-                hero.getHeroPos().y>=MainActivity.SCREEN_HEIGHT-50){
+        if(floor.contains(HERO.getHero().left,HERO.getHero().top)||
+        floor.contains(HERO.getHero().right,HERO.getHero().top)||
+                floor.contains(HERO.getHero().left,HERO.getHero().bottom)||
+                floor.contains(HERO.getHero().right,HERO.getHero().bottom) ||
+                HERO.getHeroPos().y>=MainActivity.SCREEN_HEIGHT-50){
             return true;
 
         return  false;*/

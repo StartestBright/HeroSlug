@@ -29,7 +29,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
     @Override
     public void update(){
-    //    if(xPos>= GamePanel.hero.getHeroPos().x) {
+    //    if(xPos>= GamePanel.HERO.getHeroPos().x) {
     //        directLeft = true;
      //   }
 

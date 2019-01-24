@@ -10,8 +10,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 public abstract class EnemyGunShot extends View implements GameObject {
     protected int bulletColor;
@@ -39,7 +37,7 @@ public abstract class EnemyGunShot extends View implements GameObject {
     }
 
     public void detectLeft() {
-        if (xPos >= GamePanel.hero.getHeroPos().x) {
+        if (xPos >= GamePanel.HERO.getHeroPos().x) {
             directLeft = true;
         }
         if (active) {
@@ -90,6 +88,7 @@ public abstract class EnemyGunShot extends View implements GameObject {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void init(Context context) {
 
+
         opt.inMutable = true;
         bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
         bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
@@ -101,11 +100,11 @@ public abstract class EnemyGunShot extends View implements GameObject {
 
     public void collisionDetect() {
         if (this.active) {
-            if (xPos + radius >= GamePanel.hero.getHero().left && //if  collide with enemy
-                    xPos - radius <= GamePanel.hero.getHero().right &&
-                    yPos + radius >= GamePanel.hero.getHero().top &&
-                    yPos - radius <= GamePanel.hero.getHero().bottom) {
-                GamePanel.hero.takeDamage(damage);
+            if (xPos + radius >= GamePanel.HERO.getHero().left && //if  collide with enemy
+                    xPos - radius <= GamePanel.HERO.getHero().right &&
+                    yPos + radius >= GamePanel.HERO.getHero().top &&
+                    yPos - radius <= GamePanel.HERO.getHero().bottom) {
+                GamePanel.HERO.takeDamage(damage);
                 active = false;
             }
         }

@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import static com.jknull.heroslug.MainActivity.SCREEN_HEIGHT;
-import static com.jknull.heroslug.MainActivity.SCREEN_WIDTH;
 
 public class AttackButton extends View {
     GamePanel gamePanel;
@@ -29,7 +28,7 @@ public class AttackButton extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN)
-            gamePanel.getPlayer().attack();
+            gamePanel.HERO.attack();
         return true;
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.shapes.RectShape;
 
 import java.util.ArrayList;
 
@@ -58,20 +57,26 @@ public abstract class Enemy implements Character{
     }
 
     public void enmyFollow(Enemy enemy){
-        if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=1000
-                &&Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)>=600){
+
+        if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=1000
+                &&Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)>=600){
+
             enemy.enemyInWalkMode =false;
-            if(enemy.enemyPos.x == GamePanel.hero.getHeroPos().x) {
+            if(enemy.enemyPos.x == GamePanel.HERO.getHeroPos().x) {
 
 
             }
-            else if (enemy.enemyPos.x < GamePanel.hero.getHeroPos().x) {
+
+            else if (enemy.enemyPos.x < GamePanel.HERO.getHeroPos().x) {
+
                 enemy.enemyPos.x += enemy.enemyVelocityX*2;
-            } else if (enemy.enemyPos.x > GamePanel.hero.getHeroPos().x) {
+            } else if (enemy.enemyPos.x > GamePanel.HERO.getHeroPos().x) {
                 enemy.enemyPos.x -=  enemy.enemyVelocityX*2;
             }
 
-        }else if(Math.abs(GamePanel.hero.getHeroPos().x-enemy.enemyPos.x)<=600){
+
+        }else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=600){
+
             if(canFire == true){
                 this.attack();
             //    canFire = false;

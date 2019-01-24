@@ -1,6 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,53 +16,49 @@ import java.util.ArrayList;
 
 public class Soldier extends Hero{
     public static int SOLDIERMAXHP = 250;
-
-    private boolean snipingMode = false;
     private Context context;
-    private ArrayList<SoldierGunShot> playerBullets;
-    private GamePanel gamePanel;
-    private Background bg;
-    private Canvas canvas;
     private SoldierHealPack healPack;
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
-    private int snipingBulletDamage = 90,normalBulletDamage = 25;
-    private int healPackCoolTime = 12;
-    private long healPackCoolTimeStart =0;
-    private boolean healPackCoolTimeOn = false;
-    private boolean ultimateSkillOn = false ,ultimateSkillCoolTimeOn=false;
-    private long ultimateStart,ultimateCoolTime=15;
-
-
+    private int snipingBulletDamage = 150,normalBulletDamage = 25;
 
     int rayLength = 3000;
 
-
-    boolean onFloor;
     Handler handler;
-    public Soldier(Rect rectangle,int color,Point pos,Context context,GamePanel gamePanel){
-
-
+    public Soldier(int color,Point pos,Context context,GamePanel gamePanel){
+        super(pos);
+        heroBitmaps = new Bitmap[2];
+        heroBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
+        heroWeaponBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        heroWeaponSizeX = 120;
+        heroWeaponSizeY = 70;
+        heroSizeX =60;
+        heroSizeY =100;
         this.context = context;
-        this.tempPlayer = rectangle;
-        this.heroColor = color;
-        this.gamePanel = gamePanel;
+        super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
+        super.heroColor = color;
         playerPos = pos;
-        playerLanded = false;
-
-        playerVelocityY =0;
-        playerVelocityX =0;
 
         gunShotDelay = 3;
         bulletSpeed = normalBulletSpeed;
         bulletDamge = normalBulletDamage;
-        canFire = true;
-
         playerBullets = new ArrayList<SoldierGunShot>();
 
         jumpPower = 100;
         heroTag = "Soldier";
+
+        skill1CoolTime = 15;
+        skill1LastingTime=5;
+        skill2CoolTime = 12;
+        skill2LastingTime= 0;
+
+
+        ultimateSkillCoolTime = 30;
+        ultimateSkillOnCoolTime = true;
+        ultimateSkillLastingTime = 10;
+
+
 
 
 
@@ -70,56 +67,22 @@ public class Soldier extends Hero{
 
     @Override
     public void update() {
-        if(!playerLanded) {
-            playerVelocityY += gravity;
-        }else if(playerLanded){
-            playerVelocityY = 0;
-            playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-tempPlayer.height()/2;
-        }
-        playerPos.y += playerVelocityY;
-        playerPos.x += playerVelocityX;
-
-        tempPlayer.set(playerPos.x - tempPlayer.width()/2
-                ,playerPos.y-tempPlayer.height()/2
-                ,playerPos.x+tempPlayer.width()/2,playerPos.y+tempPlayer.height()/2);
-
-        for(int i=0;i<playerBullets.size();i++){
-            playerBullets.get(i).update();
-            if(!playerBullets.get(i).isActive())
-                playerBullets.remove(i);
-        }
-
-
-
-        heroMoveBeyondHalf();
-
-
-
-
-        if(healPackCoolTimeOn){
-            if((System.currentTimeMillis()-healPackCoolTimeStart)/1000>= healPackCoolTime){
-                healPackCoolTimeOn = false;
-            }
-        }
+        super.update();
         if(healPack !=null){
             healPack.update();
         }
 
-        if(ultimateSkillCoolTimeOn){
-            if( (System.currentTimeMillis()-ultimateStart)/1000>=ultimateCoolTime){
-                ultimateSkillCoolTimeOn = false;
-            }
-            if( (System.currentTimeMillis()-ultimateStart)/1000>=10){
-                ultimateSkillOn = false;
-            }
+        if(skill1On){
+            gunShotDelay = 10;
+            bulletSpeed = snipingBulletSpeed;
+            bulletDamge = snipingBulletDamage;
+        }else{
+            gunShotDelay = 3;
+            bulletSpeed =normalBulletSpeed;
+            bulletDamge = normalBulletDamage;
         }
 
 
-        if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
-
-            canFire =true;
-        }
-        flyFinished();
 
     }
 
@@ -127,18 +90,16 @@ public class Soldier extends Hero{
 
     @Override
     public void draw(Canvas canvas){
-        this.canvas=canvas;
-        Paint paint = new Paint();
-        paint.setColor(heroColor);
-        canvas.drawRect(tempPlayer,paint);
-        //canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.joystick),tempPlayer,tempPlayer,paint);
+        super.draw(canvas);
 
         for(int i=0;i<playerBullets.size();i++){
-            if(playerBullets.get(i).isActive())
-                playerBullets.get(i).draw(canvas);
+            SoldierGunShot gunShot = (SoldierGunShot)playerBullets.get(i);
+            if(gunShot.isActive())
+                gunShot.draw(canvas);
         }
 
-        if(snipingMode) {
+
+        if(skill1On){
             Paint p = new Paint();
             p.setColor(Color.RED);
             p.setStrokeWidth(8);
@@ -188,18 +149,7 @@ public class Soldier extends Hero{
                             int x = enemy.getEnemyPos().x - playerPos.x;
                             int y = enemy.getEnemyPos().y - playerPos.y;
                             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
-                            //temp += Math.PI/2;
-                            //System.out.println("x : "+x + " "+"y : "+y+" temp : " +temp );
-                            //System.out.println(Math.atan2(x,y)/Math.PI*180);
-
-
-                    /*if(x<0 && y>0){
-                        temp +=Math.PI;
-                    }else if(x<0 &&y <0){
-                        temp +=Math.PI;
-                    }*/
                             temp *= -1;
-
                             SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), playerPos.x, playerPos.y);
                             newBullet.setBulletSpeed(bulletSpeed);
                             newBullet.setBulletDamage(bulletDamge);
@@ -222,61 +172,49 @@ public class Soldier extends Hero{
 
     @Override
     public void takeDamage(int damage) {
-        GamePanel.playerHP.getDamage(damage);
+        GamePanel.HEROHP.getDamage(damage);
     }
 
-    public void setSnipingMode(){
+    @Override
+    public void setSkill1On(){
         if(!ultimateSkillOn) {
-            this.snipingMode = !this.snipingMode;
-            if (snipingMode) {
-                gunShotDelay = 10;
-                bulletSpeed = snipingBulletSpeed;
-                bulletDamge = snipingBulletDamage;
+            super.setSkill1On();
+            //this.skill1On = !this.skill1On;
+            //if (skill1On) {
+            skill1On = true;
+            //gunShotDelay = 10;
+            //bulletSpeed = snipingBulletSpeed;
+            //bulletDamge = snipingBulletDamage;
 
-            } else {
-                gunShotDelay = 3;
-                bulletSpeed =normalBulletSpeed;
-                bulletDamge = normalBulletDamage;
+            //} else {
+                //gunShotDelay = 3;
+                //bulletSpeed =normalBulletSpeed;
+                //bulletDamge = normalBulletDamage;
+            //}
+        }
+
+    }
+
+    @Override
+    public void setSkill2On(){
+        if(!skill2OnCoolTime) {
+            super.setSkill2On();
+            healPack = new SoldierHealPack(playerPos, this);
+        }
+
+    }
+
+    @Override
+    public void setUltimateSkillOn() {
+        if(!ultimateSkillOnCoolTime) {
+            super.setUltimateSkillOn();
+            if(skill1On){
+                setSkill1On();
             }
         }
-
     }
 
-    public void healPack(){
-        //healPack.setPos(playerPos);
-        if(!healPackCoolTimeOn) {
-            healPackCoolTimeStart = System.currentTimeMillis();
-            healPack = new SoldierHealPack(playerPos, this);
-            healPackCoolTimeOn= true;
-        }
-
-    }
     public void setHealPackNull(){
         healPack = null;
     }
-
-    public void ultimateSkill(){
-        if(!ultimateSkillCoolTimeOn) {
-            ultimateStart = System.currentTimeMillis();
-            if(snipingMode){
-                setSnipingMode();
-            }
-            ultimateSkillCoolTimeOn = true;
-            ultimateSkillOn = true;
-
-
-
-        }
-    }
-
-    /*public void soldierGetHeal(){
-        if(playerCurHp<SOLDIERMAXHP) {
-            playerCurHp += 1;
-        }else if(playerCurHp>= SOLDIERMAXHP)
-            playerCurHp = SOLDIERMAXHP;
-    }*/
-
-
-
-
 }
