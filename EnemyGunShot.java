@@ -87,7 +87,16 @@ public abstract class EnemyGunShot extends View implements GameObject{
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public abstract void init(Context context);
+    public  void init(Context context){
+
+            opt.inMutable = true;
+            bulletImage = BitmapFactory.decodeResource(context.getResources(),R.drawable.gunshot);
+            bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
+            bulletImage.setWidth(800);
+            bulletImage.setHeight(800);
+            bulletColor = Color.RED;
+
+    }
 
 
    public void collisionDetect(){
@@ -105,6 +114,9 @@ public abstract class EnemyGunShot extends View implements GameObject{
                     }
                 }
             }
+
+
+
         }
 
 

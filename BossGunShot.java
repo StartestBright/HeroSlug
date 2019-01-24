@@ -1,6 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,16 +14,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class EnemyGunShot1 extends EnemyGunShot {
+public class BossGunShot extends EnemyGunShot {
 
 
-  //  BitmapFactory.Options opt = new BitmapFactory.Options();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot1(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-         super(context,velocityX,velocityY,xPos,yPos);
+    public BossGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
+        super(context,velocityX,velocityY,xPos,yPos);
     }
-
 
 
     @Override
@@ -32,15 +31,17 @@ public class EnemyGunShot1 extends EnemyGunShot {
         }
 
         if(active) {
-            if(directLeft) {
-                xPos -= (velocityX * bulletSpeed);
-             //   yPos += (velocityY * bulletSpeed);
-            }
-            else{      xPos += (velocityX * bulletSpeed);
-              //  yPos += -(velocityY * bulletSpeed);
+            //      if(directLeft) {
+            //         xPos -= (velocityX * bulletSpeed);
+            //   yPos += (velocityY * bulletSpeed);
+            //       }
+            //     else{
+            //        xPos += (velocityX * bulletSpeed);
+            //  yPos += -(velocityY * bulletSpeed);
 
-            }
-
+            //   }
+            xPos += (velocityX * bulletSpeed);
+            yPos += -(velocityY * bulletSpeed);
         }
         if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
             active = false;
@@ -48,10 +49,4 @@ public class EnemyGunShot1 extends EnemyGunShot {
         collisionDetect();
 
     }
-
-
-
-
-
-
 }

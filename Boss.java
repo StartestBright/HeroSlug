@@ -16,18 +16,19 @@ public class Boss extends Enemy {
     private Canvas canvas;
     private static int enemy1MaxHp = 50;
     public int enemySize = 50;
-    private ArrayList<EnemyGunShot1> bossBullets;
+    private ArrayList<BossGunShot > bossBullets;
     private long flashStartedTime;
-    private long flashDelay = 100;
+    private long flashDelay = 40;
     private boolean canFlash = true;
 
     public Boss(Context context, Point p, int enemyIndex) {
         super(context,p,enemyIndex);
         //this.context = context;
-        bossBullets = new ArrayList<EnemyGunShot1>();
+        bossBullets = new ArrayList<BossGunShot >();
         curHp = enemy1MaxHp;
         enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
         enemyAlive =true;
+        gunShotDelay = 50;
 
     }
 
@@ -47,9 +48,9 @@ public class Boss extends Enemy {
     @Override
     public void attack(){
 
-        if(canFire) {
-            canFire = false;
-            gunShotDelayStartTime = System.currentTimeMillis();
+     //   if(1) {
+           // canFire = false;
+           // gunShotDelayStartTime = System.currentTimeMillis();
 
             int x = GamePanel.hero.playerPos.x-enemyPos.x;
             int y = GamePanel.hero.playerPos.y-enemyPos.y;
@@ -59,16 +60,17 @@ public class Boss extends Enemy {
 
 
 
-            EnemyGunShot1 newBullet = new EnemyGunShot1( context, (float) Math.cos(temp)/10, (float) Math.sin(temp)/10,  enemyPos.x, enemyPos.y);
-
-            newBullet.setBulletSpeed(2);
+            BossGunShot newBullet = new BossGunShot ( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos.x, enemyPos.y);
+          //  System.out.println((float) Math.cos(temp);
+        //    System.out.println((float) Math.sin(temp);
+            newBullet.setBulletSpeed(4);
             bossBullets.add(newBullet);
 
 
-        } else if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
+      //  } else if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
 
-            canFire =true;
-        }
+        //    canFire =true;
+     //   }
     }
 
 
@@ -89,8 +91,13 @@ public class Boss extends Enemy {
     public void falsh(Enemy enemy){
         if(canFlash){
             canFlash = false;
-            final int random = new Random().nextInt(61) + 20; // [0, 60] + 20 => [20, 80]
-            enemyPos.x = GamePanel.hero.playerPos.x + random;
+            final int randomX = new Random().nextInt(2); // [0, 60] + 20 => [20, 80]
+            final int random = new Random().nextInt(450) + 100; // [0, 60] + 20 => [20, 80]
+            if(randomX==0) {
+                enemyPos.x = GamePanel.hero.playerPos.x + random;
+            }else{
+                enemyPos.x = GamePanel.hero.playerPos.x - random;
+            }
             enemyPos.y = GamePanel.hero.playerPos.y - random;
             attack();
             flashStartedTime = System.currentTimeMillis();
