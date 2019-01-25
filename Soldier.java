@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class Soldier extends Hero{
     public static int SOLDIERMAXHP = 250;
     private Context context;
-
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
     private int snipingBulletDamage = 150,normalBulletDamage = 25;
 
     int rayLength = 3000;
+
 
     Handler handler;
     public Soldier(int color,Point pos,Context context,GamePanel gamePanel){
@@ -38,6 +38,7 @@ public class Soldier extends Hero{
         this.context = context;
         super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
         super.heroColor = color;
+
         playerPos = pos;
 
         gunShotDelay = 3;
@@ -58,11 +59,6 @@ public class Soldier extends Hero{
         ultimateSkillOnCoolTime = true;
         ultimateSkillLastingTime = 10;
 
-
-
-
-
-        //healPack = new SoldierHealPack(playerPos,this);
     }
 
     @Override
@@ -91,7 +87,6 @@ public class Soldier extends Hero{
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-
         for(int i=0;i<playerBullets.size();i++){
             SoldierGunShot gunShot = (SoldierGunShot)playerBullets.get(i);
             if(gunShot.isActive())
@@ -126,8 +121,6 @@ public class Soldier extends Hero{
         if(healPack!=null){
             healPack.draw(canvas);
         }
-
-
 
     }
 
@@ -169,30 +162,18 @@ public class Soldier extends Hero{
             gunShotDelayStartTime = System.currentTimeMillis();
         }
     }
-
+    /*
     @Override
     public void takeDamage(int damage) {
         GamePanel.HEROHP.getDamage(damage);
     }
+    */
 
     @Override
     public void setSkill1On(){
         if(!ultimateSkillOn) {
             super.setSkill1On();
-            //this.skill1On = !this.skill1On;
-            //if (skill1On) {
-            skill1On = true;
-            //gunShotDelay = 10;
-            //bulletSpeed = snipingBulletSpeed;
-            //bulletDamge = snipingBulletDamage;
-
-            //} else {
-                //gunShotDelay = 3;
-                //bulletSpeed =normalBulletSpeed;
-                //bulletDamge = normalBulletDamage;
-            //}
         }
-
     }
 
     @Override

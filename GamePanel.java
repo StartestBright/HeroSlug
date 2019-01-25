@@ -91,7 +91,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         HEROHP = MainActivity.playerHP;
         BG = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.backgroundimage));
-        HERO = new Soldier(Color.BLUE,new Point(100,100),context,this);
+
+        //HERO = new Soldier(Color.BLUE,new Point(100,100),context,this);
+        HERO = new RocketMan(Color.YELLOW,new Point(100,100),context);
+
         playerPoint = new Point(150,150);
         floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),Color.GREEN,this);
         enemyManager = new EnemyManager(context);

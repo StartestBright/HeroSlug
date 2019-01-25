@@ -27,6 +27,8 @@ public abstract class Hero implements Character{
     protected Point playerPos;
     protected int heroSizeX,heroSizeY;
     protected boolean flying;
+    protected float bulletSpeed;
+    protected int bulletDamge;
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
     protected long skill2CoolTime,skill2StartTime,skill2LastingTime;
@@ -88,7 +90,12 @@ public abstract class Hero implements Character{
     public void update(){
         heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
         if(!playerLanded) {
-            playerVelocityY += gravity;
+            if(GamePanel.HERO.getHeroTag()!="RocketMan")
+                playerVelocityY += gravity;
+            else if(GamePanel.HERO.getHeroTag()=="RocketMan"){
+                if(!skill1On)
+                    playerVelocityY += gravity;
+            }
         }else if(playerLanded){
             playerVelocityY = 0;
             playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-heroRect.height()/2;
@@ -106,9 +113,9 @@ public abstract class Hero implements Character{
         heroMoveBeyondHalf();
 
         if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
-
             canFire =true;
         }
+
         flyFinished();
 
         for(int i=0;i<playerBullets.size();i++){
@@ -161,12 +168,14 @@ public abstract class Hero implements Character{
         if(!skill1OnCoolTime){
             skill1StartTime = System.currentTimeMillis();
             skill1OnCoolTime = true;
+            skill1On = true;
         }
     };
     public void setSkill2On(){
         if(!skill2OnCoolTime) {
             skill2StartTime = System.currentTimeMillis();
             skill2OnCoolTime = true;
+            skill2On = true;
         }
     };
     public void setUltimateSkillOn(){
@@ -243,6 +252,10 @@ public abstract class Hero implements Character{
     }
     public Point getHeroPos() {
         return playerPos;
+    }
+    @Override
+    public void takeDamage(int damage) {
+        GamePanel.HEROHP.getDamage(damage);
     }
     public void heroMoveBeyondHalf(){
         if(playerVelocityX>0) {
