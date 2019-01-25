@@ -18,7 +18,7 @@ public class Enemy1 extends Enemy {
 
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
-        enemyVelocityX=4.0;
+      //  enemyVelocityX=4.0;
         enemyMaxHp = 100;
         enemySize = 50;
    //     enemy1Bullets = new ArrayList<EnemyGunShot1>();
@@ -38,6 +38,7 @@ public class Enemy1 extends Enemy {
     @Override
     public void attack(){
         if(canFire) {
+            enemyVelocityX=0;
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
            // EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);

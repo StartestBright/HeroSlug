@@ -22,7 +22,8 @@ public class Boss extends Enemy {
 
     public Boss(Context context, Point p, int enemyIndex) {
         super(context,p,enemyIndex);
-        curHp = 1000;
+        enemyMaxHp = 500;
+        curHp = enemyMaxHp;
         enemySize = 50;
     }
 
