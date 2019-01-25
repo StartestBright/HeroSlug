@@ -27,8 +27,7 @@ public class HeroGunShot extends View implements GameObject{
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
 
-    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public HeroGunShot(Context context) {
+    public HeroGunShot(Context context,float velocityX,float velocityY,float xPos,float yPos) {
         super(context);
         this.velocityX = velocityX;
         this.velocityY = velocityY;

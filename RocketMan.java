@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
@@ -16,6 +15,11 @@ public class RocketMan extends Hero {
     public static int ROCKETMANMAXHP = 200;
     private int rocketSpeed = 30;
     private Context context;
+    private boolean rockManFlying = false;
+    private int flyingGaze;
+    private static int FLYINGMAXGAZE = 100;
+
+
 
 
     public RocketMan(int color, Point pos, Context context){
@@ -33,6 +37,7 @@ public class RocketMan extends Hero {
 
         playerPos = pos;
 
+        flyingGaze = FLYINGMAXGAZE;
         gunShotDelay = 3;
         bulletSpeed = rocketSpeed;
         bulletDamge = rocketSpeed;
@@ -50,6 +55,8 @@ public class RocketMan extends Hero {
         ultimateSkillCoolTime = 30;
         ultimateSkillOnCoolTime = true;
         ultimateSkillLastingTime = 10;
+
+
     }
     @Override
     public int getHeroMaxHP() {
@@ -69,9 +76,43 @@ public class RocketMan extends Hero {
         }
     }
 
+    private int rocketManJumpPosY;
+    private boolean rockmanCanFly = false;
+    public void fly(){
+        rockManFlying = true;
+        if(playerLanded) {
+            rocketManJumpPosY = playerPos.y;
+        }
+
+    }
+
+    @Override
+    protected void setPlayerLanded(boolean landed) {
+        super.setPlayerLanded(landed);
+        rockManFlying= false;
+        rockmanCanFly = false;
+    }
+
+
+    public void falling(){
+        rockManFlying = false;
+    }
     @Override
     public void update() {
         super.update();
+        if(rockManFlying&&(flyingGaze>0)&&rockmanCanFly){
+            playerVelocityY =0;
+            playerPos.y -=25;
+            flyingGaze-=2;
+        }
+        if(!rockManFlying && (flyingGaze<=FLYINGMAXGAZE) ){
+            flyingGaze+=1;
+        }
+
+        if(rocketManJumpPosY-playerPos.y>=450) {
+            rockmanCanFly = true;
+        }
+
     }
 
 
@@ -83,5 +124,24 @@ public class RocketMan extends Hero {
             if(gunShot.isActive())
                 gunShot.draw(canvas);
         }
+    }
+
+    @Override
+    protected String getHeroTag() {
+        return "RocketMan";
+    }
+
+    @Override
+    public void setSkill1On() {
+        super.setSkill1On();
+        playerLanded=false;
+        playerVelocityY=0;
+
+    }
+
+    @Override
+    public void setSkill2On() {
+        super.setSkill2On();
+
     }
 }

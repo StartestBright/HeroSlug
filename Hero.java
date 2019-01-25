@@ -90,7 +90,12 @@ public abstract class Hero implements Character{
     public void update(){
         heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
         if(!playerLanded) {
-            playerVelocityY += gravity;
+            if(GamePanel.HERO.getHeroTag()!="RocketMan")
+                playerVelocityY += gravity;
+            else if(GamePanel.HERO.getHeroTag()=="RocketMan"){
+                if(!skill1On)
+                    playerVelocityY += gravity;
+            }
         }else if(playerLanded){
             playerVelocityY = 0;
             playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-heroRect.height()/2;
@@ -163,12 +168,14 @@ public abstract class Hero implements Character{
         if(!skill1OnCoolTime){
             skill1StartTime = System.currentTimeMillis();
             skill1OnCoolTime = true;
+            skill1On = true;
         }
     };
     public void setSkill2On(){
         if(!skill2OnCoolTime) {
             skill2StartTime = System.currentTimeMillis();
             skill2OnCoolTime = true;
+            skill2On = true;
         }
     };
     public void setUltimateSkillOn(){

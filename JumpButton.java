@@ -3,11 +3,13 @@ package com.jknull.heroslug;
 import android.content.Context;
 //import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class JumpButton extends View {
 
+    Context context;
     public static int JUMPBUTTON_WIDTH = MainActivity.SCREEN_WIDTH/8;
     public static int JUMPBUTTON_HEIGHT = MainActivity.SCREEN_HEIGHT/8;
 
@@ -30,22 +32,34 @@ public class JumpButton extends View {
 
     public void init(Context context) {
 
+        this.context = context;
         this.setBackgroundResource(R.drawable.jumpicon);
+
+
+
+
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        //event.getPointerId(0);
 
-        if(action == MotionEvent.ACTION_UP){
-
-            if(gamePanel.HERO.isLaneded()){
+        if (GamePanel.HERO.getHeroTag() == "RocketMan") {
+            RocketMan rocketMan = (RocketMan) GamePanel.HERO;
+            rocketMan.fly();
+        }
+        if (action == event.ACTION_DOWN) { //jump
+            if (gamePanel.HERO.isLaneded()) {
                 gamePanel.HERO.jump();
+            }
 
+
+        } else if (action == MotionEvent.ACTION_UP) {
+            if (GamePanel.HERO.getHeroTag() == "RocketMan") {
+                RocketMan rocketMan = (RocketMan) GamePanel.HERO;
+                rocketMan.falling();
             }
         }
         return true;
-
     }
 }

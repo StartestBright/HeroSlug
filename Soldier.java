@@ -173,7 +173,6 @@ public class Soldier extends Hero{
     public void setSkill1On(){
         if(!ultimateSkillOn) {
             super.setSkill1On();
-            skill1On = true;
         }
     }
 
