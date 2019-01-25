@@ -10,7 +10,7 @@ import android.os.Build;
 
 import java.util.ArrayList;
 
-public class Enemy3 extends Enemy {
+public class Enemy3 extends Enemy{
 
 
 

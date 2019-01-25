@@ -18,6 +18,7 @@ public class Boss extends Enemy {
     private long flashDelay = 20;
     private boolean canFlash = true;
     private boolean bossActive = false;
+    private boolean askForHelp = true;
 
 
     public Boss(Context context, Point p, int enemyIndex) {
@@ -25,6 +26,18 @@ public class Boss extends Enemy {
         enemyMaxHp = 500;
         curHp = enemyMaxHp;
         enemySize = 50;
+        enemyVelocityX=0;
+        enemyVelocityY=0;
+      //  EnemyManager enemyHelp;
+    }
+
+    public void askHelp(){
+        if((curHp<=enemyMaxHp/2)&&askForHelp){
+            askForHelp=false;
+            EnemyManager.enemies.add(new Enemy2(context,new Point(GamePanel.HERO.playerPos.x+800,500),EnemyManager.enemyIndex));
+            EnemyManager.enemyIndex++;
+
+        }
     }
 
     @Override
@@ -93,5 +106,6 @@ public class Boss extends Enemy {
             bossActive = true;
         }
         super.update();
+        askHelp();
     }
 }
