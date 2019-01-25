@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,7 +38,7 @@ public class Boss extends Enemy {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
 
@@ -62,7 +62,7 @@ public class Boss extends Enemy {
         canvas.drawRect(enemyRect, p);
 
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void falsh(Enemy enemy){
         if(canFlash){
             canFlash = false;
@@ -83,7 +83,7 @@ public class Boss extends Enemy {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
         if (bossActive) {

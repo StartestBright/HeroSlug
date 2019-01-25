@@ -1,7 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+//import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,9 +22,9 @@ public class JoyStick extends View{
         init(context);
     }
 
-    public JoyStick(Context context,@Nullable AttributeSet attrs) {
+    public JoyStick(Context context,AttributeSet attrs) {
         super(context, attrs);
-        
+
     }
     public void init(Context context){
         this.setBackgroundResource(R.drawable.joystick);

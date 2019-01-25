@@ -3,7 +3,7 @@ package com.jknull.heroslug;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 
 public class Background {
     private Bitmap image;

@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,7 +29,7 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
 
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         //super(context,velocityX,velocityY,xPos,yPos);
         super(context);

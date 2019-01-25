@@ -10,7 +10,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
@@ -136,7 +136,7 @@ public class Soldier extends Hero{
     public int getHeroMaxHP() {
         return SOLDIERMAXHP;
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack() {
         if(canFire) {
