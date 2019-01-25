@@ -44,10 +44,10 @@ public abstract class Enemy implements Character{
     public void enmyWalk(Enemy enemy){
         if(enemyInWalkMode == true){
             if(walkAlready<=walkLength) {
-                enemyPos.x -= enemyVelocityX;
+                enemyVelocityX=-2;
                 walkAlready++;
             }else if(walkBack<=walkLength){
-                enemyPos.x += enemyVelocityX;
+                enemyVelocityX=2;
                 walkBack++;
             }else {
                 walkAlready=0;
@@ -69,9 +69,9 @@ public abstract class Enemy implements Character{
 
             else if (enemy.enemyPos.x < GamePanel.HERO.getHeroPos().x) {
 
-                enemy.enemyPos.x += enemy.enemyVelocityX*2;
+                enemyVelocityX=4;
             } else if (enemy.enemyPos.x > GamePanel.HERO.getHeroPos().x) {
-                enemy.enemyPos.x -=  enemy.enemyVelocityX*2;
+                enemy.enemyVelocityX=-4;
             }
 
 
@@ -122,6 +122,8 @@ public abstract class Enemy implements Character{
 
 
     public  void update(){
+        enemyPos.x += enemyVelocityX;
+        enemyPos.y += enemyVelocityY;
         enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
         for(int i=0;i<enemyGunShots.size();i++){
             enemyGunShots.get(i).update();
@@ -167,7 +169,5 @@ public abstract class Enemy implements Character{
             enemyAlive = false;
         }
     }
-
-    //
 
 }

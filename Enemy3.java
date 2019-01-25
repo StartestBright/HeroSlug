@@ -76,9 +76,9 @@ public class Enemy3 extends Enemy {
                 &&(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)>=10)) {
             enemy.enemyInWalkMode = false;
             if (enemy.enemyPos.x < GamePanel.HERO.getHeroPos().x) {
-                enemy.enemyPos.x += enemy.enemyVelocityX * 2;
+                enemyVelocityX =4;
             }else if (enemy.enemyPos.x > GamePanel.HERO.getHeroPos().x) {
-                enemy.enemyPos.x -= enemy.enemyVelocityX * 2;
+                enemyVelocityX =-4;
             }
         }
        else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=10){
