@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -39,14 +39,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GamePanel(Context context) {
         super(context);
         init(context);
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GamePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -84,7 +84,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+   // @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void init(Context context){
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(),this);

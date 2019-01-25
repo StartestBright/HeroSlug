@@ -8,11 +8,11 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.os.Build;
 import android.provider.SyncStateContract;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 import android.support.constraint.Constraints;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v4.app.ActivityCompat;
+//import android.support.v4.app.FragmentManager;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     public static Skill3 ultimateSkill;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DisplayMetrics dm = new DisplayMetrics();

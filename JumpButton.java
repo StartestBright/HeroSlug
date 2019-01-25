@@ -1,7 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+//import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +23,7 @@ public class JumpButton extends View {
 
     }
 
-    public JumpButton(Context context,@Nullable AttributeSet attrs) {
+    public JumpButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }

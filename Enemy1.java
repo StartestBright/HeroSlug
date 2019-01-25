@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class Enemy1 extends Enemy {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
         if(canFire) {
@@ -57,7 +57,7 @@ public class Enemy1 extends Enemy {
         super.draw(canvas);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+   //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
         landDetect();

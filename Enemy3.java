@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public class Enemy3 extends Enemy {
         super.draw(canvas);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack(){
         if(canFire) {
@@ -54,7 +54,7 @@ public class Enemy3 extends Enemy {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
         enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize-400;
@@ -69,7 +69,7 @@ public class Enemy3 extends Enemy {
         return enemySize;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void enmyFollow(Enemy enemy){
         if((Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=800)

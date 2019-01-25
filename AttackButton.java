@@ -2,7 +2,7 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+//import android.support.annotation.RequiresApi;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,7 +24,7 @@ public class AttackButton extends View {
         this.setBackgroundResource(R.drawable.attackicon);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN)
