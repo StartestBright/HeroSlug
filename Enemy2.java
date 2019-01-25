@@ -20,7 +20,7 @@ public class Enemy2 extends Enemy {
         super(context, p, enemyIndex);
         curHp = enemyMaxHp + 200;
         enemyVelocityX = 2.0;
-        enemySize = 30;
+        enemySize = 50;
         dashing=false;
     }
 

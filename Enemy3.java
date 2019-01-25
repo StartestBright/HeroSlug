@@ -20,6 +20,7 @@ public class Enemy3 extends Enemy {
         curHp = enemyMaxHp;
         enemySize = 50;
         enemyVelocityX = 2.0;
+        enemyVelocityY = 0;
     }
 
     @Override
