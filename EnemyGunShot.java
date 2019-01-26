@@ -11,6 +11,8 @@ import android.os.Build;
 //import android.support.annotation.RequiresApi;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public abstract class EnemyGunShot extends View implements GameObject {
     protected int bulletColor;
     protected boolean active = true;
@@ -23,6 +25,7 @@ public abstract class EnemyGunShot extends View implements GameObject {
     protected int screenWidth = MainActivity.SCREEN_WIDTH;
     protected int screenHeight = MainActivity.SCREEN_HEIGHT;
     BitmapFactory.Options opt = new BitmapFactory.Options();
+
 
 
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -100,12 +103,14 @@ public abstract class EnemyGunShot extends View implements GameObject {
 
     public void collisionDetect() {
         if (this.active) {
-            if (xPos + radius >= GamePanel.HERO.getHero().left && //if  collide with enemy
-                    xPos - radius <= GamePanel.HERO.getHero().right &&
-                    yPos + radius >= GamePanel.HERO.getHero().top &&
-                    yPos - radius <= GamePanel.HERO.getHero().bottom) {
+            if (xPos + radius +10>= GamePanel.HERO.getHero().left && //if  collide with enemy
+                    xPos - radius -10<= GamePanel.HERO.getHero().right &&
+                    yPos + radius +10>= GamePanel.HERO.getHero().top &&
+                    yPos - radius -10<= GamePanel.HERO.getHero().bottom) {
                 GamePanel.HERO.takeDamage(damage);
                 active = false;
+
+
             }
         }
     }

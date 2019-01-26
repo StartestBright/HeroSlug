@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class EnemyManager {
     private Context context;
+    public static ArrayList<BoomEffection> enemyBoomEffections= new ArrayList<BoomEffection>();
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private int enemyIndex= 0;
     public void spawnEnemy1(Point spawnPoint){
@@ -34,14 +35,14 @@ public class EnemyManager {
         spawnEnemy1(new Point(2800,100));
         spawnEnemy1(new Point(3200,100));
        spawnEnemy1(new Point(3800,100));
-   spawnEnemy2(new Point(1200,1200));
+/*     spawnEnemy2(new Point(1200,1200));
       spawnEnemy2(new Point(1900,1200));
       spawnEnemy2(new Point(3000,1200));
        spawnEnemy3(new Point(3500,-500));
      spawnEnemy3(new Point(4000,-500));
      spawnEnemy3(new Point(1200,-500));
       spawnEnemy3(new Point(2300,-500));
-     spawnEnemy3(new Point(4500,-500));
+     spawnEnemy3(new Point(4500,-500));*/
     }
     public void update(){
         for(int i=0;i<enemies.size();i++){
@@ -57,12 +58,24 @@ public class EnemyManager {
         }
     }
     public static void killEnemy(int index){
+
         for(int i =0;i<enemies.size();i++){
             if(enemies.get(i).getEnemyIndex()==index){
-                enemies.remove(i);
+                enemyBoomEffections.add(new BoomEffection(enemies.get(i).enemyBitMapLeft,enemies.get(i).enemyPos,100));
+
+           //     enemies.remove(i);
             }
         }
+        for(int i = 0; i <enemyBoomEffections.size();i++){
+            if(enemyBoomEffections.get(i).isFished()){
+
+                enemyBoomEffections.remove(i);
+            }
+        }
+
     }
+
+
 
 
 
