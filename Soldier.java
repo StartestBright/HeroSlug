@@ -44,6 +44,26 @@ public class Soldier extends Hero{
         heroMovingLeftBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move6l);
         heroMovingLeftBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move7l);
 
+        heroIdleRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle0r);
+        heroIdleRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle1r);
+        heroIdleRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle2r);
+        heroIdleRightBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle3r);
+        heroIdleRightBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle4r);
+        heroIdleRightBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle5r);
+        heroIdleRightBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle6r);
+        heroIdleRightBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle7r);
+        heroIdleRightBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle8r);
+
+        heroIdleLeftBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle0l);
+        heroIdleLeftBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle1l);
+        heroIdleLeftBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle2l);
+        heroIdleLeftBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle3l);
+        heroIdleLeftBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle4l);
+        heroIdleLeftBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle5l);
+        heroIdleLeftBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle6l);
+        heroIdleLeftBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle7l);
+        heroIdleLeftBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle8l);
+
 
 
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_weapon_right);
@@ -85,6 +105,7 @@ public class Soldier extends Hero{
         }
 
         if(skill1On){
+            canMove = false;
             gunShotDelay = 10;
             bulletSpeed = snipingBulletSpeed;
             bulletDamge = snipingBulletDamage;

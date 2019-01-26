@@ -27,6 +27,7 @@ public abstract class Hero implements Character{
     protected boolean flying;
     protected float bulletSpeed;
     protected int bulletDamage;
+    protected boolean canMove = true;
 
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
@@ -42,7 +43,12 @@ public abstract class Hero implements Character{
 
     protected Bitmap heroMovingRightBitmaps[];
     protected Bitmap heroMovingLeftBitmaps[];
+    protected Bitmap heroIdleRightBitmaps[];
+    protected Bitmap heroIdleLeftBitmaps[];
+
+
     protected int heroMovingBitmapIndex =0;
+    protected int heroIdleBitmapIndex = 0;
 
     protected Bitmap[] heroWeaponBitmaps;
     protected int heroWeaponBitmapIndex=0;
@@ -69,6 +75,9 @@ public abstract class Hero implements Character{
 
                     if (playerVelocityX == 0) {
                         heroMovingBitmapIndex = 0;
+                        heroIdleBitmapIndex = (heroIdleBitmapIndex+1)%9;
+                        Thread.sleep(100);
+                        continue;
                     } else if (playerVelocityX != 0) {
                         heroMovingBitmapIndex = (heroMovingBitmapIndex + 1) % 8;
                     }
@@ -94,6 +103,9 @@ public abstract class Hero implements Character{
         playerPos = heroSpawnPos;
         heroMovingRightBitmaps = new Bitmap[8];
         heroMovingLeftBitmaps = new Bitmap[8];
+        heroIdleRightBitmaps = new Bitmap[9];
+        heroIdleLeftBitmaps = new Bitmap[9];
+
 
         heroMovingBitmapIndex =0;
         heroWeaponBitmapIndex =0;
@@ -132,9 +144,9 @@ public abstract class Hero implements Character{
                 canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
             }else if(playerVelocityX== 0){
                 if(heroFacingRight())
-                    canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                    canvas.drawBitmap(heroIdleRightBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
                 else
-                    canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                    canvas.drawBitmap(heroIdleLeftBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
 
             }
         //canvas.save();
@@ -191,6 +203,7 @@ public abstract class Hero implements Character{
             }
             if( (System.currentTimeMillis()- skill1StartTime)/1000>=skill1LastingTime){
                 skill1On = false;
+                canMove = true;
             }
 
             MainActivity.skill1.setAlpha(( (float)(System.currentTimeMillis()-skill1StartTime)/1000 )/skill1CoolTime);
@@ -287,8 +300,10 @@ public abstract class Hero implements Character{
     protected Rect getHero(){
         return this.heroRect;
     }
+
+
     public void moveHorizontal(double value){
-        if(!flying) {
+        if(!flying && canMove) {
             playerVelocityX = value;
             if (playerVelocityX >= PLAYERMAXHORIZONTALSPEED)
                 playerVelocityX = PLAYERMAXHORIZONTALSPEED;
@@ -379,12 +394,15 @@ public abstract class Hero implements Character{
     }
 
     public Point getHeroShotSpawnPoint(){
-        return new Point(heroWeaponRect.right,heroWeaponRect.top+heroWeaponRect.height()/2);
+        if(heroFacingRight())
+            return new Point(heroWeaponRect.right-20,heroWeaponRect.top+heroWeaponRect.height()/2);
+        else
+            return new Point(heroWeaponRect.left,heroWeaponRect.top+heroWeaponRect.height()/2);
     }
 
 
     public boolean heroFacingRight(){
-        if((playerRotation<Math.PI/2 &&playerRotation>0)|| (playerRotation>-Math.PI/2 && playerRotation<0))
+        if((playerRotation<Math.PI/2 &&playerRotation>=0)|| (playerRotation>-Math.PI/2 && playerRotation<=0))
             return true;
         return false;
     }
