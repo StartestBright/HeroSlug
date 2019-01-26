@@ -18,6 +18,7 @@ public class RocketMan extends Hero {
     private boolean rockManFlying = false;
     private int flyingGaze;
     private static int FLYINGMAXGAZE = 100;
+    private RocketManShockShot shockShot;
 
 
 
@@ -46,8 +47,11 @@ public class RocketMan extends Hero {
         jumpPower = 100;
         heroTag = "RocketMan";
 
+
+        skill1OnCoolTime=false;
         skill1CoolTime = 15;
         skill1LastingTime=5;
+        skill2OnCoolTime=false;
         skill2CoolTime = 12;
         skill2LastingTime= 0;
 
@@ -112,6 +116,8 @@ public class RocketMan extends Hero {
         if(rocketManJumpPosY-playerPos.y>=450) {
             rockmanCanFly = true;
         }
+        if(shockShot!=null)
+            shockShot.update();
 
     }
 
@@ -124,6 +130,10 @@ public class RocketMan extends Hero {
             if(gunShot.isActive())
                 gunShot.draw(canvas);
         }
+        if(shockShot!=null)
+            shockShot.draw(canvas);
+
+
     }
 
     @Override
@@ -133,15 +143,22 @@ public class RocketMan extends Hero {
 
     @Override
     public void setSkill1On() {
-        super.setSkill1On();
-        playerLanded=false;
-        playerVelocityY=0;
+        if(!skill1OnCoolTime) {
+            super.setSkill1On();
+            playerLanded = false;
+            playerVelocityY = 0;
+        }
 
     }
 
     @Override
     public void setSkill2On() {
-        super.setSkill2On();
-
+        if (!skill2OnCoolTime) {
+            super.setSkill2On();
+            shockShot =new RocketManShockShot(context,(float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
+        }
+    }
+    public void setRockManFlying(boolean flying){
+        rockManFlying = false;
     }
 }

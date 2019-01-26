@@ -7,44 +7,54 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 //import android.support.annotation.RequiresApi;
 import android.view.View;
 
-public abstract class EnemyGunShot extends View implements GameObject {
+import java.util.ArrayList;
+
+public abstract class EnemyGunShot implements GameObject {
     protected int bulletColor;
     protected boolean active = true;
     protected float bulletSpeed = 10;
-    protected float xPos = 500, yPos = 500, velocityX = 0, velocityY = 0;
-    protected float radius = 10;
+    protected float bulletVelocityX = 0, bulletVelocityY = 0;
+    protected  Point bulletPos;
+    protected int bulltSize = 25;
     protected Bitmap bulletImage;
     protected boolean directLeft;
     protected int damage = 25;
     protected int screenWidth = MainActivity.SCREEN_WIDTH;
     protected int screenHeight = MainActivity.SCREEN_HEIGHT;
+    protected Rect bulletRect;
+    protected  Canvas canvas;
+    protected Context context;
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
 
+
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos, int speed) {
-        super(context);
-        init(context);
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.bulletSpeed = speed;
+    public EnemyGunShot(Context context, float velocityX, float velocityY, Point pos, int speed) {
+       // super(context);
+      //  init(context);
+        this.context = context;
+        bulletVelocityX = velocityX;
+        bulletVelocityY  = velocityY;
+        bulletPos = pos;
+        bulletSpeed = speed;
+        bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
     }
 
     public void detectLeft() {
-        if (xPos >= GamePanel.HERO.getHeroPos().x) {
+        if (bulletPos.x >= GamePanel.HERO.getHeroPos().x) {
             directLeft = true;
         }
         if (active) {
             if (directLeft) {
-                xPos -= (velocityX * bulletSpeed);
+                bulletPos.x -= (bulletVelocityX * bulletSpeed);
             } else {
-                xPos += (velocityX * bulletSpeed);
+                bulletPos.x += (bulletVelocityX* bulletSpeed);
             }
         }
     }
@@ -52,27 +62,28 @@ public abstract class EnemyGunShot extends View implements GameObject {
 
     @Override
     public void update() {
-        if (xPos + radius >= screenWidth || xPos < 0 || yPos + radius >= screenHeight - GamePanel.floorHeight || yPos < 0) {
+        if (bulletPos.x + bulltSize >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulltSize >= screenHeight - GamePanel.floorHeight || bulletPos.y < 0) {
             active = false;
         }
+        bulletRect.set(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
         collisionDetect();
     }
 
-    @Override
+    //@Override
     public void draw(Canvas canvas) {
         if (active) {
-            super.draw(canvas);
+            this.canvas = canvas;
             // canvas.drawBitmap(bulletImage,0,0,null);
             Paint paint = new Paint();
-            paint.setColor(bulletColor);
-            canvas.drawCircle(xPos, yPos, radius, paint);
+        //    paint.setColor(bulletColor);
+            canvas.drawBitmap(bulletImage,null,bulletRect,paint);
 
         }
     }
 
     public Point getBulletPoint() {
         Point p = new Point();
-        p.set((int) xPos, (int) yPos);
+        p=bulletPos;
         return p;
     }
 
@@ -89,28 +100,34 @@ public abstract class EnemyGunShot extends View implements GameObject {
     public void init(Context context) {
 
 
-        opt.inMutable = true;
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
-        bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
+  //      bulletPos.x= Math.round(bulletPos.x);
+     //   bulletPos.y=Math.round(bulletPos.y);
+      //  opt.inMutable = true;
+        bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+     //   bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
-        bulletColor = Color.RED;
+     //   bulletColor = Color.RED;
+
 
     }
 
     public void collisionDetect() {
         if (this.active) {
-            if (xPos + radius >= GamePanel.HERO.getHero().left && //if  collide with enemy
-                    xPos - radius <= GamePanel.HERO.getHero().right &&
-                    yPos + radius >= GamePanel.HERO.getHero().top &&
-                    yPos - radius <= GamePanel.HERO.getHero().bottom) {
+            if (bulletPos.x + bulltSize +10>= GamePanel.HERO.getHero().left && //if  collide with enemy
+                    bulletPos.x - bulltSize -10<= GamePanel.HERO.getHero().right &&
+                    bulletPos.y + bulltSize +10>= GamePanel.HERO.getHero().top &&
+                    bulletPos.y - bulltSize -10<= GamePanel.HERO.getHero().bottom) {
                 GamePanel.HERO.takeDamage(damage);
                 active = false;
+
+
             }
         }
     }
     public void moveByHero(float velocityX){
-        xPos -= velocityX;
+        bulletPos.x -= velocityX;
     }
 }
 

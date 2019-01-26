@@ -171,7 +171,7 @@ public class Soldier extends Hero{
 
     @Override
     public void setSkill1On(){
-        if(!ultimateSkillOn) {
+        if(!ultimateSkillOn && !skill1OnCoolTime) {
             super.setSkill1On();
         }
     }

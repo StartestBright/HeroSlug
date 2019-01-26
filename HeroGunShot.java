@@ -59,11 +59,12 @@ public class HeroGunShot extends View implements GameObject{
         if(active) {
             xPos += (velocityX * bulletSpeed);
             yPos += (velocityY * bulletSpeed);
+            collisionDetect();
         }
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;
         }
-        collisionDetect();
+
     }
 
     @Override
@@ -99,7 +100,7 @@ public class HeroGunShot extends View implements GameObject{
 
             for(int i=0;i<EnemyManager.enemies.size();i++) {
                 Enemy enemy = EnemyManager.enemies.get(i);
-                if(enemy.isAlive()){
+                if(enemy.isAlive()&&active){
                     if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
                             xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
                             yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&

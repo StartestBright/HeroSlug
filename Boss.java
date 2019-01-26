@@ -61,7 +61,7 @@ public class Boss extends Enemy {
 
             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
             temp *= -1;
-            enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos.x, enemyPos.y,2));
+            enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos,2));
             bulletIndex++;
     }
 

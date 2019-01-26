@@ -4,15 +4,16 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Build;
 //import android.support.annotation.RequiresApi;
 
 public class EnemyReleaseBoom extends EnemyGunShot {
 
     //RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public EnemyReleaseBoom(Context context, float velocityX, float velocityY, float xPos, float yPos,int speed) {
-        super(context,velocityX,velocityY,xPos,yPos,speed);
-        radius = 50;
+    public EnemyReleaseBoom(Context context, float velocityX, float velocityY, Point pos, int speed) {
+        super(context,velocityX,velocityY,pos,speed);
+        bulltSize = 50;
         damage = 50;
     }
 
@@ -36,12 +37,12 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         if(active) {
 
               //  xPos -= (velocityX * bulletSpeed);
-                     yPos += (velocityY * bulletSpeed);
+                     bulletPos.y += (bulletVelocityY * bulletSpeed);
 
 
             }
 
-        if(xPos+radius>=screenWidth||xPos<0||yPos+radius>=screenHeight-GamePanel.floorHeight||yPos<0){
+        if(bulletPos.x+bulltSize>=screenWidth||bulletPos.x<0||bulletPos.y+bulltSize>=screenHeight-GamePanel.floorHeight||bulletPos.y<0){
             active = false;
         }
         collisionDetect();

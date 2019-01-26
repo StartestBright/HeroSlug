@@ -2,12 +2,14 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 
 import java.util.ArrayList;
 
 public class EnemyManager {
     private Context context;
+    public static ArrayList<BoomEffection> enemyBoomEffections= new ArrayList<BoomEffection>();
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public static int enemyIndex= 0;
     public void spawnEnemy1(Point spawnPoint){
@@ -35,7 +37,7 @@ public class EnemyManager {
         spawnEnemy1(new Point(2800,100));
         spawnEnemy1(new Point(3200,100));
        spawnEnemy1(new Point(3800,100));
-   spawnEnemy2(new Point(1200,1200));
+/*     spawnEnemy2(new Point(1200,1200));
       spawnEnemy2(new Point(1900,1200));
       spawnEnemy2(new Point(3000,1200));
        spawnEnemy3(new Point(3500,-500));
@@ -58,15 +60,14 @@ public class EnemyManager {
         }
     }
     public static void killEnemy(int index){
+
         for(int i =0;i<enemies.size();i++){
             if(enemies.get(i).getEnemyIndex()==index){
                 enemies.remove(i);
             }
         }
+
+
     }
-
-
-
-
-
+    
 }

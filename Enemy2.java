@@ -1,5 +1,6 @@
 package com.jknull.heroslug;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,8 +21,10 @@ public class Enemy2 extends Enemy {
         super(context, p, enemyIndex);
         curHp = enemyMaxHp + 200;
         enemyVelocityX = 2.0;
-        enemySize = 50;
+        enemySize = 200;
         dashing=false;
+        enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2right);
+        enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2left);
     }
 
     @Override
@@ -50,9 +53,7 @@ public class Enemy2 extends Enemy {
 
     @Override
     public void draw(Canvas canvas) {
-        Paint p = new Paint();
-        p.setColor(Color.rgb(255, 255, 255));
-        canvas.drawRect(enemyRect, p);
+        super.draw(canvas);
     }
 
 
