@@ -11,6 +11,7 @@ public class EnemyManager {
     public static ArrayList<BoomEffection> enemyBoomEffections= new ArrayList<BoomEffection>();
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private int enemyIndex= 0;
+
     public void spawnEnemy1(Point spawnPoint){
         enemies.add(new Enemy1(context,spawnPoint,enemyIndex));
         enemyIndex++;
@@ -29,13 +30,13 @@ public class EnemyManager {
     }
     EnemyManager(Context context){
         this.context = context;
-        Boss1(new Point(5000,500));
+        /*Boss1(new Point(5000,500));
         spawnEnemy1(new Point(800,200));
        spawnEnemy1(new Point(1600,100));
         spawnEnemy1(new Point(2800,100));
         spawnEnemy1(new Point(3200,100));
        spawnEnemy1(new Point(3800,100));
-/*     spawnEnemy2(new Point(1200,1200));
+    spawnEnemy2(new Point(1200,1200));
       spawnEnemy2(new Point(1900,1200));
       spawnEnemy2(new Point(3000,1200));
        spawnEnemy3(new Point(3500,-500));

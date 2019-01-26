@@ -1,14 +1,12 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Handler;
 //import android.support.annotation.RequiresApi;
 
@@ -28,9 +26,18 @@ public class Soldier extends Hero{
     Handler handler;
     public Soldier(int color,Point pos,Context context,GamePanel gamePanel){
         super(pos);
-        heroBitmaps = new Bitmap[2];
-        heroBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
-        heroWeaponBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        heroMovingBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0r);
+        heroMovingBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1r);
+        heroMovingBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move2r);
+        heroMovingBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move3r);
+        heroMovingBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move4r);
+        heroMovingBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move5r);
+        heroMovingBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move6r);
+        heroMovingBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move7r);
+
+
+
+        heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_weapon_right);
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
         heroSizeX =60;
@@ -56,7 +63,7 @@ public class Soldier extends Hero{
 
 
         ultimateSkillCoolTime = 30;
-        ultimateSkillOnCoolTime = true;
+        ultimateSkillOnCoolTime = false;
         ultimateSkillLastingTime = 10;
 
     }
@@ -98,7 +105,7 @@ public class Soldier extends Hero{
             Paint p = new Paint();
             p.setColor(Color.RED);
             p.setStrokeWidth(8);
-            canvas.drawLine(playerPos.x,playerPos.y,(int)(Math.cos(playerRotation)*rayLength)+playerPos.x,(int)(Math.sin(playerRotation)*rayLength)+playerPos.y,p);
+            canvas.drawLine(getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y,(int)(Math.cos(playerRotation)*rayLength)+playerPos.x,(int)(Math.sin(playerRotation)*rayLength)+playerPos.y,p);
         }
 
         if(ultimateSkillOn){
@@ -143,7 +150,7 @@ public class Soldier extends Hero{
                             int y = enemy.getEnemyPos().y - playerPos.y;
                             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
                             temp *= -1;
-                            SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), playerPos.x, playerPos.y);
+                            SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y);
                             newBullet.setBulletSpeed(bulletSpeed);
                             newBullet.setBulletDamage(bulletDamge);
                             playerBullets.add(newBullet);
@@ -152,7 +159,7 @@ public class Soldier extends Hero{
                     }
                 }
             } else {
-                SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
+                SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y);
                 newBullet.setBulletSpeed(bulletSpeed);
                 newBullet.setBulletDamage(bulletDamge);
                 playerBullets.add(newBullet);

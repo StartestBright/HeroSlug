@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 
 public class RocketManShockShot extends HeroGunShot {
-    private float shockPower = 300;
+    private float shockPower = 500;
     private float shockRange = 400;
     public RocketManShockShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context, velocityX, velocityY, xPos, yPos);

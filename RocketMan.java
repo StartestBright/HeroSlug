@@ -25,9 +25,9 @@ public class RocketMan extends Hero {
 
     public RocketMan(int color, Point pos, Context context){
         super(pos);
-        heroBitmaps = new Bitmap[2];
-        heroBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
-        heroWeaponBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        heroMovingBitmaps = new Bitmap[2];
+        heroMovingBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
+        heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
         heroSizeX =60;
@@ -52,7 +52,7 @@ public class RocketMan extends Hero {
         skill1CoolTime = 15;
         skill1LastingTime=5;
         skill2OnCoolTime=false;
-        skill2CoolTime = 12;
+        skill2CoolTime = 1;
         skill2LastingTime= 0;
 
 

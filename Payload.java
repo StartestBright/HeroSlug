@@ -29,7 +29,7 @@ public class Payload implements GameObject {
         payloadPos.x = payloadWidth/2;
         payloadPos.y = MainActivity.SCREEN_HEIGHT-payloadHeight/2-Floor.FLOORHEIGHT;
         payloadVelocityX = 5;
-        payloadBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.payloadimage);
+        payloadBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.payload_image);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class Payload implements GameObject {
             payloadPos.x += payloadVelocityX;
             PAYLOADPROGRESS += payloadVelocityX;
         }
+
 
 
         float ratio = (float)Payload.PAYLOADPROGRESS/GamePanel.MAPSIZE;
@@ -69,9 +70,11 @@ public class Payload implements GameObject {
 
         for(int i=0;i<EnemyManager.enemies.size();i++){
             Rect enemyRect = EnemyManager.enemies.get(i).enemyRect;
-            if(payloadRect.left -payloadContestRange <= enemyRect.right && payloadRect.right + payloadContestRange >= enemyRect.left
-                    && payloadRect.top -payloadContestRange<= enemyRect.bottom && payloadRect.bottom +payloadContestRange>= enemyRect.top){
-                return true;
+            if(EnemyManager.enemies.get(i).isAlive()) {
+                if (payloadRect.left - payloadContestRange <= enemyRect.right && payloadRect.right + payloadContestRange >= enemyRect.left
+                        && payloadRect.top - payloadContestRange <= enemyRect.bottom && payloadRect.bottom + payloadContestRange >= enemyRect.top) {
+                    return true;
+                }
             }
 
         }
