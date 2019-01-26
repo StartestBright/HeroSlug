@@ -30,6 +30,7 @@ public abstract class Hero implements Character{
     protected float bulletSpeed;
     protected int bulletDamge;
 
+
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
     protected long skill2CoolTime,skill2StartTime,skill2LastingTime;
     protected long ultimateSkillCoolTime, ultimateSkillStartTime,ultimateSkillLastingTime;
@@ -49,6 +50,7 @@ public abstract class Hero implements Character{
     //Matrix heroWeaponMatrix;
     protected int heroBitmapIndex=0;
 
+
     public abstract int getHeroMaxHP();
 
 
@@ -62,6 +64,9 @@ public abstract class Hero implements Character{
         canFire = true;
         ultimateSkillStartTime = System.currentTimeMillis();
         heroWeaponPos = new Point();
+        ultimateSkillOnCoolTime =true;
+        skill1OnCoolTime=false;
+        skill2OnCoolTime=false;
 
         heroWeaponPos.x = playerPos.x+20;
         heroWeaponPos.y = playerPos.y+10;
@@ -189,6 +194,10 @@ public abstract class Hero implements Character{
 
     public void getDashed(int l) {
         flying = true;
+        if(GamePanel.HERO.getHeroTag()=="RocketMan") {
+            RocketMan rocketMan = (RocketMan)GamePanel.HERO;
+            rocketMan.setRockManFlying(false);
+        }
         playerLanded = false;
         if(l==1) {
             playerVelocityX = -30;
