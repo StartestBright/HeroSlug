@@ -21,7 +21,7 @@ public class Enemy2 extends Enemy {
         super(context, p, enemyIndex);
         curHp = enemyMaxHp + 200;
         enemyVelocityX = 2.0;
-        enemySize = 100;
+        enemySize = 200;
         dashing=false;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2right);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2left);

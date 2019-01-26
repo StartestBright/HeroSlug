@@ -2,6 +2,7 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 
 import java.util.ArrayList;
@@ -61,17 +62,10 @@ public class EnemyManager {
 
         for(int i =0;i<enemies.size();i++){
             if(enemies.get(i).getEnemyIndex()==index){
-                enemyBoomEffections.add(new BoomEffection(enemies.get(i).enemyBitMapLeft,enemies.get(i).enemyPos,100));
-
-           //     enemies.remove(i);
+                enemies.remove(i);
             }
         }
-        for(int i = 0; i <enemyBoomEffections.size();i++){
-            if(enemyBoomEffections.get(i).isFished()){
 
-                enemyBoomEffections.remove(i);
-            }
-        }
 
     }
 

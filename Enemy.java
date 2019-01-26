@@ -114,7 +114,7 @@ public abstract class Enemy implements Character{
     }
     public boolean isAlive(){
         return enemyAlive;
-    };
+    }
 
 
     public abstract void attack();
