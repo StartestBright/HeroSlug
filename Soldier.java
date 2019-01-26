@@ -69,7 +69,7 @@ public class Soldier extends Hero{
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_weapon_right);
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
-        heroSizeX =60;
+        heroSizeX =80;
         heroSizeY =100;
         this.context = context;
         super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);

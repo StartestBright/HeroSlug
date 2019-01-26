@@ -395,9 +395,9 @@ public abstract class Hero implements Character{
 
     public Point getHeroShotSpawnPoint(){
         if(heroFacingRight())
-            return new Point(heroWeaponRect.right-20,heroWeaponRect.top+heroWeaponRect.height()/2);
+            return new Point(heroWeaponRect.right-10,heroWeaponRect.top+heroWeaponRect.height()/2);
         else
-            return new Point(heroWeaponRect.left,heroWeaponRect.top+heroWeaponRect.height()/2);
+            return new Point(heroWeaponRect.left-35,heroWeaponRect.top+heroWeaponRect.height()/2);
     }
 
 
