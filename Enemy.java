@@ -1,7 +1,10 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -26,19 +29,30 @@ public abstract class Enemy implements Character{
     protected long gunShotDelayStartTime;
     protected long gunShotDelay = 50;
     protected static int enemyMaxHp;
+    protected  Bitmap enemyBitMapRight;
+    protected  Bitmap enemyBitMapLeft;
     protected Canvas canvas;
+
 
     public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
    // public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 
+
     protected  int bulletIndex = 0;
+
+    public void takeShockShot(Point shockPoint,float shockPower,float shockRange){
+        enemyVelocityX+=(enemyPos.x-shockPoint.x)/shockRange*shockPower;
+        enemyVelocityY+=(enemyPos.y-shockPoint.y)/shockRange*shockPower;
+    }
 
 
     public Point getEnemyPos(){
         return this.enemyPos;
 
     }
+
+
 
 
     public void enmyWalk(Enemy enemy){
@@ -133,12 +147,30 @@ public abstract class Enemy implements Character{
     }
 
     public void draw(Canvas canvas){
+        this.canvas = canvas;
+        Paint p = new Paint();
+        if(enemyVelocityX>0) {
+            canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
+        }else if(enemyVelocityX<0){
+            canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
+        }else if(GamePanel.HERO.playerPos.x<=this.enemyPos.x){
+            canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
+        }
+        else{
+            canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
+        }
+
+
+
+
         for(int i=0;i<enemyGunShots.size();i++){
             if(enemyGunShots.get(i).isActive()) {
                 enemyGunShots.get(i).draw(canvas);
             }
         }
     }
+
+
 
 
 
