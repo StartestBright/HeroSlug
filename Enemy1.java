@@ -26,7 +26,8 @@ public class Enemy1 extends Enemy {
 
         curHp = enemyMaxHp;
 
-        enemySize = 100;
+        enemyHeight= 100;
+        enemyWidth = 50;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy1);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy1left);
 
@@ -41,6 +42,10 @@ public class Enemy1 extends Enemy {
     @Override
     public void jump() {
 
+    }
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -58,12 +63,10 @@ public class Enemy1 extends Enemy {
 
 
 
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-    }
+
 
    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
     @Override
     public void update() {
         landDetect();

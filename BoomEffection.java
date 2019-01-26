@@ -18,11 +18,12 @@ public class BoomEffection {
     private int totalFrame;
     private int currentFrame;
     private int frameW,frameH;
-    private boolean isFished=false;
-    private  int intXPosition;
-    private  int intYPostion;
+    private boolean isFished;
+
+
 
     public BoomEffection(Bitmap bitmap, Point boomPosition, int totalFrame) {
+
         this.bitmap = bitmap;
         this.boomPosition=boomPosition;
         int a = Math.round(3.14f);

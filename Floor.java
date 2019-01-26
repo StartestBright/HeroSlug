@@ -37,7 +37,7 @@ public class Floor {
 
     public boolean enemyCollide(int enemyIndex){
         Enemy enemy = EnemyManager.enemies.get(enemyIndex);
-        if(enemy.enemyPos.y>=MainActivity.SCREEN_HEIGHT-enemy.getEnemySize()){
+        if(enemy.enemyPos.y>=MainActivity.SCREEN_HEIGHT-enemy.getEnemyHeight()){
             return true;
         }
         return false;

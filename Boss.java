@@ -25,7 +25,8 @@ public class Boss extends Enemy {
         super(context,p,enemyIndex);
         enemyMaxHp = 500;
         curHp = enemyMaxHp;
-        enemySize = 50;
+        enemyWidth = 50;
+        enemyHeight = 100;
         enemyVelocityX=0;
         enemyVelocityY=0;
       //  EnemyManager enemyHelp;

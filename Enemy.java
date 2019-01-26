@@ -18,7 +18,8 @@ public abstract class Enemy implements Character{
     protected double enemyVelocityX;
     protected boolean enemyLanded;
     protected boolean enemyAlive;
-    protected  int enemySize;
+    protected  int enemyWidth;
+    protected int enemyHeight;
     protected Rect enemyRect;
     protected final int walkLength=200;
     protected int walkAlready = 0;
@@ -109,7 +110,7 @@ public abstract class Enemy implements Character{
         enemyPos = p;
         this.enemyIndex = enemyIndex;
         curHp = enemyMaxHp;
-        enemyRect = new Rect(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
+        enemyRect = new Rect(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         enemyAlive =true;
     }
     public boolean isAlive(){
@@ -124,15 +125,16 @@ public abstract class Enemy implements Character{
             enemyVelocityY += gravity;
         }else if(enemyLanded){
             enemyVelocityY = 0;
-            enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize;
+            enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight;
         }
     }
 
 
     public  void update(){
+        Paint paint = new Paint();
         enemyPos.x += enemyVelocityX;
         enemyPos.y += enemyVelocityY;
-        enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
+        enemyRect.set(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         for(int i=0;i<enemyGunShots.size();i++){
             enemyGunShots.get(i).update();
             if(!enemyGunShots.get(i).isActive())
@@ -142,12 +144,12 @@ public abstract class Enemy implements Character{
 
     public void draw(Canvas canvas){
         this.canvas = canvas;
-        Paint p = new Paint();
+       Paint p = new Paint();
         if(enemyVelocityX>0) {
             canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
         }else if(enemyVelocityX<0){
             canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
-        }else if(GamePanel.HERO.playerPos.x<=this.enemyPos.x){
+        }else if(GamePanel.HERO.playerPos.x<=enemyPos.x){
             canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
         }
         else{
@@ -169,8 +171,11 @@ public abstract class Enemy implements Character{
 
 
 
-    public int getEnemySize() {
-        return enemySize;
+    public int getEnemyWidth() {
+        return enemyWidth;
+    }
+    public int getEnemyHeight() {
+        return enemyHeight;
     }
     public Rect getEnemyRect(){
         return enemyRect;
