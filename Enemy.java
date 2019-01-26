@@ -3,6 +3,7 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -28,7 +29,7 @@ public abstract class Enemy implements Character{
     protected Boolean canFire = true;
     protected long gunShotDelayStartTime;
     protected long gunShotDelay = 50;
-    protected static int enemyMaxHp;
+    protected int enemyMaxHp; //wow... omg u made it as static... IT shouldn't be study what static is! I was looking for this problem
     protected  Bitmap enemyBitMapRight;
     protected  Bitmap enemyBitMapLeft;
     protected Canvas canvas;
@@ -130,28 +131,32 @@ public abstract class Enemy implements Character{
 
 
     public  void update(){
-        enemyPos.x += enemyVelocityX;
-        enemyPos.y += enemyVelocityY;
-        enemyRect.set(enemyPos.x-enemySize,enemyPos.y-enemySize,enemyPos.x+enemySize,enemyPos.y+enemySize);
-        for(int i=0;i<enemyGunShots.size();i++){
-            enemyGunShots.get(i).update();
-            if(!enemyGunShots.get(i).isActive())
-                enemyGunShots.remove(i);
+        if(isAlive()) { //Tony you didn't add this line which is wasting the resources
+            enemyPos.x += enemyVelocityX;
+            enemyPos.y += enemyVelocityY;
+            enemyRect.set(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
+            for (int i = 0; i < enemyGunShots.size(); i++) {
+                enemyGunShots.get(i).update();
+                if (!enemyGunShots.get(i).isActive())
+                    enemyGunShots.remove(i);
+            }
         }
     }
 
     public void draw(Canvas canvas){
-        this.canvas = canvas;
-        Paint p = new Paint();
-        if(enemyVelocityX>0) {
-            canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
-        }else if(enemyVelocityX<0){
-            canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
-        }else if(GamePanel.HERO.playerPos.x<=this.enemyPos.x){
-            canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
-        }
-        else{
-            canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
+        if(isAlive()) { //Tony you didn't add this line which is wasting the resources
+            this.canvas = canvas;
+            Paint p = new Paint();
+            if (enemyVelocityX > 0) {
+                canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
+            } else if (enemyVelocityX < 0) {
+                canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
+            } else if (GamePanel.HERO.playerPos.x <= this.enemyPos.x) {
+                canvas.drawBitmap(enemyBitMapLeft, null, enemyRect, p);
+            } else {
+                canvas.drawBitmap(enemyBitMapRight, null, enemyRect, p);
+            }
+            drawEnemyHpBar(canvas);
         }
 
 
@@ -165,7 +170,21 @@ public abstract class Enemy implements Character{
     }
 
 
+    protected void drawEnemyHpBar(Canvas canvas){
+        Paint barFramePaint = new Paint();
+        barFramePaint.setColor(Color.RED);
+        barFramePaint.setStyle(Paint.Style.STROKE);
+        barFramePaint.setStrokeWidth(2);
+        int enemyBarHeight =40;
+        int enemyBarPosTop =enemyRect.top-enemyBarHeight-10;
+        int enemyBarPosBot =enemyBarPosTop+enemyBarHeight;
+        canvas.drawRect(enemyRect.left,enemyBarPosTop,enemyRect.right,enemyBarPosBot,barFramePaint);
 
+        Paint hpPaint = new Paint();
+        hpPaint.setColor(Color.RED);
+        hpPaint.setStyle(Paint.Style.FILL);
+        canvas.drawRect(enemyRect.left,enemyBarPosTop,enemyRect.left+ ((float)curHp/enemyMaxHp)*enemyRect.width(),enemyBarPosBot,hpPaint);
+    }
 
 
 
@@ -200,6 +219,5 @@ public abstract class Enemy implements Character{
 
         enemyVelocityX+=((enemyPos.x-shockPoint.x))/shockRange*shockPower;
         enemyVelocityY+=((enemyPos.y-shockPoint.y))/shockRange*shockPower;
-        System.out.println((shockRange-Math.abs(enemyPos.y-shockPoint.y))/shockRange*shockPower);
     }
 }

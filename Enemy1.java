@@ -22,7 +22,7 @@ public class Enemy1 extends Enemy {
     public Enemy1(Context context,Point p,int enemyIndex) {
         super(context,p,enemyIndex);
       //  enemyVelocityX=4.0;
-        enemyMaxHp = 100;
+        enemyMaxHp = 200;
 
         curHp = enemyMaxHp;
 

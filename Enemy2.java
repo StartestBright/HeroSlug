@@ -19,7 +19,8 @@ public class Enemy2 extends Enemy {
 
     public Enemy2(Context context, Point p, int enemyIndex) {
         super(context, p, enemyIndex);
-        curHp = enemyMaxHp + 200;
+        enemyMaxHp = 300; // You didn't set each enemies' max hp..
+        curHp = enemyMaxHp;
         enemyVelocityX = 2.0;
         enemySize = 200;
         dashing=false;

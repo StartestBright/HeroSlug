@@ -66,7 +66,7 @@ public abstract class Hero implements Character{
     class HeroAnimManager extends Thread {
 
         public HeroAnimManager(){
-            System.out.println("made");
+
         }
         @Override
         public void run() {

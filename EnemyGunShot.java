@@ -43,7 +43,7 @@ public abstract class EnemyGunShot implements GameObject {
         bulletPos = pos;
         bulletSpeed = speed;
         bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
     }
 
     public void detectLeft() {
@@ -62,11 +62,13 @@ public abstract class EnemyGunShot implements GameObject {
 
     @Override
     public void update() {
-        if (bulletPos.x + bulltSize >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulltSize >= screenHeight - GamePanel.floorHeight || bulletPos.y < 0) {
-            active = false;
+        if(isActive()) { // AGAIN!!! Tony you didn't add this line which is wasting the resources. I knew something that you made is wasting the resources
+            if (bulletPos.x + bulltSize >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulltSize >= screenHeight - GamePanel.floorHeight || bulletPos.y < 0) {
+                active = false;
+            }
+            bulletRect.set(bulletPos.x - bulltSize, bulletPos.y - bulltSize, bulletPos.x + bulltSize, bulletPos.y + bulltSize);
+            collisionDetect();
         }
-        bulletRect.set(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
-        collisionDetect();
     }
 
     //@Override
@@ -104,7 +106,7 @@ public abstract class EnemyGunShot implements GameObject {
      //   bulletPos.y=Math.round(bulletPos.y);
       //  opt.inMutable = true;
         bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
      //   bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
