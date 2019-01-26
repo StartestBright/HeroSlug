@@ -26,14 +26,23 @@ public class Soldier extends Hero{
     Handler handler;
     public Soldier(int color,Point pos,Context context,GamePanel gamePanel){
         super(pos);
-        heroMovingBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0r);
-        heroMovingBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1r);
-        heroMovingBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move2r);
-        heroMovingBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move3r);
-        heroMovingBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move4r);
-        heroMovingBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move5r);
-        heroMovingBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move6r);
-        heroMovingBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move7r);
+        heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0r);
+        heroMovingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1r);
+        heroMovingRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move2r);
+        heroMovingRightBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move3r);
+        heroMovingRightBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move4r);
+        heroMovingRightBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move5r);
+        heroMovingRightBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move6r);
+        heroMovingRightBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move7r);
+
+        heroMovingLeftBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0l);
+        heroMovingLeftBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1l);
+        heroMovingLeftBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move2l);
+        heroMovingLeftBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move3l);
+        heroMovingLeftBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move4l);
+        heroMovingLeftBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move5l);
+        heroMovingLeftBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move6l);
+        heroMovingLeftBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move7l);
 
 
 

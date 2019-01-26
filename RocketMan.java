@@ -25,8 +25,8 @@ public class RocketMan extends Hero {
 
     public RocketMan(int color, Point pos, Context context){
         super(pos);
-        heroMovingBitmaps = new Bitmap[2];
-        heroMovingBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
+        heroMovingRightBitmaps = new Bitmap[2];
+        heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
@@ -41,7 +41,7 @@ public class RocketMan extends Hero {
         flyingGaze = FLYINGMAXGAZE;
         gunShotDelay = 3;
         bulletSpeed = rocketSpeed;
-        bulletDamge = rocketSpeed;
+        bulletDamage = rocketSpeed;
         playerBullets = new ArrayList<RocketManGunShot>();
 
         jumpPower = 100;
@@ -73,7 +73,7 @@ public class RocketMan extends Hero {
         if(canFire) {
             RocketManGunShot newBullet = new RocketManGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), playerPos.x, playerPos.y);
             newBullet.setBulletSpeed(bulletSpeed);
-            newBullet.setBulletDamage(bulletDamge);
+            newBullet.setBulletDamage(bulletDamage);
             playerBullets.add(newBullet);
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();

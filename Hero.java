@@ -26,7 +26,7 @@ public abstract class Hero implements Character{
     protected int heroSizeX,heroSizeY;
     protected boolean flying;
     protected float bulletSpeed;
-    protected int bulletDamge;
+    protected int bulletDamage;
 
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
@@ -40,8 +40,9 @@ public abstract class Hero implements Character{
 
     protected ArrayList playerBullets;
 
-    protected Bitmap heroMovingBitmaps[];
-    protected int heroMovingRightBitmapIndex =0;
+    protected Bitmap heroMovingRightBitmaps[];
+    protected Bitmap heroMovingLeftBitmaps[];
+    protected int heroMovingBitmapIndex =0;
 
     protected Bitmap[] heroWeaponBitmaps;
     protected int heroWeaponBitmapIndex=0;
@@ -59,21 +60,31 @@ public abstract class Hero implements Character{
     class HeroAnimManager extends Thread {
 
         public HeroAnimManager(){
-
+            System.out.println("made");
         }
         @Override
         public void run() {
-            try {
+            while(true) {
+                try {
 
-                if(playerVelocityX==0){
-                    heroMovingRightBitmapIndex =0;
-                }else if(playerVelocityX>0){
-                    heroMovingRightBitmapIndex = (heroMovingRightBitmapIndex +1)%8;
+                    if (playerVelocityX == 0) {
+                        heroMovingBitmapIndex = 0;
+                    } else if (playerVelocityX != 0) {
+                        heroMovingBitmapIndex = (heroMovingBitmapIndex + 1) % 8;
+                    }
+
+
+                    long sleepTime = 100;
+
+                    long realSleepTime = (long) Math.abs(((PLAYERMAXHORIZONTALSPEED/playerVelocityX)*sleepTime));
+                    if(realSleepTime>150){
+                        realSleepTime = 150;
+                    }
+                    Thread.sleep(realSleepTime);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                Thread.sleep(1000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -81,8 +92,10 @@ public abstract class Hero implements Character{
     public Hero(Point heroSpawnPos){
         animManager = new HeroAnimManager();
         playerPos = heroSpawnPos;
-        heroMovingBitmaps = new Bitmap[8];
-        heroMovingRightBitmapIndex =0;
+        heroMovingRightBitmaps = new Bitmap[8];
+        heroMovingLeftBitmaps = new Bitmap[8];
+
+        heroMovingBitmapIndex =0;
         heroWeaponBitmapIndex =0;
         heroWeaponBitmaps = new Bitmap[2];
         heroWeaponRect = new Rect();
@@ -112,19 +125,27 @@ public abstract class Hero implements Character{
         Paint paint = new Paint();
         paint.setColor(heroColor);
         //canvas.drawRect(heroRect,paint);
-        if(heroMovingBitmaps[0]!=null)
-            canvas.drawBitmap(heroMovingBitmaps[heroMovingRightBitmapIndex], null, heroRect, paint);
+        if(heroMovingRightBitmaps[0]!=null)
+            if(playerVelocityX>0) {
+                canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+            }else if(playerVelocityX<0){
+                canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+            }else if(playerVelocityX== 0){
+                if(heroFacingRight())
+                    canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                else
+                    canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+
+            }
         //canvas.save();
         //canvas.translate(heroWeaponPos.x,heroWeaponPos.y);
         //canvas.rotate(45);
-        canvas.drawBitmap(heroWeaponBitmaps[0],null,heroWeaponRect,paint);
+        //canvas.drawBitmap(heroWeaponBitmaps[0],null,heroWeaponRect,paint);
         //canvas.restore();
     }
 
-
-
     public void update(){
-        //System.out.println(heroMovingRightBitmapIndex);
+        //System.out.println(heroMovingBitmapIndex);
         heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
         if(!playerLanded) {
             if(GamePanel.HERO.getHeroTag()!="RocketMan")
@@ -360,5 +381,14 @@ public abstract class Hero implements Character{
     public Point getHeroShotSpawnPoint(){
         return new Point(heroWeaponRect.right,heroWeaponRect.top+heroWeaponRect.height()/2);
     }
+
+
+    public boolean heroFacingRight(){
+        if((playerRotation<Math.PI/2 &&playerRotation>0)|| (playerRotation>-Math.PI/2 && playerRotation<0))
+            return true;
+        return false;
+    }
+
+
 
 }
