@@ -49,7 +49,7 @@ public class Enemy3 extends Enemy {
         if(canFire) {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
-            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, enemyPos.x, enemyPos.y,2));
+            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, enemyPos,2));
             bulletIndex++;
         }
     }
