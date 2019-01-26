@@ -20,6 +20,7 @@ public class Enemy1 extends Enemy {
         super(context,p,enemyIndex);
       //  enemyVelocityX=4.0;
         enemyMaxHp = 100;
+        curHp = enemyMaxHp;
         enemySize = 50;
    //     enemy1Bullets = new ArrayList<EnemyGunShot1>();
     }
