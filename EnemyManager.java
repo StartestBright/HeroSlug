@@ -61,7 +61,15 @@ public class EnemyManager {
 
         for(int i =0;i<enemies.size();i++){
             if(enemies.get(i).getEnemyIndex()==index){
-                enemies.remove(i);
+                enemyBoomEffections.add(new BoomEffection(enemies.get(i).enemyBitMapLeft,enemies.get(i).enemyPos,100));
+
+           //     enemies.remove(i);
+            }
+        }
+        for(int i = 0; i <enemyBoomEffections.size();i++){
+            if(enemyBoomEffections.get(i).isFished()){
+
+                enemyBoomEffections.remove(i);
             }
         }
 
