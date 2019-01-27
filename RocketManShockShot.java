@@ -37,10 +37,10 @@ public class RocketManShockShot extends HeroGunShot {
             float x  = Math.abs(enemy.enemyPos.x-xPos);
             float y  = Math.abs(enemy.enemyPos.y-yPos);
             if(enemy.isAlive()&&x<=shockRange&&y<=shockRange){
-                if ((xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
-                        xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
-                        yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&
-                        yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemySize())||(yPos>=MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT)) {
+                if ((xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemyWidth()&& //if  collide with enemy
+                        xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemyWidth()&&
+                        yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemyHeight()&&
+                        yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemyHeight())||(yPos>=MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT)) {
 
                     enemy.takeShockShot(new Point((int)xPos,(int) yPos),shockPower,shockRange);
                     //EnemyManager.enemies.get(i).takeDamage(gunShotDamage);

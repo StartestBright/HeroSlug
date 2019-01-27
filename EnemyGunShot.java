@@ -20,7 +20,8 @@ public abstract class EnemyGunShot implements GameObject {
     protected float bulletSpeed = 10;
     protected float bulletVelocityX = 0, bulletVelocityY = 0;
     protected  Point bulletPos;
-    protected int bulltSize = 25;
+    protected int bulletWidth = 25;
+    protected int bulletHeight = 25;
     protected Bitmap bulletImage;
     protected boolean directLeft;
     protected int damage = 25;
@@ -29,6 +30,16 @@ public abstract class EnemyGunShot implements GameObject {
     protected Rect bulletRect;
     protected  Canvas canvas;
     protected Context context;
+
+    protected Bitmap boomImage;
+
+
+
+    //////////////////////////////////
+    protected ArrayList<BoomEffection> boomEffections = new ArrayList<BoomEffection>();
+
+
+
     BitmapFactory.Options opt = new BitmapFactory.Options();
 
 
@@ -42,8 +53,11 @@ public abstract class EnemyGunShot implements GameObject {
         bulletVelocityY  = velocityY;
         bulletPos = pos;
         bulletSpeed = speed;
-        bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
+
+        init(context);
+     //   bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
+     //   bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+
     }
 
     public void detectLeft() {
@@ -62,13 +76,13 @@ public abstract class EnemyGunShot implements GameObject {
 
     @Override
     public void update() {
-        if(isActive()) { // AGAIN!!! Tony you didn't add this line which is wasting the resources. I knew something that you made is wasting the resources
-            if (bulletPos.x + bulltSize >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulltSize >= screenHeight - GamePanel.floorHeight || bulletPos.y < 0) {
-                active = false;
-            }
-            bulletRect.set(bulletPos.x - bulltSize, bulletPos.y - bulltSize, bulletPos.x + bulltSize, bulletPos.y + bulltSize);
-            collisionDetect();
+
+        if (bulletPos.x + bulletWidth >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulletHeight>= screenHeight - GamePanel.floorHeight || bulletPos.y < 0) {
+            active = false;
         }
+        bulletRect.set(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
+        collisionDetect();
+
     }
 
     //@Override
@@ -105,25 +119,42 @@ public abstract class EnemyGunShot implements GameObject {
   //      bulletPos.x= Math.round(bulletPos.x);
      //   bulletPos.y=Math.round(bulletPos.y);
       //  opt.inMutable = true;
-        bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
+
+        bulletRect = new Rect(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+
      //   bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
      //   bulletColor = Color.RED;
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
 
 
     }
 
     public void collisionDetect() {
         if (this.active) {
-            if (bulletPos.x + bulltSize +10>= GamePanel.HERO.getHero().left && //if  collide with enemy
-                    bulletPos.x - bulltSize -10<= GamePanel.HERO.getHero().right &&
-                    bulletPos.y + bulltSize +10>= GamePanel.HERO.getHero().top &&
-                    bulletPos.y - bulltSize -10<= GamePanel.HERO.getHero().bottom) {
+            if (bulletRect.right>= GamePanel.HERO.getHero().left && //if  collide with enemy
+                    bulletRect.left <= GamePanel.HERO.getHero().right &&
+                    bulletRect.bottom>= GamePanel.HERO.getHero().top &&
+                    bulletRect.top <= GamePanel.HERO.getHero().bottom) {
                 GamePanel.HERO.takeDamage(damage);
                 active = false;
+  //              Point tempPoint = new Point(bulletPos.x,bulletPos.y);
 
+ //               boomEffections.add(new BoomEffection(boomImage,tempPoint,7));
+   //             for (int i = 0; i < boomEffections.size(); i++) {
+    //                Paint p = new Paint();
+
+      //              boomEffections.get(i).draw(canvas, p);
+
+        //            if (boomEffections.get(i).isFished()) {
+
+     //                   boomEffections.remove(i);
+       //             } else {
+
+        //            }
+     //           }
 
             }
         }

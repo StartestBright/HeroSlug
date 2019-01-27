@@ -11,7 +11,7 @@ import android.os.Build;
 
 import java.util.ArrayList;
 
-public class Enemy3 extends Enemy {
+public class Enemy3 extends Enemy{
 
 
 
@@ -20,7 +20,8 @@ public class Enemy3 extends Enemy {
         super(context,p, enemyIndex);
         enemyMaxHp = 100; // Again you didn't set max hp
         curHp = enemyMaxHp;
-        enemySize = 100;
+        enemyWidth = 200;
+        enemyHeight = 150;
         enemyVelocityX = 2.0;
         enemyVelocityY = 0;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy3right);
@@ -50,7 +51,8 @@ public class Enemy3 extends Enemy {
         if(canFire) {
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
-            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, enemyPos,2));
+            Point tempPoint = new Point(enemyPos.x,enemyPos.y+105);
+            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, tempPoint,2));
             bulletIndex++;
         }
     }
@@ -58,17 +60,19 @@ public class Enemy3 extends Enemy {
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
-        enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemySize-400;
+        enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight-600;
         enmyWalk(this);
         enmyFollow(this);
         super.update();
     }
 
 
-    @Override
-    public int getEnemySize() {
-        return enemySize;
-    }
+
+
+      // @Override
+     //  public int getEnemySize() {
+     //   return enemySize;
+    //}
 
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -83,6 +87,7 @@ public class Enemy3 extends Enemy {
             }
         }
        else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=10){
+                enemyVelocityX=0;
                 if (canFire == true) {
                     this.attack();
                 } else if ((System.currentTimeMillis() - gunShotDelayStartTime) / 100 >= gunShotDelay) {

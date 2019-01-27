@@ -101,10 +101,10 @@ public class HeroGunShot extends View implements GameObject{
             for(int i=0;i<EnemyManager.enemies.size();i++) {
                 Enemy enemy = EnemyManager.enemies.get(i);
                 if(enemy.isAlive()&&active){
-                    if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemySize()&& //if  collide with enemy
-                            xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemySize()&&
-                            yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemySize()&&
-                            yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemySize()) {
+                    if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemyWidth()&& //if  collide with enemy
+                            xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemyWidth()&&
+                            yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemyHeight()&&
+                            yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemyHeight()) {
 
                         EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
                         active = false;

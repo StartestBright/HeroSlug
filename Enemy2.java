@@ -22,7 +22,8 @@ public class Enemy2 extends Enemy {
         enemyMaxHp = 300; // You didn't set each enemies' max hp..
         curHp = enemyMaxHp;
         enemyVelocityX = 2.0;
-        enemySize = 200;
+        enemyHeight= 100;
+        enemyWidth = 50;
         dashing=false;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2right);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2left);
@@ -64,7 +65,7 @@ public class Enemy2 extends Enemy {
         landDetect();
         enmyWalk(this);
         enmyFollow(this);
-        enemyRect.set(enemyPos.x - enemySize, enemyPos.y - enemySize, enemyPos.x + enemySize, enemyPos.y + enemySize);
+        enemyRect.set(enemyPos.x - enemyWidth, enemyPos.y - enemyWidth, enemyPos.x + enemyWidth, enemyPos.y + enemyHeight);
     }
 
     @Override
@@ -108,11 +109,11 @@ public class Enemy2 extends Enemy {
                 }
 
 
-                if ((enemy.enemyPos.y-GamePanel.HERO.heroRect.bottom<=enemy.enemySize)&&
+                if ((enemy.enemyPos.y-GamePanel.HERO.heroRect.bottom<=enemy.enemyHeight)&&
                         (((enemy.enemyPos.x >= GamePanel.HERO.playerPos.x) &&
-                        (enemy.enemyPos.x - enemy.getEnemySize() - GamePanel.HERO.heroRect.right <= 10)) ||
+                        (enemy.enemyPos.x - enemy.getEnemyWidth() - GamePanel.HERO.heroRect.right <= 10)) ||
                         ((enemy.enemyPos.x <= GamePanel.HERO.playerPos.x) &&
-                                (GamePanel.HERO.heroRect.left - enemy.enemyPos.x - enemy.getEnemySize() <= 10)))){
+                                (GamePanel.HERO.heroRect.left - enemy.enemyPos.x - enemy.getEnemyWidth() <= 10)))){
                   //  System.out.println(GamePanel.HERO.heroRect.bottom);
                     enemy.enemyVelocityX = 0;
                     //  System.out.println(this.enemyVelocityX);
