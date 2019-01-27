@@ -2,15 +2,19 @@ package com.jknull.heroslug;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Build;
 //import android.support.annotation.RequiresApi;
 
 public class Background {
     private Bitmap image;
+    private Rect backGroundRect;
     private int x, y,dx;
 
     public Background(Bitmap res){
         image = res;
+        y = 0;
+        backGroundRect = new Rect();
         //image.setWidth(MainActivity.SCREEN_WIDTH);
         //image.setHeight(MainActivity.SCREEN_HEIGHT);
     }

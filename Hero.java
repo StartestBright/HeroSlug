@@ -68,13 +68,14 @@ public abstract class Hero implements Character{
 
 
     protected SoundPool heroSoundEffects;
+    protected int maxStreamForHero=8;
     protected int heroSounds[];
     protected AudioAttributes heroSoundEffectsAttributes;
 
 
     enum HeroSounds{
         GUNSHOT(0),JUMP(1),SKILL1(2),
-        SKILL2(3),ULTIMATE(4),SNIPINGSOUND(5);
+        SKILL2(3),ULTIMATE(4),SNIPINGSOUND(5),ATTACKED(6),SOLDIERULTI2(7);
 
         private final int x;
         HeroSounds(int i) {
@@ -166,9 +167,9 @@ public abstract class Hero implements Character{
 
 
         heroSoundEffectsAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-        heroSoundEffects = new SoundPool.Builder().setAudioAttributes(heroSoundEffectsAttributes).setMaxStreams(5).build();
+        heroSoundEffects = new SoundPool.Builder().setAudioAttributes(heroSoundEffectsAttributes).setMaxStreams(maxStreamForHero).build();
 
-        heroSounds = new int[6];
+        heroSounds = new int[maxStreamForHero];
 
 
 
@@ -322,6 +323,7 @@ public abstract class Hero implements Character{
             ultimateSkillOnCoolTime = true;
             ultimateSkillOn = true;
             heroSoundEffects.play(heroSounds[HeroSounds.ULTIMATE.getValue()],1,1,1,0,1);
+            heroSoundEffects.play(heroSounds[HeroSounds.SOLDIERULTI2.getValue()],1,1,1,0,1);
         }
     };
 
@@ -407,6 +409,7 @@ public abstract class Hero implements Character{
     @Override
     public void takeDamage(int damage) {
         GamePanel.HEROHP.getDamage(damage);
+        heroSoundEffects.play(heroSounds[HeroSounds.ATTACKED.getValue()],1,1,1,0,1);
     }
     public void heroMoveBeyondHalf(){
         if(playerVelocityX>0) {

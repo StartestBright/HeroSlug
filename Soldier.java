@@ -103,6 +103,8 @@ public class Soldier extends Hero{
         heroSounds[HeroSounds.ULTIMATE.getValue()]= heroSoundEffects.load(context,R.raw.soldier_ultimate_sound,1);
         heroSounds[HeroSounds.SKILL2.getValue()] = heroSoundEffects.load(context,R.raw.soldier_skill2on_sound,1);
         heroSounds[HeroSounds.JUMP.getValue()] = heroSoundEffects.load(context,R.raw.soldier_jump_sound,1);
+        heroSounds[HeroSounds.ATTACKED.getValue()] = heroSoundEffects.load(context,R.raw.soldier_attacked_sound,1);
+        heroSounds[HeroSounds.SOLDIERULTI2.getValue()] = heroSoundEffects.load(context,R.raw.soldier_ultimate_sound2,1);
 
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_weapon_right);
         heroWeaponSizeX = 120;
