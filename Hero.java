@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,7 @@ public abstract class Hero implements Character{
     protected float bulletSpeed;
     protected int bulletDamage;
     protected boolean canMove = true;
+    protected SoldierHealPack healPack;
 
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
@@ -37,7 +40,6 @@ public abstract class Hero implements Character{
     protected boolean skill1OnCoolTime=false,skill1On=false;
     protected boolean skill2OnCoolTime=false,skill2On=false;
     protected boolean ultimateSkillOnCoolTime= false,ultimateSkillOn=false;
-    protected SoldierHealPack healPack;
 
     protected ArrayList playerBullets;
 
@@ -45,10 +47,13 @@ public abstract class Hero implements Character{
     protected Bitmap heroMovingLeftBitmaps[];
     protected Bitmap heroIdleRightBitmaps[];
     protected Bitmap heroIdleLeftBitmaps[];
+    protected Bitmap heroDyingRightBitmaps[];
+    protected Bitmap heroDyingLeftBitmaps[];
 
 
     protected int heroMovingBitmapIndex =0;
     protected int heroIdleBitmapIndex = 0;
+    protected int heroDyingBitmapIndex = 0;
 
     protected Bitmap[] heroWeaponBitmaps;
     protected int heroWeaponBitmapIndex=0;
@@ -70,41 +75,61 @@ public abstract class Hero implements Character{
         }
         @Override
         public void run() {
-            while(true) {
-                try {
+            if(!PlayerHP.HERODEAD) {
+                while (true) {
+                    try {
 
-                    if (playerVelocityX == 0) {
-                        heroMovingBitmapIndex = 0;
-                        heroIdleBitmapIndex = (heroIdleBitmapIndex+1)%9;
-                        Thread.sleep(100);
-                        continue;
-                    } else if (playerVelocityX != 0) {
-                        heroMovingBitmapIndex = (heroMovingBitmapIndex + 1) % 8;
+                        if (playerVelocityX == 0 && !PlayerHP.HERODEAD) {
+                            heroMovingBitmapIndex = 0;
+                            heroIdleBitmapIndex = (heroIdleBitmapIndex + 1) % 9;
+                            Thread.sleep(100);
+                            continue;
+                        } else if (playerVelocityX != 0) {
+                            heroMovingBitmapIndex = (heroMovingBitmapIndex + 1) % 8;
+                        }
+
+
+                        long sleepTime = 100;
+
+                        long realSleepTime = (long) Math.abs(((PLAYERMAXHORIZONTALSPEED / playerVelocityX) * sleepTime));
+                        if (realSleepTime > 150) {
+                            realSleepTime = 150;
+                        }
+                        Thread.sleep(realSleepTime);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-
-
-                    long sleepTime = 100;
-
-                    long realSleepTime = (long) Math.abs(((PLAYERMAXHORIZONTALSPEED/playerVelocityX)*sleepTime));
-                    if(realSleepTime>150){
-                        realSleepTime = 150;
-                    }
-                    Thread.sleep(realSleepTime);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    if(PlayerHP.HERODEAD)
+                        break;
                 }
-            }
+            }/*else if(PlayerHP.HERODEAD){
+                System.out.println("anim start!");
+                while(heroDyingBitmapIndex<heroDyingRightBitmaps.length) {
+                    try {
+                        Thread.sleep(100);
+                        System.out.println(heroDyingBitmapIndex);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    heroDyingBitmapIndex++;
+                }
+                return;
+            }*/
         }
     }
 
     public Hero(Point heroSpawnPos){
+        SoundPool soundPool = new SoundPool(5,AudioManager.STREAM_MUSIC,0);
+
         animManager = new HeroAnimManager();
         playerPos = heroSpawnPos;
         heroMovingRightBitmaps = new Bitmap[8];
         heroMovingLeftBitmaps = new Bitmap[8];
         heroIdleRightBitmaps = new Bitmap[9];
         heroIdleLeftBitmaps = new Bitmap[9];
+        heroDyingRightBitmaps = new Bitmap[12];
+        heroDyingLeftBitmaps = new Bitmap[12];
 
 
         heroMovingBitmapIndex =0;
@@ -137,27 +162,37 @@ public abstract class Hero implements Character{
         Paint paint = new Paint();
         paint.setColor(heroColor);
         //canvas.drawRect(heroRect,paint);
-        if(heroMovingRightBitmaps[0]!=null)
-            if(playerVelocityX>0) {
-                canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
-            }else if(playerVelocityX<0){
-                canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
-            }else if(playerVelocityX== 0){
-                if(heroFacingRight())
-                    canvas.drawBitmap(heroIdleRightBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
-                else
-                    canvas.drawBitmap(heroIdleLeftBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
+        if (!PlayerHP.HERODEAD) {
+            if (heroMovingRightBitmaps[0] != null)
+                if (playerVelocityX > 0) {
+                    canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                } else if (playerVelocityX < 0) {
+                    canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                } else if (playerVelocityX == 0) {
+                    if (heroFacingRight()) {
+                        canvas.drawBitmap(heroIdleRightBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
+                    }
+                    else
+                        canvas.drawBitmap(heroIdleLeftBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
 
-            }
-        //canvas.save();
-        //canvas.translate(heroWeaponPos.x,heroWeaponPos.y);
-        //canvas.rotate(45);
-        //canvas.drawBitmap(heroWeaponBitmaps[0],null,heroWeaponRect,paint);
-        //canvas.restore();
+                }
+            //canvas.save();
+            //canvas.translate(heroWeaponPos.x,heroWeaponPos.y);
+            //canvas.rotate(45);
+            //canvas.drawBitmap(heroWeaponBitmaps[0],null,heroWeaponRect,paint);
+            //canvas.restore();
+        }/*else{
+            if(heroFacingRight()){
+                canvas.drawBitmap(heroDyingRightBitmaps[heroDyingBitmapIndex],null,heroRect,null);
+            }else
+                canvas.drawBitmap(heroDyingLeftBitmaps[heroDyingBitmapIndex],null,heroRect,null);
+        }*/
     }
 
     public void update(){
         //System.out.println(heroMovingBitmapIndex);
+        if(PlayerHP.HERODEAD)
+            canMove= false;
         heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
         if(!playerLanded) {
             if(GamePanel.HERO.getHeroTag()!="RocketMan")
@@ -171,7 +206,8 @@ public abstract class Hero implements Character{
             playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-heroRect.height()/2;
         }
         playerPos.y += playerVelocityY;
-        playerPos.x += playerVelocityX;
+        if(!PlayerHP.HERODEAD)
+            playerPos.x += playerVelocityX;
 
         heroWeaponPos.x = playerPos.x+20;
         heroWeaponPos.y = playerPos.y;
@@ -259,18 +295,20 @@ public abstract class Hero implements Character{
 
 
     public void getDashed(int l) {
-        flying = true;
-        if(GamePanel.HERO.getHeroTag()=="RocketMan") {
-            RocketMan rocketMan = (RocketMan)GamePanel.HERO;
-            rocketMan.setRockManFlying(false);
+        if(!PlayerHP.HERODEAD) {
+            flying = true;
+            if (GamePanel.HERO.getHeroTag() == "RocketMan") {
+                RocketMan rocketMan = (RocketMan) GamePanel.HERO;
+                rocketMan.setRockManFlying(false);
+            }
+            playerLanded = false;
+            if (l == 1) {
+                playerVelocityX = -30;
+            } else {
+                playerVelocityX = 30;
+            }
+            playerVelocityY = -80;
         }
-        playerLanded = false;
-        if(l==1) {
-            playerVelocityX = -30;
-        }else{
-            playerVelocityX = 30;
-        }
-        playerVelocityY = -80;
 
     }
 

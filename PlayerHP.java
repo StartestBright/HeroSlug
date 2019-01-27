@@ -46,8 +46,13 @@ public class PlayerHP extends View implements UIObject{
         textPaint.setColor(Color.DKGRAY);
         textPaint.setTextSize(50);
         canvas.drawText("HP",0,50,textPaint);
+
         float curHpRatio = (float)curHp/maxHp;
 
+        if(curHpRatio>=1)
+            curHpRatio=1;
+        else if(curHpRatio<=0)
+            curHpRatio=0;
 
         canvas.drawRect( 0,50,width,150,strokePaint);
         canvas.drawRect(0,50,curHpRatio*width,150,solidPaint);

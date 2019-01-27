@@ -160,14 +160,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
     public void update(){
 
-        if(!PlayerHP.HERODEAD&&!STAGECLEAR) {
+        //if(!PlayerHP.HERODEAD&&!STAGECLEAR) {
             HERO.update();
             HEROHP.update();
             BG.update();
             floor.update();
             enemyManager.update();
             PAYLOAD.update();
-        }
+        //}
 
     }
 
