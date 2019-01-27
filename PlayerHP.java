@@ -27,7 +27,10 @@ public class PlayerHP extends View implements UIObject{
 
     @Override
     public void update() {
-
+        if(curHp<=0)
+            curHp =0;
+        else if(curHp>=maxHp)
+            curHp = maxHp;
     }
 
     @Override

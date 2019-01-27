@@ -272,21 +272,21 @@ public abstract class Hero implements Character{
 
 
     public void setSkill1On(){
-        if(!skill1OnCoolTime){
+        if(!skill1OnCoolTime&&!PlayerHP.HERODEAD){
             skill1StartTime = System.currentTimeMillis();
             skill1OnCoolTime = true;
             skill1On = true;
         }
     };
     public void setSkill2On(){
-        if(!skill2OnCoolTime) {
+        if(!skill2OnCoolTime&&!PlayerHP.HERODEAD) {
             skill2StartTime = System.currentTimeMillis();
             skill2OnCoolTime = true;
             skill2On = true;
         }
     };
     public void setUltimateSkillOn(){
-        if(!ultimateSkillOnCoolTime) {
+        if(!ultimateSkillOnCoolTime&&!PlayerHP.HERODEAD) {
             ultimateSkillStartTime = System.currentTimeMillis();
             ultimateSkillOnCoolTime = true;
             ultimateSkillOn = true;
@@ -324,7 +324,7 @@ public abstract class Hero implements Character{
 
 
     public void jump(){
-        if(playerLanded) {
+        if(playerLanded&&!PlayerHP.HERODEAD) {
             playerLanded = false;
             playerVelocityY -= jumpPower;
 
