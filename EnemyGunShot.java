@@ -127,7 +127,7 @@ public abstract class EnemyGunShot implements GameObject {
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
      //   bulletColor = Color.RED;
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
+      //  bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
 
 
     }
