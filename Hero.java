@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 
 import java.util.ArrayList;
@@ -100,28 +101,24 @@ public abstract class Hero implements Character{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(PlayerHP.HERODEAD)
-                        break;
-                }
-            }/*else if(PlayerHP.HERODEAD){
-                System.out.println("anim start!");
-                while(heroDyingBitmapIndex<heroDyingRightBitmaps.length) {
-                    try {
-                        Thread.sleep(100);
-                        System.out.println(heroDyingBitmapIndex);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if(PlayerHP.HERODEAD){
+                        while(heroDyingBitmapIndex<11) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            heroDyingBitmapIndex++;
+                        }
+                        return;
                     }
-                    heroDyingBitmapIndex++;
+
                 }
-                return;
-            }*/
+            }
         }
     }
 
     public Hero(Point heroSpawnPos){
-        SoundPool soundPool = new SoundPool(5,AudioManager.STREAM_MUSIC,0);
-
         animManager = new HeroAnimManager();
         playerPos = heroSpawnPos;
         heroMovingRightBitmaps = new Bitmap[8];
@@ -130,7 +127,6 @@ public abstract class Hero implements Character{
         heroIdleLeftBitmaps = new Bitmap[9];
         heroDyingRightBitmaps = new Bitmap[12];
         heroDyingLeftBitmaps = new Bitmap[12];
-
 
         heroMovingBitmapIndex =0;
         heroWeaponBitmapIndex =0;
@@ -181,12 +177,12 @@ public abstract class Hero implements Character{
             //canvas.rotate(45);
             //canvas.drawBitmap(heroWeaponBitmaps[0],null,heroWeaponRect,paint);
             //canvas.restore();
-        }/*else{
+        }else{
             if(heroFacingRight()){
                 canvas.drawBitmap(heroDyingRightBitmaps[heroDyingBitmapIndex],null,heroRect,null);
             }else
                 canvas.drawBitmap(heroDyingLeftBitmaps[heroDyingBitmapIndex],null,heroRect,null);
-        }*/
+        }
     }
 
     public void update(){
@@ -206,7 +202,7 @@ public abstract class Hero implements Character{
             playerPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-heroRect.height()/2;
         }
         playerPos.y += playerVelocityY;
-        if(!PlayerHP.HERODEAD)
+        //if(!PlayerHP.HERODEAD)
             playerPos.x += playerVelocityX;
 
         heroWeaponPos.x = playerPos.x+20;
@@ -358,7 +354,8 @@ public abstract class Hero implements Character{
         this.playerLanded = landed;
     }
     protected void setPlayerRotation(float rotation) {
-        playerRotation = rotation;
+        if(!PlayerHP.HERODEAD)
+            playerRotation = rotation;
         //heroWeaponMatrix.postRotate((float) (playerRotation/Math.PI*180));
 
         //Bitmap scaledBitmap = Bitmap.createScaledBitmap(heroWeaponBitmaps,heroWeaponSizeX,heroWeaponSizeY,true);
