@@ -128,10 +128,10 @@ public abstract class EnemyGunShot implements GameObject {
 
     public void collisionDetect() {
         if (this.active) {
-            if (bulletPos.x + bulletWidth >= GamePanel.HERO.getHero().left && //if  collide with enemy
-                    bulletPos.x - bulletWidth <= GamePanel.HERO.getHero().right &&
-                    bulletPos.y + bulletHeight >= GamePanel.HERO.getHero().top &&
-                    bulletPos.y - bulletHeight <= GamePanel.HERO.getHero().bottom) {
+            if (bulletRect.right>= GamePanel.HERO.getHero().left && //if  collide with enemy
+                    bulletRect.left <= GamePanel.HERO.getHero().right &&
+                    bulletRect.bottom>= GamePanel.HERO.getHero().top &&
+                    bulletRect.top <= GamePanel.HERO.getHero().bottom) {
                 GamePanel.HERO.takeDamage(damage);
                 active = false;
   //              Point tempPoint = new Point(bulletPos.x,bulletPos.y);

@@ -16,8 +16,8 @@ public class EnemyReleaseBoom extends EnemyGunShot {
     //RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public EnemyReleaseBoom(Context context, float velocityX, float velocityY, Point pos, int speed) {
         super(context,velocityX,velocityY,pos,speed);
-        bulletWidth = 80;
-        bulletHeight = 80;
+        bulletWidth = 42;
+        bulletHeight = 34;
         damage = 50;
     }
 
@@ -49,13 +49,16 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
         if(active) {
 
-              //  xPos -= (velocityX * bulletSpeed);
-                     bulletPos.y += (bulletVelocityY * bulletSpeed);
+        //    bulletPos.y += (bulletVelocityY * bulletSpeed);
+
+            bulletPos.y += (bulletVelocityY * bulletSpeed);
 
 
             }
 
-        collisionDetect();
+            super.update();
+
+     //   collisionDetect();
 
     }
 
