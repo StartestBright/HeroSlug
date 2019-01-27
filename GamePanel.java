@@ -18,7 +18,7 @@ import android.view.SurfaceView;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static int GAMESTAGE = 1;
     public static int MAPSIZE =10000;
-    public static float bgmVolume = 0.5f;
+    public static float bgmVolume = 0.4f;
 
     private static boolean STAGECLEAR = false;
     private MainThread thread;
