@@ -224,4 +224,5 @@ public abstract class Enemy implements Character{
         enemyVelocityX+=((enemyPos.x-shockPoint.x))/shockRange*shockPower;
         enemyVelocityY+=((enemyPos.y-shockPoint.y))/shockRange*shockPower;
     }
+
 }

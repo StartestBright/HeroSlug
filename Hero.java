@@ -1,13 +1,15 @@
 package com.jknull.heroslug;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.media.AudioAttributes;
 import android.media.SoundPool;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,7 @@ public abstract class Hero implements Character{
 
     protected ArrayList playerBullets;
 
+    protected Bitmap soldierSnipingBitmaps[];
     protected Bitmap heroMovingRightBitmaps[];
     protected Bitmap heroMovingLeftBitmaps[];
     protected Bitmap heroIdleRightBitmaps[];
@@ -64,15 +67,27 @@ public abstract class Hero implements Character{
     //Matrix heroWeaponMatrix;
 
 
+    protected SoundPool heroSoundEffects;
+    protected int heroSounds[];
+    protected AudioAttributes heroSoundEffectsAttributes;
 
-    public abstract int getHeroMaxHP();
 
+    enum HeroSounds{
+        GUNSHOT(0),JUMP(1),SKILL1(2),
+        SKILL2(3),ULTIMATE(4),SNIPINGSOUND(5);
+
+        private final int x;
+        HeroSounds(int i) {
+            this.x = i;
+        }
+        public int getValue(){return this.x;}
+    }
 
     HeroAnimManager animManager;
     class HeroAnimManager extends Thread {
 
         public HeroAnimManager(){
-
+            System.out.println(HeroSounds.SKILL2);
         }
         @Override
         public void run() {
@@ -102,7 +117,7 @@ public abstract class Hero implements Character{
                         e.printStackTrace();
                     }
                     if(PlayerHP.HERODEAD){
-                        while(heroDyingBitmapIndex<11) {
+                        while(heroDyingBitmapIndex<heroDyingRightBitmaps.length) {
                             try {
                                 Thread.sleep(100);
                             } catch (InterruptedException e) {
@@ -118,9 +133,11 @@ public abstract class Hero implements Character{
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Hero(Point heroSpawnPos){
         animManager = new HeroAnimManager();
         playerPos = heroSpawnPos;
+        soldierSnipingBitmaps = new Bitmap[2];
         heroMovingRightBitmaps = new Bitmap[8];
         heroMovingLeftBitmaps = new Bitmap[8];
         heroIdleRightBitmaps = new Bitmap[9];
@@ -146,6 +163,15 @@ public abstract class Hero implements Character{
         heroWeaponPos.y = playerPos.y+40;
 
         animManager.start();
+
+
+        heroSoundEffectsAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+        heroSoundEffects = new SoundPool.Builder().setAudioAttributes(heroSoundEffectsAttributes).setMaxStreams(5).build();
+
+        heroSounds = new int[6];
+
+
+
         //heroWeaponMatrix = new Matrix();
         //Matrix mat = new Matrix();
         //mat.setRotate(56,heroWeaponRect.centerX(),heroWeaponRect.centerY());
@@ -160,7 +186,13 @@ public abstract class Hero implements Character{
         //canvas.drawRect(heroRect,paint);
         if (!PlayerHP.HERODEAD) {
             if (heroMovingRightBitmaps[0] != null)
-                if (playerVelocityX > 0) {
+                if(skill1On&& getHeroTag()=="Soldier") {
+                    if (heroFacingRight()) {
+                        canvas.drawBitmap(soldierSnipingBitmaps[0], null, heroRect, null);
+                    } else {
+                        canvas.drawBitmap(soldierSnipingBitmaps[1], null, heroRect, null);
+                    }
+                }else if (playerVelocityX > 0) {
                     canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
                 } else if (playerVelocityX < 0) {
                     canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
@@ -177,7 +209,8 @@ public abstract class Hero implements Character{
             //canvas.rotate(45);
             //canvas.drawBitmap(heroWeaponBitmaps[0],null,heroWeaponRect,paint);
             //canvas.restore();
-        }else{
+        }
+        else{
             if(heroFacingRight()){
                 canvas.drawBitmap(heroDyingRightBitmaps[heroDyingBitmapIndex],null,heroRect,null);
             }else
@@ -272,6 +305,7 @@ public abstract class Hero implements Character{
             skill1StartTime = System.currentTimeMillis();
             skill1OnCoolTime = true;
             skill1On = true;
+            heroSoundEffects.play(heroSounds[HeroSounds.SKILL1.getValue()],1,1,1,0,1);
         }
     };
     public void setSkill2On(){
@@ -279,6 +313,7 @@ public abstract class Hero implements Character{
             skill2StartTime = System.currentTimeMillis();
             skill2OnCoolTime = true;
             skill2On = true;
+            heroSoundEffects.play(heroSounds[HeroSounds.SKILL2.getValue()],1,1,1,0,1);
         }
     };
     public void setUltimateSkillOn(){
@@ -286,6 +321,7 @@ public abstract class Hero implements Character{
             ultimateSkillStartTime = System.currentTimeMillis();
             ultimateSkillOnCoolTime = true;
             ultimateSkillOn = true;
+            heroSoundEffects.play(heroSounds[HeroSounds.ULTIMATE.getValue()],1,1,1,0,1);
         }
     };
 
@@ -323,6 +359,7 @@ public abstract class Hero implements Character{
         if(playerLanded&&!PlayerHP.HERODEAD) {
             playerLanded = false;
             playerVelocityY -= jumpPower;
+            heroSoundEffects.play(heroSounds[HeroSounds.JUMP.getValue()],0.8f,0.8f,1,0,1);
 
         }
 

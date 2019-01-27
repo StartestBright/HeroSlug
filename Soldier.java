@@ -7,24 +7,28 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 //import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
 public class Soldier extends Hero{
-    public static int SOLDIERMAXHP = 250;
+    public static int SOLDIERMAXHP = 11250;
     private Context context;
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
     private int snipingBulletDamage = 150,normalBulletDamage = 25;
 
+
     int rayLength = 3000;
 
 
     Handler handler;
-    public Soldier(int color,Point pos,Context context,GamePanel gamePanel){
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public Soldier(int color, Point pos, Context context, GamePanel gamePanel){
         super(pos);
         heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0r);
         heroMovingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1r);
@@ -90,8 +94,15 @@ public class Soldier extends Hero{
         heroDyingLeftBitmaps[10] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l10);
         heroDyingLeftBitmaps[11] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l11);
 
+        soldierSnipingBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_sniping_bitmap_r);
+        soldierSnipingBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_sniping_bitmap_l);
 
-
+        heroSounds[HeroSounds.GUNSHOT.getValue()] = heroSoundEffects.load(context,R.raw.soldier_gunshot_sound,1);
+        heroSounds[HeroSounds.SNIPINGSOUND.getValue()] = heroSoundEffects.load(context,R.raw.soldier_sniping_sound,1);
+        heroSounds[HeroSounds.SKILL1.getValue()] = heroSoundEffects.load(context,R.raw.soldier_skill1on_sound,1);
+        heroSounds[HeroSounds.ULTIMATE.getValue()]= heroSoundEffects.load(context,R.raw.soldier_ultimate_sound,1);
+        heroSounds[HeroSounds.SKILL2.getValue()] = heroSoundEffects.load(context,R.raw.soldier_skill2on_sound,1);
+        heroSounds[HeroSounds.JUMP.getValue()] = heroSoundEffects.load(context,R.raw.soldier_jump_sound,1);
 
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_weapon_right);
         heroWeaponSizeX = 120;
@@ -189,14 +200,11 @@ public class Soldier extends Hero{
     }
 
 
-    @Override
-    public int getHeroMaxHP() {
-        return SOLDIERMAXHP;
-    }
+
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void attack() {
-        if(canFire) {
+        if(canFire && !PlayerHP.HERODEAD) {
             if (ultimateSkillOn) {
                 for (int i = 0; i < EnemyManager.enemies.size(); i++) {
                     Enemy enemy = EnemyManager.enemies.get(i);
@@ -212,6 +220,7 @@ public class Soldier extends Hero{
                             newBullet.setBulletDamage(bulletDamge);
                             playerBullets.add(newBullet);
 
+                            heroSoundEffects.play(heroSounds[HeroSounds.GUNSHOT.getValue()],1,1,1,0,1);
                         }
                     }
                 }
@@ -220,7 +229,10 @@ public class Soldier extends Hero{
                 newBullet.setBulletSpeed(bulletSpeed);
                 newBullet.setBulletDamage(bulletDamge);
                 playerBullets.add(newBullet);
-
+                if(!skill1On)
+                    heroSoundEffects.play(heroSounds[HeroSounds.GUNSHOT.getValue()],1,1,1,0,1);
+                else
+                    heroSoundEffects.play(heroSounds[HeroSounds.SNIPINGSOUND.getValue()],1,1,1,0,1);
             }
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
@@ -237,6 +249,7 @@ public class Soldier extends Hero{
     public void setSkill1On(){
         if(!ultimateSkillOn && !skill1OnCoolTime) {
             super.setSkill1On();
+            playerVelocityX = 0;
         }
     }
 
@@ -253,9 +266,6 @@ public class Soldier extends Hero{
     public void setUltimateSkillOn() {
         if(!ultimateSkillOnCoolTime) {
             super.setUltimateSkillOn();
-            if(skill1On){
-                setSkill1On();
-            }
         }
     }
 

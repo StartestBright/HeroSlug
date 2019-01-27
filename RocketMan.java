@@ -62,10 +62,6 @@ public class RocketMan extends Hero {
 
 
     }
-    @Override
-    public int getHeroMaxHP() {
-        return ROCKETMANMAXHP;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

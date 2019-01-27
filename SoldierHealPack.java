@@ -61,7 +61,7 @@ public class SoldierHealPack implements GameObject{
         Rect tempHero = hero.getHero();
         if(!healpackLanded)
             healpackVelocityY = healpackGravity*1;
-        if(healpack.bottom>=MainActivity.SCREEN_HEIGHT-GamePanel.floorHeight){
+        if(healpack.bottom>=GamePanel.floorRect.top && healpack.top<=GamePanel.floorRect.bottom && healpack.left<=GamePanel.floorRect.right&&healpack.right>=GamePanel.floorRect.left){
             healpackVelocityY = 0f;
             healpackLanded = true;
         }
