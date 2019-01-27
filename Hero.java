@@ -28,6 +28,7 @@ public abstract class Hero implements Character{
     protected float bulletSpeed;
     protected int bulletDamage;
     protected boolean canMove = true;
+    protected SoldierHealPack healPack;
 
 
     protected long skill1CoolTime,skill1StartTime,skill1LastingTime;
@@ -37,7 +38,6 @@ public abstract class Hero implements Character{
     protected boolean skill1OnCoolTime=false,skill1On=false;
     protected boolean skill2OnCoolTime=false,skill2On=false;
     protected boolean ultimateSkillOnCoolTime= false,ultimateSkillOn=false;
-    protected SoldierHealPack healPack;
 
     protected ArrayList playerBullets;
 
@@ -73,7 +73,7 @@ public abstract class Hero implements Character{
             while(true) {
                 try {
 
-                    if (playerVelocityX == 0) {
+                    if (playerVelocityX == 0&&!PlayerHP.HERODEAD) {
                         heroMovingBitmapIndex = 0;
                         heroIdleBitmapIndex = (heroIdleBitmapIndex+1)%9;
                         Thread.sleep(100);

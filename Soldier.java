@@ -217,7 +217,7 @@ public class Soldier extends Hero{
     public void setSkill2On(){
         if(!skill2OnCoolTime) {
             super.setSkill2On();
-            healPack = new SoldierHealPack(playerPos, this);
+            healPack = new SoldierHealPack(playerPos, this,context);
         }
 
     }
