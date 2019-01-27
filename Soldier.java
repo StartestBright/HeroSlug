@@ -64,6 +64,33 @@ public class Soldier extends Hero{
         heroIdleLeftBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle7l);
         heroIdleLeftBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle8l);
 
+        heroDyingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r0);
+        heroDyingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r1);
+        heroDyingRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r2);
+        heroDyingRightBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r3);
+        heroDyingRightBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r4);
+        heroDyingRightBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r5);
+        heroDyingRightBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r6);
+        heroDyingRightBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r7);
+        heroDyingRightBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r8);
+        heroDyingRightBitmaps[9] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r9);
+        heroDyingRightBitmaps[10] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r10);
+        heroDyingRightBitmaps[11] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r11);
+
+        heroDyingLeftBitmaps[0] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l0);
+        heroDyingLeftBitmaps[1] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l1);
+        heroDyingLeftBitmaps[2] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l2);
+        heroDyingLeftBitmaps[3] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l3);
+        heroDyingLeftBitmaps[4] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l4);
+        heroDyingLeftBitmaps[5] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l5);
+        heroDyingLeftBitmaps[6] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l6);
+        heroDyingLeftBitmaps[7] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l7);
+        heroDyingLeftBitmaps[8] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l8);
+        heroDyingLeftBitmaps[9] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l9);
+        heroDyingLeftBitmaps[10] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l10);
+        heroDyingLeftBitmaps[11] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l11);
+
+
 
 
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_weapon_right);
