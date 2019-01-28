@@ -23,7 +23,7 @@ public class RocketMan extends Hero {
 
 
 
-    public RocketMan(int color, Point pos, Context context){
+    public RocketMan(Point pos, Context context){
         super(pos);
         heroMovingRightBitmaps = new Bitmap[2];
         heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
@@ -34,7 +34,6 @@ public class RocketMan extends Hero {
         heroSizeY =100;
         this.context = context;
         super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
-        super.heroColor = color;
 
         playerPos = pos;
 

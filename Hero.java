@@ -219,8 +219,19 @@ public abstract class Hero implements Character{
         }
     }
 
+
+    public void playerBulletGarbageCollector(){
+        for(int i=0;i<playerBullets.size();i++){
+            HeroGunShot gunShot =(HeroGunShot )playerBullets.get(i);
+            if(gunShot!=null)
+                if(!gunShot.isActive())
+                    playerBullets.remove(i);
+        }
+    }
     public void update(){
         //System.out.println(heroMovingBitmapIndex);
+        playerBulletGarbageCollector();
+
         if(PlayerHP.HERODEAD)
             canMove= false;
         heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
@@ -257,8 +268,6 @@ public abstract class Hero implements Character{
         for(int i=0;i<playerBullets.size();i++){
             HeroGunShot gunShot = (HeroGunShot) playerBullets.get(i);
             gunShot.update();
-
-
         }
 
 
