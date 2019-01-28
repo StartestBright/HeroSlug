@@ -1,8 +1,10 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -19,6 +21,8 @@ public class Boss extends Enemy {
     private boolean canFlash = true;
     private boolean bossActive = false;
     private boolean askForHelp = true;
+    private Bitmap bossFlashingLeftImages[];
+    private Bitmap bossFlashingRightImages[];
 
 
     public Boss(Context context, Point p) {
@@ -34,6 +38,27 @@ public class Boss extends Enemy {
         enemyShotSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
 
         enemyShotSound.load(context,R.raw.enemyshot,1);
+
+
+        bossFlashingLeftImages = new Bitmap[8];
+        bossFlashingRightImages = new Bitmap[8];
+
+        bossFlashingLeftImages[1]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh1);
+        bossFlashingLeftImages[2]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh2);
+        bossFlashingLeftImages[3]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh3);
+        bossFlashingLeftImages[4]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh4);
+        bossFlashingLeftImages[5]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh5);
+        bossFlashingLeftImages[6]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh6);
+        bossFlashingLeftImages[7]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftflash7);
+        bossFlashingLeftImages[8]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftflash8);
+        bossFlashingRightImages[1]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh1);
+        bossFlashingRightImages[2]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh2);
+        bossFlashingRightImages[3]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh3);
+        bossFlashingRightImages[4]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh4);
+        bossFlashingRightImages[5]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh5);
+        bossFlashingRightImages[6]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftfalsh6);
+        bossFlashingRightImages[7]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftflash7);
+        bossFlashingRightImages[8]= BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleftflash8);
       //  EnemyManager enemyHelp;
     }
 
@@ -85,8 +110,8 @@ public class Boss extends Enemy {
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void falsh(Enemy enemy){
         if(canFlash){
+            drawFlash();
             canFlash = false;
-
             final int randomX = new Random().nextInt(2); // [0, 60] + 20 => [20, 80]
             final int random = new Random().nextInt(450) + 100; // [0, 60] + 20 => [20, 80]
             if(randomX==0) {
@@ -102,6 +127,20 @@ public class Boss extends Enemy {
             canFlash = true;
         }
     }
+
+    public void drawFlash() {
+        Paint p = new Paint();
+        if (enemyPos.x <= GamePanel.HERO.playerPos.x) {
+            for (int i = 1; i <= 8; i++) {
+                canvas.drawBitmap(bossFlashingRightImages[i], null, enemyRect, p);
+            }
+        } else {
+            for (int i = 1; i <= 8; i++) {
+                canvas.drawBitmap(bossFlashingLeftImages[i], null, enemyRect, p);
+            }
+        }
+    }
+
 
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

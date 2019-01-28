@@ -118,6 +118,7 @@ public class Enemy3 extends Enemy{
         if(curHp>=0){
         curHp -= damage;}
         if(curHp<=0) {
+            curHp = 0;
            enemyVelocityY = gravity;
            enemyInWalkMode = false;
           //  EnemyManager.killEnemy();
