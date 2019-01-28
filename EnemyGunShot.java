@@ -33,9 +33,10 @@ public abstract class EnemyGunShot implements GameObject {
     protected  Bitmap boomBitmap;
     protected Boolean boomming = false;
     protected   Boolean boomFinished = false;
+    protected  String enemyTag;
 
     protected String getTag(){
-        return "Enemy";
+        return enemyTag;
     }
 
 
