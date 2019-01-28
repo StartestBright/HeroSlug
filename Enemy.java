@@ -285,8 +285,14 @@ public abstract class Enemy implements Character{
 
     public void takeShockShot(Point shockPoint,float shockPower,float shockRange){
 
-        enemyVelocityX+=((enemyPos.x-shockPoint.x))/shockRange*shockPower;
-        enemyVelocityY+=((enemyPos.y-shockPoint.y))/shockRange*shockPower;
+        if(enemyPos.x-shockPoint.x>0)
+            enemyVelocityX += (shockRange - (enemyPos.x - shockPoint.x)) / shockRange * shockPower;
+        else
+            enemyVelocityX -= (shockRange - (enemyPos.x - shockPoint.x)) / shockRange * shockPower;
+        if(enemyPos.y-shockPoint.y>0)
+            enemyVelocityY += (shockRange - (enemyPos.y - shockPoint.y)) / shockRange * shockPower;
+        else
+            enemyVelocityY -= (shockRange - (enemyPos.y - shockPoint.y)) / shockRange * shockPower;
     }
 
 

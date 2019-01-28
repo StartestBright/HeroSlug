@@ -19,6 +19,7 @@ public class RocketManGunShot extends HeroGunShot {
         bulletColor = Color.GREEN;
         bulletSpeed = 100f;
         rocketmanRocketRange = 300;
+        bulletSpeed = 50;
         heroGunShotBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocket_shot);
 
     }

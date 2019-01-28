@@ -56,9 +56,9 @@ public class RocketMan extends Hero {
         skill2LastingTime= 0;
 
 
-        ultimateSkillCoolTime = 30;
-        ultimateSkillOnCoolTime = true;
-        ultimateSkillLastingTime = 10;
+        ultimateSkillCoolTime = 45;
+        ultimateSkillOnCoolTime = false;
+        ultimateSkillLastingTime = 0;
 
         heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r0);
         heroMovingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r1);
@@ -236,10 +236,27 @@ public class RocketMan extends Hero {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void setUltimateSkillOn() {
-        if (!skill2OnCoolTime&&!PlayerHP.HERODEAD) {
+        if (!ultimateSkillOnCoolTime&&!PlayerHP.HERODEAD) {
             super.setUltimateSkillOn();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for(int i=0;i<50;i++){
+                        playerBullets.add(new RocketManGunShot(context,(float) (Math.cos(playerRotation)+(Math.random()*2)), (float) (Math.sin(playerRotation)+(Math.random()*2)), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y));
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
+
         }
     }
 
