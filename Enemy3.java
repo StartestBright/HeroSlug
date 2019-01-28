@@ -87,7 +87,7 @@ public class Enemy3 extends Enemy{
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void enmyFollow(Enemy enemy){
-        if(curHp>=0){
+        if(curHp>0){
             if((Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=800)
                     &&(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)>=10)) {
                 enemy.enemyInWalkMode = false;

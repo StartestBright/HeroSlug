@@ -26,6 +26,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         bulletWidth = 42;
         bulletHeight = 34;
         damage = 50;
+        enemyTag = "enemy3";
 
         bulletBoom= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
 
@@ -85,10 +86,7 @@ public class EnemyReleaseBoom extends EnemyGunShot {
     }
 
 
-    @Override
-    public String getTag(){
-        return "Enemy3";
-    }
+
     @Override
     public void draw(Canvas canvas){
         Paint p = new Paint();
