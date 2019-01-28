@@ -12,6 +12,7 @@ public class RocketManGunShot extends HeroGunShot {
     public RocketManGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context,velocityX,velocityY,xPos,yPos,true);
 
+        herogunShotRectSizeY = 30;
         heroGunShotRectSizeX = 50;
         gunShotDamage =300;
         active = true;

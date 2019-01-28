@@ -25,6 +25,7 @@ public class HeroGunShot extends View implements GameObject{
 
 
     protected Rect heroGunShotRect;
+    protected int herogunShotRectSizeY;
     protected int heroGunShotRectSizeX;
     protected Bitmap heroGunShotBitmap;
     protected float rocketmanRocketRange;
@@ -61,7 +62,7 @@ public class HeroGunShot extends View implements GameObject{
             yPos += (velocityY * bulletSpeed);
             collisionDetect();
         }
-        heroGunShotRect.set((int)xPos- heroGunShotRectSizeX,(int)yPos- heroGunShotRectSizeX,(int)xPos+ heroGunShotRectSizeX,(int)yPos+ heroGunShotRectSizeX);
+        heroGunShotRect.set((int)xPos- heroGunShotRectSizeX,(int)yPos- herogunShotRectSizeY,(int)xPos+ heroGunShotRectSizeX,(int)yPos+ herogunShotRectSizeY);
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;
         }
@@ -143,6 +144,9 @@ public class HeroGunShot extends View implements GameObject{
                 }
             }
         }
+    }
+    public void gunshotMoveByPlayer(int value){
+        xPos-= value;
     }
 
 
