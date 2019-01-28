@@ -48,6 +48,8 @@ public class EnemyManager {
       spawnEnemy3(new Point(2300,-500));
      spawnEnemy3(new Point(4500,-500));
 
+
+
     }
     public void update(){
         for(int i=0;i<enemies.size();i++){

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 public class HeroChooseScreen extends AppCompatActivity {
 
     public static Hero ChosenHero;
-    String chosenHeroTag;
     Intent gameStartIntent;
     ImageView soldierSelected,RocketManSelected,RainerSelected;
     @Override
@@ -41,6 +40,7 @@ public class HeroChooseScreen extends AppCompatActivity {
             }
         });
         RocketManSelected.setOnTouchListener(new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction()==MotionEvent.ACTION_UP) {

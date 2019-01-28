@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public abstract class Hero implements Character{
     public static int PLAYERMAXHORIZONTALSPEED = 15;
     protected Rect heroRect;
-    protected int heroColor;
     protected long gunShotDelay;
     protected long gunShotDelayStartTime;
     protected boolean canFire;
@@ -46,6 +45,7 @@ public abstract class Hero implements Character{
 
     protected ArrayList playerBullets;
 
+    protected Bitmap rocketManFlyingBitmaps[];
     protected Bitmap soldierSnipingBitmaps[];
     protected Bitmap heroMovingRightBitmaps[];
     protected Bitmap heroMovingLeftBitmaps[];
@@ -118,16 +118,29 @@ public abstract class Hero implements Character{
                         e.printStackTrace();
                     }
                     if(PlayerHP.HERODEAD){
-                        while(heroDyingBitmapIndex<heroDyingRightBitmaps.length) {
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                        if(heroTag=="Soldier"){
+                            while(heroDyingBitmapIndex<12){
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                heroDyingBitmapIndex++;
                             }
-                            heroDyingBitmapIndex++;
+                            return;
+                        }else if(heroTag=="RocketMan") {
+                            while (heroDyingBitmapIndex < 17) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                heroDyingBitmapIndex++;
+                            }
+                            return;
                         }
-                        return;
                     }
+
 
                 }
             }
@@ -138,13 +151,14 @@ public abstract class Hero implements Character{
     public Hero(Point heroSpawnPos){
         animManager = new HeroAnimManager();
         playerPos = heroSpawnPos;
+        rocketManFlyingBitmaps= new Bitmap[2];
         soldierSnipingBitmaps = new Bitmap[2];
         heroMovingRightBitmaps = new Bitmap[8];
         heroMovingLeftBitmaps = new Bitmap[8];
         heroIdleRightBitmaps = new Bitmap[9];
         heroIdleLeftBitmaps = new Bitmap[9];
-        heroDyingRightBitmaps = new Bitmap[12];
-        heroDyingLeftBitmaps = new Bitmap[12];
+        heroDyingRightBitmaps = new Bitmap[18];
+        heroDyingLeftBitmaps = new Bitmap[18];
 
         heroMovingBitmapIndex =0;
         heroWeaponBitmapIndex =0;
@@ -182,27 +196,29 @@ public abstract class Hero implements Character{
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(heroColor);
-        //canvas.drawRect(heroRect,paint);
         if (!PlayerHP.HERODEAD) {
-            if (heroMovingRightBitmaps[0] != null)
                 if(skill1On&& getHeroTag()=="Soldier") {
                     if (heroFacingRight()) {
                         canvas.drawBitmap(soldierSnipingBitmaps[0], null, heroRect, null);
                     } else {
                         canvas.drawBitmap(soldierSnipingBitmaps[1], null, heroRect, null);
                     }
+                }else if(skill1On && getHeroTag()=="RocketMan"){
+                    if (heroFacingRight()) {
+                        canvas.drawBitmap(rocketManFlyingBitmaps[0], null, heroRect, null);
+                    } else {
+                        canvas.drawBitmap(rocketManFlyingBitmaps[1], null, heroRect, null);
+                    }
                 }else if (playerVelocityX > 0) {
-                    canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                    canvas.drawBitmap(heroMovingRightBitmaps[heroMovingBitmapIndex], null, heroRect, null);
                 } else if (playerVelocityX < 0) {
-                    canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, paint);
+                    canvas.drawBitmap(heroMovingLeftBitmaps[heroMovingBitmapIndex], null, heroRect, null);
                 } else if (playerVelocityX == 0) {
                     if (heroFacingRight()) {
-                        canvas.drawBitmap(heroIdleRightBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
+                        canvas.drawBitmap(heroIdleRightBitmaps[heroIdleBitmapIndex], null, heroRect, null);
                     }
                     else
-                        canvas.drawBitmap(heroIdleLeftBitmaps[heroIdleBitmapIndex], null, heroRect, paint);
+                        canvas.drawBitmap(heroIdleLeftBitmaps[heroIdleBitmapIndex], null, heroRect, null);
 
                 }
             //canvas.save();
@@ -478,10 +494,27 @@ public abstract class Hero implements Character{
     }
 
     public Point getHeroShotSpawnPoint(){
-        if(heroFacingRight())
-            return new Point(heroWeaponRect.right-10,heroWeaponRect.top+heroWeaponRect.height()/2);
+        if(getHeroTag()=="Soldier") {
+            if (heroFacingRight())
+                return new Point(heroWeaponRect.right - 10, heroWeaponRect.top + heroWeaponRect.height() / 2);
+            else
+                return new Point(heroWeaponRect.left - 35, heroWeaponRect.top + heroWeaponRect.height() / 2);
+        }else if(getHeroTag()=="RocketMan"){
+            if(skill1On) {
+                if (heroFacingRight())
+                    return new Point(heroWeaponRect.right - 10, heroWeaponRect.top + heroWeaponRect.height() / 2);
+                else if (!heroFacingRight())
+                    return new Point(heroWeaponRect.left - 35, heroWeaponRect.top + heroWeaponRect.height() / 2);
+            }else
+            if (heroFacingRight())
+                return new Point(heroWeaponRect.right - 10, heroWeaponRect.top + heroWeaponRect.height() / 2+42);
+            else if (!heroFacingRight())
+                return new Point(heroWeaponRect.left - 35, heroWeaponRect.top + heroWeaponRect.height() / 2+42);
+        }
+        if (heroFacingRight())
+            return new Point(heroWeaponRect.right - 10, heroWeaponRect.top + heroWeaponRect.height() / 2);
         else
-            return new Point(heroWeaponRect.left-35,heroWeaponRect.top+heroWeaponRect.height()/2);
+            return new Point(heroWeaponRect.left - 35, heroWeaponRect.top + heroWeaponRect.height() / 2);
     }
 
 
