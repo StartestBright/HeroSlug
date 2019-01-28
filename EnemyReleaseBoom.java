@@ -3,15 +3,17 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Build;
 //import android.support.annotation.RequiresApi;
 
 public class EnemyReleaseBoom extends EnemyGunShot {
 
     private Bitmap bulletImageLeft;
+
+
 
     //RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public EnemyReleaseBoom(Context context, float velocityX, float velocityY, Point pos, int speed) {
@@ -19,6 +21,8 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         bulletWidth = 42;
         bulletHeight = 34;
         damage = 50;
+
+
     }
 
 
@@ -54,11 +58,29 @@ public class EnemyReleaseBoom extends EnemyGunShot {
             bulletPos.y += (bulletVelocityY * bulletSpeed);
 
 
-            }
+            }else if(!boomming){
+            boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6));
+            boomming= true;
+            boomFinished = false;
+        }
 
             super.update();
 
      //   collisionDetect();
+
+    }
+    @Override
+    public void draw(Canvas canvas){
+        Paint p = new Paint();
+        super.draw(canvas);
+        for(int i=0;i<boomEffections.size();i++){
+            if(!boomEffections.get(i).isEnd()) {
+                boomEffections.get(i).draw(canvas,p);
+            }else{
+                boomming = false;
+                boomFinished = true;
+            }
+        }
 
     }
 

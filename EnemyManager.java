@@ -71,6 +71,7 @@ public class EnemyManager {
                 System.out.println("remove!");
             }
         }
+      //  for (int k=0;k<enemies.get(k).)
 
 
     }
@@ -93,10 +94,9 @@ public class EnemyManager {
         for(int i =0;i<enemies.size();i++){
             if(enemies.get(i).enemyIsDead()){
                enemies.remove(i);
+               System.out.println("ENEMYREMOBVE");
             }
         }
-
-
     }
 
 }

@@ -37,16 +37,11 @@ public abstract class Enemy implements Character{
     protected  Bitmap enemyBoom;
     protected  boolean boomStarted= false;
 
-//    protected  boolean BoomFinished;
-
-   // protected  ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 
 
 
     public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
-   // public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-
-
+    public static ArrayList<BoomEffection> gunShotEffections = new ArrayList<BoomEffection>();
 
     protected  int bulletIndex = 0;
 
@@ -137,6 +132,14 @@ public abstract class Enemy implements Character{
         return enemyAlive;
     }
 
+    public static void killBullet(){
+
+        for(int i =0;i<enemyGunShots.size();i++){
+            if(!enemyGunShots.get(i).isActive()){
+                enemyGunShots.remove(i);
+            }
+        }
+    }
 
     public abstract void attack();
 
@@ -156,14 +159,31 @@ public abstract class Enemy implements Character{
         enemyPos.x += enemyVelocityX;
         enemyPos.y += enemyVelocityY;
         enemyRect.set(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
-        for(int i=0;i<enemyGunShots.size();i++){
-            enemyGunShots.get(i).update();
-            if(!enemyGunShots.get(i).isActive())
-                enemyGunShots.remove(i);
-       //          boomFinished = true;
-      //      System.out.println("removed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        for(int i=0;i<enemyGunShots.size();i++) {
+            if (enemyGunShots.get(i).isActive()) {
+                enemyGunShots.get(i).update();
+            } else if (!enemyGunShots.get(i).boomming) {
+                gunShotEffections.add(new BoomEffection(enemyGunShots.get(i).boomBitmap, enemyGunShots.get(i).bulletPos.x, enemyGunShots.get(i).bulletPos.y, 5));
+                enemyGunShots.get(i).boomming = true;
+            }
+
+            for (int j = 0; j < gunShotEffections.size(); j++) {
+                if (gunShotEffections.get(j).isEnd()) {
+                    gunShotEffections.remove(j);
+                    System.out.println("effecremovee");
+                    enemyGunShots.remove(i);
+                    System.out.println("bulletremovee");
+                }
+            }
         }
-    }
+               //     enemyGunShots.get(i).boomming = false;
+                //    enemyGunShots.get(i).boomFinished = true;
+              //      System.out.println("88888888888888888888888888");
+
+       //         boomFinished = true;
+  //          System.out.println("removed!!!78787878787878!!!!!!!!!!!!!!!!");
+        }
+
 
     public void draw(Canvas canvas){
 
@@ -188,6 +208,12 @@ public abstract class Enemy implements Character{
         for(int i=0;i<enemyGunShots.size();i++){
             if(enemyGunShots.get(i).isActive()) {
                 enemyGunShots.get(i).draw(canvas);
+            }
+        }
+
+        for(int i=0;i<gunShotEffections.size();i++){
+            if(!gunShotEffections.get(i).isEnd()) {
+                gunShotEffections.get(i).draw(canvas,p);
             }
         }
     }
@@ -247,5 +273,7 @@ public abstract class Enemy implements Character{
         enemyVelocityX+=((enemyPos.x-shockPoint.x))/shockRange*shockPower;
         enemyVelocityY+=((enemyPos.y-shockPoint.y))/shockRange*shockPower;
     }
+
+
 
 }
