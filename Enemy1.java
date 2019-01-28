@@ -1,26 +1,21 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-//import android.support.annotation.RequiresApi;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
-import java.util.ArrayList;
+//import android.support.annotation.RequiresApi;
 
 public class Enemy1 extends Enemy {
 
 
 //    private ArrayList<EnemyGunShot1> enemy1Bullets;
 
-    public Enemy1(Context context,Point p,int enemyIndex) {
-        super(context,p,enemyIndex);
+    public Enemy1(Context context,Point p) {
+        super(context,p);
       //  enemyVelocityX=4.0;
         enemyMaxHp = 200;
 
@@ -30,6 +25,11 @@ public class Enemy1 extends Enemy {
         enemyWidth = 50;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy1);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy1left);
+
+
+        enemyShotSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyShotSound.load(context,R.raw.enemyshot,1);
 
    //     enemy1Bullets = new ArrayList<EnemyGunShot1>();
     }
@@ -58,6 +58,9 @@ public class Enemy1 extends Enemy {
            // EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
             Point tempPoint = new Point(enemyPos.x,enemyPos.y);
             enemyGunShots.add(new EnemyGunShot1( context,1, 0, tempPoint,2));
+
+            enemyShotSound.play(1,1,1,0,0,1);
+
          }
     }
 

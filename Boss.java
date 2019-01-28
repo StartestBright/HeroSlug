@@ -3,15 +3,14 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.os.Build;
-//import android.support.annotation.RequiresApi;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+//import android.support.annotation.RequiresApi;
 
 public class Boss extends Enemy {
     private ArrayList<BossGunShot > bossBullets;
@@ -22,8 +21,8 @@ public class Boss extends Enemy {
     private boolean askForHelp = true;
 
 
-    public Boss(Context context, Point p, int enemyIndex) {
-        super(context,p,enemyIndex);
+    public Boss(Context context, Point p) {
+        super(context,p);
         enemyMaxHp = 500;
         curHp = enemyMaxHp;
         enemyWidth = 50;
@@ -32,14 +31,18 @@ public class Boss extends Enemy {
         enemyVelocityY=0;
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleft);
         enemyBitMapRight    = BitmapFactory.decodeResource(context.getResources(),R.drawable.bossright);
+        enemyShotSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyShotSound.load(context,R.raw.enemyshot,1);
       //  EnemyManager enemyHelp;
     }
 
     public void askHelp(){
         if((curHp<=enemyMaxHp/2)&&askForHelp){
             askForHelp=false;
-            EnemyManager.enemies.add(new Enemy2(context,new Point(GamePanel.HERO.playerPos.x+800,500),EnemyManager.enemyIndex));
-            EnemyManager.enemyIndex++;
+            EnemyManager.enemies.add(new Enemy2(context,new Point(GamePanel.HERO.playerPos.x+800,500)));
+            EnemyManager.enemies.add(new Enemy2(context,new Point(GamePanel.HERO.playerPos.x+900,500)));
+            EnemyManager.enemies.add(new Enemy2(context,new Point(GamePanel.HERO.playerPos.x-800,500)));
 
         }
     }
@@ -69,6 +72,7 @@ public class Boss extends Enemy {
             tempPos = new Point(enemyPos.x,enemyPos.y);
             enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),tempPos,2));
             bulletIndex++;
+            enemyShotSound.play(1,1,1,0,0,1);
     }
 
 

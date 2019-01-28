@@ -1,61 +1,52 @@
 package com.jknull.heroslug;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 
-public class BoomEffection implements GameObject {
+public class BoomEffection{
     private Bitmap bitmap;
-    private Point boomPosition;
+    private int x,y;
     private int totalFrame;
-    private int currentFrame = 0;
+    private int currentFrame;
+    private  int imageDelay = 0;
+    private  int delayTime =0;
     private int frameW,frameH;
-    private boolean isFished;
-    protected  Canvas canvas;
-    private  Context context;
-    private  Rect boomRect;
+    private boolean isFinished= false;
 
 
-
-    public BoomEffection(Context context,Bitmap bitmap, Point boomPosition, int totalFrame, Rect rect) {
-        this.context = context;
+    public BoomEffection(Bitmap bitmap, int x, int y, int totalFrame, int imDelay) {
         this.bitmap = bitmap;
-        this.boomPosition=boomPosition;
+        this.x = x;
+        this.y = y;
         this.totalFrame = totalFrame;
-        boomRect = rect;
-
-     //   intXPosition = Math.round(boomPosition.x);
+        delayTime = imDelay;
+        frameW = bitmap.getWidth()/totalFrame;
+        frameH = bitmap.getHeight();
     }
 
-    public void update(){
-        booming();
-    }
-
-
-
-    public void draw(Canvas canvas){
-        Paint paint = new Paint();
-        this.canvas = canvas;
+    public void draw(Canvas canvas, Paint paint){
         canvas.save();
-        canvas.clipRect(boomRect);
-        canvas.drawBitmap(bitmap,null,boomRect,paint);
+        canvas.clipRect(x,y,x+frameW,y+frameH);
+        canvas.drawBitmap(bitmap,x-currentFrame*frameW,y,paint);
         canvas.restore();
         booming();
     }
 
     public void booming(){
-        if(currentFrame<totalFrame){
+        if((currentFrame<totalFrame)&&imageDelay>=delayTime){
             currentFrame++;
-        }else {
-            isFished = true;
+            imageDelay = 0;
+        }else if(currentFrame<totalFrame) {
+            imageDelay++;
+        }
+            else{
+            isFinished = true;
         }
     }
 
     public boolean isFished(){
-        return  isFished;
+        return  isFinished;
     }
 }

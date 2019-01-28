@@ -31,11 +31,18 @@ public abstract class EnemyGunShot implements GameObject {
     protected  Canvas canvas;
     protected Context context;
     protected  Bitmap boomBitmap;
+    protected Boolean boomming = false;
+    protected   Boolean boomFinished = false;
+
+    protected String getTag(){
+        return "Enemy";
+    }
+
 
 
 
     //////////////////////////////////
-    protected ArrayList<BoomEffection> boomEffections = new ArrayList<BoomEffection>();
+    public static ArrayList<BoomEffection> boomEffections = new ArrayList<BoomEffection>();
 
 
 
@@ -52,12 +59,15 @@ public abstract class EnemyGunShot implements GameObject {
         bulletVelocityY  = velocityY;
         bulletPos = pos;
         bulletSpeed = speed;
+        boomBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom);
 
         init(context);
      //   bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
      //   bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
 
     }
+
+
 
     public void detectLeft() {
         if (bulletPos.x >= GamePanel.HERO.getHeroPos().x) {
@@ -84,6 +94,12 @@ public abstract class EnemyGunShot implements GameObject {
 
 
 
+
+
+
+
+
+
     }
 
     //@Override
@@ -94,9 +110,10 @@ public abstract class EnemyGunShot implements GameObject {
             Paint paint = new Paint();
         //    paint.setColor(bulletColor);
             canvas.drawBitmap(bulletImage,null,bulletRect,paint);
-
-
         }
+
+
+
     }
 
     public Point getBulletPoint() {
@@ -141,9 +158,8 @@ public abstract class EnemyGunShot implements GameObject {
                     bulletRect.left <= GamePanel.HERO.getHero().right &&
                     bulletRect.bottom>= GamePanel.HERO.getHero().top &&
                     bulletRect.top <= GamePanel.HERO.getHero().bottom) {
-                  GamePanel.HERO.takeDamage(damage);
-                active = false;
-
+                     GamePanel.HERO.takeDamage(damage);
+                     active = false;
             }
         }
     }

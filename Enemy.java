@@ -2,11 +2,14 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 import java.util.ArrayList;
 
@@ -33,14 +36,35 @@ public abstract class Enemy implements Character{
     protected  Bitmap enemyBitMapRight;
     protected  Bitmap enemyBitMapLeft;
     protected Canvas canvas;
+    protected  Bitmap enemyBoom;
+    protected  boolean boomStarted= false;
+
+    protected SoundPool enemyBoomSound;
+    protected SoundPool enemyShotSound;
+
+   // enemyBoomSound= newSoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+
+
+
+
 
 
     public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
-   // public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-
-
+    public static ArrayList<BoomEffection> gunShotEffections = new ArrayList<BoomEffection>();
 
     protected  int bulletIndex = 0;
+
+
+    protected boolean enemyIsDead(){
+        if(enemyAlive){
+            return false;
+        }else{
+    //        Explosion explosion = new Explosion(15000,enemyPos.x,enemyPos.y);
+        //    explosions.add(new Explosion(1500,enemyPos.x,enemyPos.y));
+            return true;
+        }
+    }
 
     public Point getEnemyPos(){
         return this.enemyPos;
@@ -51,7 +75,7 @@ public abstract class Enemy implements Character{
 
 
     public void enmyWalk(Enemy enemy){
-        if(enemyInWalkMode == true){
+        if(enemyInWalkMode){
             if(walkAlready<=walkLength) {
                 enemyVelocityX=-2;
                 walkAlready++;
@@ -86,7 +110,7 @@ public abstract class Enemy implements Character{
 
         }else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=600){
 
-            if(canFire == true){
+            if(canFire){
                 this.attack();
             //    canFire = false;
            //     gunShotDelayStartTime = System.currentTimeMillis();
@@ -105,18 +129,30 @@ public abstract class Enemy implements Character{
         }
     }
 
-    public Enemy(Context context,Point p, int enemyIndex){
+    public Enemy(Context context,Point p){
         this.context = context;
         enemyPos = p;
         this.enemyIndex = enemyIndex;
         curHp = enemyMaxHp;
         enemyRect = new Rect(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         enemyAlive =true;
+        enemyBoomSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyBoomSound.load(context,R.raw.enemyboom,1);
+        enemyBoom = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom,null);
     }
     public boolean isAlive(){
         return enemyAlive;
     }
 
+    public static void killBullet(){
+
+        for(int i =0;i<enemyGunShots.size();i++){
+            if(!enemyGunShots.get(i).isActive()){
+                enemyGunShots.remove(i);
+            }
+        }
+    }
 
     public abstract void attack();
 
@@ -127,6 +163,7 @@ public abstract class Enemy implements Character{
             enemyVelocityY = 0;
             enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight;
         }
+
     }
 
 
@@ -135,12 +172,32 @@ public abstract class Enemy implements Character{
         enemyPos.x += enemyVelocityX;
         enemyPos.y += enemyVelocityY;
         enemyRect.set(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
-        for(int i=0;i<enemyGunShots.size();i++){
-            enemyGunShots.get(i).update();
-            if(!enemyGunShots.get(i).isActive())
-                enemyGunShots.remove(i);
+        for(int i=0;i<enemyGunShots.size();i++) {
+            if (enemyGunShots.get(i).isActive()) {
+                enemyGunShots.get(i).update();
+            } else if ((!enemyGunShots.get(i).boomming)&&(enemyGunShots.get(i).getTag()=="Enemy3")) {
+                gunShotEffections.add(new BoomEffection(enemyGunShots.get(i).boomBitmap, enemyGunShots.get(i).bulletPos.x, enemyGunShots.get(i).bulletPos.y, 5,50));
+                enemyGunShots.get(i).boomming = true;
+            }
+
+
+            for (int j = 0; j < gunShotEffections.size(); j++) {
+                if (gunShotEffections.get(j).isFished()) {
+                    gunShotEffections.remove(j);
+                    System.out.println("effecremovee");
+                    enemyGunShots.remove(i);
+                    System.out.println("bulletremovee");
+                }
+            }
         }
-    }
+               //     enemyGunShots.get(i).boomming = false;
+                //    enemyGunShots.get(i).boomFinished = true;
+              //      System.out.println("88888888888888888888888888");
+
+       //         boomFinished = true;
+  //          System.out.println("removed!!!78787878787878!!!!!!!!!!!!!!!!");
+        }
+
 
     public void draw(Canvas canvas){
 
@@ -165,6 +222,12 @@ public abstract class Enemy implements Character{
         for(int i=0;i<enemyGunShots.size();i++){
             if(enemyGunShots.get(i).isActive()) {
                 enemyGunShots.get(i).draw(canvas);
+            }
+        }
+
+        for(int i=0;i<gunShotEffections.size();i++){
+            if(!gunShotEffections.get(i).isFished()) {
+                gunShotEffections.get(i).draw(canvas,p);
             }
         }
     }
@@ -213,7 +276,9 @@ public abstract class Enemy implements Character{
     public void takeDamage(int damage) {
         curHp -= damage;
         if(curHp<=0) {
-            EnemyManager.killEnemy(enemyIndex);
+            enemyBoomSound.play(1,1,1,0,0,1);
+
+            EnemyManager.killEnemy();
             enemyAlive = false;
         }
     }
@@ -223,5 +288,7 @@ public abstract class Enemy implements Character{
         enemyVelocityX+=((enemyPos.x-shockPoint.x))/shockRange*shockPower;
         enemyVelocityY+=((enemyPos.y-shockPoint.y))/shockRange*shockPower;
     }
+
+
 
 }

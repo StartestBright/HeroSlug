@@ -2,10 +2,9 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 public class Enemy2 extends Enemy {
 
@@ -16,9 +15,11 @@ public class Enemy2 extends Enemy {
     private long dashingDelay = 10;
     private long startedDashingTime;
 
+    private SoundPool enemyDashSound;
 
-    public Enemy2(Context context, Point p, int enemyIndex) {
-        super(context, p, enemyIndex);
+
+    public Enemy2(Context context, Point p) {
+        super(context, p);
         enemyMaxHp = 300; // You didn't set each enemies' max hp..
         curHp = enemyMaxHp;
         enemyVelocityX = 2.0;
@@ -27,6 +28,10 @@ public class Enemy2 extends Enemy {
         dashing=false;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2right);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy2left);
+        enemyDashSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+        enemyDashSound.load(context,R.raw.enemydashsound,1);
+
+
     }
 
     @Override
@@ -43,6 +48,7 @@ public class Enemy2 extends Enemy {
     @Override
     public void attack() {
         canDush = false;
+        enemyDashSound.play(1,1,1,0,0,1);
 
         GamePanel.HERO.takeDamage(50);
         if (GamePanel.HERO.playerPos.x <= enemyPos.x) {
@@ -68,14 +74,7 @@ public class Enemy2 extends Enemy {
         enemyRect.set(enemyPos.x - enemyWidth, enemyPos.y - enemyWidth, enemyPos.x + enemyWidth, enemyPos.y + enemyHeight);
     }
 
-    @Override
-    public void takeDamage(int damage) {
-        curHp -= damage;
-        if (curHp <= 0) {
-            EnemyManager.killEnemy(enemyIndex);
-            enemyAlive = false;
-        }
-    }
+
 
 
 

@@ -1,11 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
-import android.os.Build;
 //import android.support.annotation.RequiresApi;
 
 public class EnemyGunShot1 extends EnemyGunShot {
@@ -25,7 +21,15 @@ public class EnemyGunShot1 extends EnemyGunShot {
     }
 
     @Override
+    public String getTag(){
+        return "Enemy1";
+    }
+
+    @Override
     public void update(){
-        super.update();detectLeft();
+
+        super.update();
+        detectLeft();
+
     }
 }

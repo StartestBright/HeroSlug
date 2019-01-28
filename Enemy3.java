@@ -2,30 +2,39 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.os.Build;
+import android.media.AudioManager;
+import android.media.SoundPool;
+
 //import android.support.annotation.RequiresApi;
 
-import java.util.ArrayList;
-
 public class Enemy3 extends Enemy{
+ //   private Bitmap enemyBullet3Boom;
+
+
+    protected SoundPool enemyRealsedBoomSound;
 
 
 
 
-    public Enemy3(Context context,Point p, int enemyIndex) {
-        super(context,p, enemyIndex);
+
+
+    public Enemy3(Context context,Point p) {
+        super(context,p);
         enemyMaxHp = 100; // Again you didn't set max hp
         curHp = enemyMaxHp;
+        enemyLanded = false;
         enemyWidth = 200;
         enemyHeight = 150;
         enemyVelocityX = 2.0;
         enemyVelocityY = 0;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy3right);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy3left);
+        enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight-600;
+        enemyRealsedBoomSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyRealsedBoomSound.load(context,R.raw.boomreleased,1);
+   //     enemyBullet3Boom = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom);
     }
 
     @Override
@@ -54,16 +63,17 @@ public class Enemy3 extends Enemy{
             Point tempPoint = new Point(enemyPos.x,enemyPos.y+105);
             enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, tempPoint,2));
             bulletIndex++;
+            enemyRealsedBoomSound.play(1,1,1,0,0,1);
         }
     }
 
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void update() {
-        enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight-600;
         enmyWalk(this);
         enmyFollow(this);
         super.update();
+        enemyDie();
     }
 
 
@@ -77,25 +87,50 @@ public class Enemy3 extends Enemy{
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void enmyFollow(Enemy enemy){
-        if((Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=800)
-                &&(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)>=10)) {
-            enemy.enemyInWalkMode = false;
-            if (enemy.enemyPos.x < GamePanel.HERO.getHeroPos().x) {
-                enemyVelocityX =4;
-            }else if (enemy.enemyPos.x > GamePanel.HERO.getHeroPos().x) {
-                enemyVelocityX =-4;
+        if(curHp>=0){
+            if((Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=800)
+                    &&(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)>=10)) {
+                enemy.enemyInWalkMode = false;
+                if (enemy.enemyPos.x < GamePanel.HERO.getHeroPos().x) {
+                    enemyVelocityX =4;
+                }else if (enemy.enemyPos.x > GamePanel.HERO.getHeroPos().x) {
+                    enemyVelocityX =-4;
+                }
             }
-        }
-       else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=10){
+            else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=10){
                 enemyVelocityX=0;
                 if (canFire == true) {
                     this.attack();
                 } else if ((System.currentTimeMillis() - gunShotDelayStartTime) / 100 >= gunShotDelay) {
                     canFire = true;
                 }
+            }
+            else{
+                enemy.enemyInWalkMode=true;
+            }
         }
-        else{
-            enemy.enemyInWalkMode=true;
+
+    }
+
+
+    @Override
+    public void takeDamage(int damage) {
+        if(curHp>=0){
+        curHp -= damage;}
+        if(curHp<=0) {
+           enemyVelocityY = gravity;
+           enemyInWalkMode = false;
+          //  EnemyManager.killEnemy();
+            //  enemyAlive = false;
+        }
+    }
+
+    public void enemyDie(){
+        if(Math.abs(enemyRect.bottom -(MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT))<=5){
+            enemyBoomSound.play(1,1,1,0,0,1);
+            EnemyManager.killEnemy();
+            enemyAlive = false;
+
         }
     }
 }
