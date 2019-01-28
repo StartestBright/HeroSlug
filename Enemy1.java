@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 //import android.support.annotation.RequiresApi;
 
@@ -23,6 +25,11 @@ public class Enemy1 extends Enemy {
         enemyWidth = 50;
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy1);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy1left);
+
+
+        enemyShotSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyShotSound.load(context,R.raw.enemyshot,1);
 
    //     enemy1Bullets = new ArrayList<EnemyGunShot1>();
     }
@@ -51,6 +58,7 @@ public class Enemy1 extends Enemy {
            // EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
             Point tempPoint = new Point(enemyPos.x,enemyPos.y);
             enemyGunShots.add(new EnemyGunShot1( context,1, 0, tempPoint,2));
+            enemyShotSound.play(1,1,1,0,0,1);
          }
     }
 

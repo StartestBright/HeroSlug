@@ -59,13 +59,13 @@ public class EnemyManager {
             if(enemies.get(i).isAlive())
                 enemies.get(i).update();
             else if(!enemies.get(i).boomStarted){
-                boomEffections.add(new BoomEffection(enemies.get(i).enemyBoom, enemies.get(i).enemyPos.x, enemies.get(i).enemyPos.y, 5));
+                boomEffections.add(new BoomEffection(enemies.get(i).enemyBoom, enemies.get(i).enemyPos.x, enemies.get(i).enemyPos.y, 5,5));
                 enemies.get(i).boomStarted= true;
                 System.out.println("is dead");
             }
         }
         for(int j=0;j<boomEffections.size();j++){
-            if(boomEffections.get(j).isEnd()) {
+            if(boomEffections.get(j).isFished()) {
                 boomEffections.remove(j);
 
                 System.out.println("remove!");
@@ -84,7 +84,7 @@ public class EnemyManager {
         }
 
         for(int i=0;i<boomEffections.size();i++){
-            if(!boomEffections.get(i).isEnd()) {
+            if(!boomEffections.get(i).isFished()) {
                 boomEffections.get(i).draw(canvas,p);
             }
         }

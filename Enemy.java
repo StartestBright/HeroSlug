@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,14 @@ public abstract class Enemy implements Character{
     protected Canvas canvas;
     protected  Bitmap enemyBoom;
     protected  boolean boomStarted= false;
+
+    protected SoundPool enemyBoomSound;
+    protected SoundPool enemyShotSound;
+
+   // enemyBoomSound= newSoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+
+
 
 
 
@@ -126,6 +136,9 @@ public abstract class Enemy implements Character{
         curHp = enemyMaxHp;
         enemyRect = new Rect(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         enemyAlive =true;
+        enemyBoomSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyBoomSound.load(context,R.raw.enemyboom,1);
         enemyBoom = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom,null);
     }
     public boolean isAlive(){
@@ -162,13 +175,14 @@ public abstract class Enemy implements Character{
         for(int i=0;i<enemyGunShots.size();i++) {
             if (enemyGunShots.get(i).isActive()) {
                 enemyGunShots.get(i).update();
-            } else if (!enemyGunShots.get(i).boomming) {
-                gunShotEffections.add(new BoomEffection(enemyGunShots.get(i).boomBitmap, enemyGunShots.get(i).bulletPos.x, enemyGunShots.get(i).bulletPos.y, 5));
+            } else if ((!enemyGunShots.get(i).boomming)&&(enemyGunShots.get(i).getTag()=="Enemy3")) {
+                gunShotEffections.add(new BoomEffection(enemyGunShots.get(i).boomBitmap, enemyGunShots.get(i).bulletPos.x, enemyGunShots.get(i).bulletPos.y, 5,50));
                 enemyGunShots.get(i).boomming = true;
             }
 
+
             for (int j = 0; j < gunShotEffections.size(); j++) {
-                if (gunShotEffections.get(j).isEnd()) {
+                if (gunShotEffections.get(j).isFished()) {
                     gunShotEffections.remove(j);
                     System.out.println("effecremovee");
                     enemyGunShots.remove(i);
@@ -212,7 +226,7 @@ public abstract class Enemy implements Character{
         }
 
         for(int i=0;i<gunShotEffections.size();i++){
-            if(!gunShotEffections.get(i).isEnd()) {
+            if(!gunShotEffections.get(i).isFished()) {
                 gunShotEffections.get(i).draw(canvas,p);
             }
         }
@@ -262,6 +276,7 @@ public abstract class Enemy implements Character{
     public void takeDamage(int damage) {
         curHp -= damage;
         if(curHp<=0) {
+            enemyBoomSound.play(1,1,1,0,0,1);
 
             EnemyManager.killEnemy();
             enemyAlive = false;

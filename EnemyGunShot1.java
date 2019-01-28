@@ -21,6 +21,11 @@ public class EnemyGunShot1 extends EnemyGunShot {
     }
 
     @Override
+    public String getTag(){
+        return "Enemy1";
+    }
+
+    @Override
     public void update(){
         super.update();
         detectLeft();

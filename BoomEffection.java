@@ -10,17 +10,20 @@ public class BoomEffection{
     private int x,y;
     private int totalFrame;
     private int currentFrame;
+    private  int imageDelay = 0;
+    private  int delayTime =0;
     private int frameW,frameH;
-    private boolean isEnd = false;
+    private boolean isFinished= false;
 
-    public BoomEffection(Bitmap bitmap, int x, int y, int totalFrame) {
+
+    public BoomEffection(Bitmap bitmap, int x, int y, int totalFrame, int imDelay) {
         this.bitmap = bitmap;
         this.x = x;
         this.y = y;
         this.totalFrame = totalFrame;
+        delayTime = imDelay;
         frameW = bitmap.getWidth()/totalFrame;
         frameH = bitmap.getHeight();
-        System.out.println("boom!!!!!!");
     }
 
     public void draw(Canvas canvas, Paint paint){
@@ -28,18 +31,22 @@ public class BoomEffection{
         canvas.clipRect(x,y,x+frameW,y+frameH);
         canvas.drawBitmap(bitmap,x-currentFrame*frameW,y,paint);
         canvas.restore();
-        logic();
+        booming();
     }
 
-    public void logic(){
-        if(currentFrame<totalFrame){
+    public void booming(){
+        if((currentFrame<totalFrame)&&imageDelay>=delayTime){
             currentFrame++;
-        }else {
-            isEnd = true;
+            imageDelay = 0;
+        }else if(currentFrame<totalFrame) {
+            imageDelay++;
+        }
+            else{
+            isFinished = true;
         }
     }
 
-    public boolean isEnd(){
-        return  isEnd;
+    public boolean isFished(){
+        return  isFinished;
     }
 }

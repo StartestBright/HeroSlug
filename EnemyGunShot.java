@@ -34,6 +34,10 @@ public abstract class EnemyGunShot implements GameObject {
     protected Boolean boomming = false;
     protected   Boolean boomFinished = false;
 
+    protected String getTag(){
+        return "Enemy";
+    }
+
 
 
 
@@ -75,10 +79,6 @@ public abstract class EnemyGunShot implements GameObject {
             } else {
                 bulletPos.x += (bulletVelocityX* bulletSpeed);
             }
-        }else if(!boomming){
-            boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6));
-            boomming= true;
-            boomFinished = false;
         }
     }
 

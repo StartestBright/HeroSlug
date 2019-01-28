@@ -3,11 +3,17 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 //import android.support.annotation.RequiresApi;
 
 public class Enemy3 extends Enemy{
  //   private Bitmap enemyBullet3Boom;
+
+
+    protected SoundPool enemyRealsedBoomSound;
+
 
 
 
@@ -25,6 +31,9 @@ public class Enemy3 extends Enemy{
         enemyBitMapRight = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy3right);
         enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemy3left);
         enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight-600;
+        enemyRealsedBoomSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        enemyRealsedBoomSound.load(context,R.raw.boomreleased,1);
    //     enemyBullet3Boom = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom);
     }
 
@@ -54,6 +63,7 @@ public class Enemy3 extends Enemy{
             Point tempPoint = new Point(enemyPos.x,enemyPos.y+105);
             enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, tempPoint,2));
             bulletIndex++;
+            enemyRealsedBoomSound.play(1,1,1,0,0,1);
         }
     }
 
@@ -105,7 +115,8 @@ public class Enemy3 extends Enemy{
 
     @Override
     public void takeDamage(int damage) {
-        curHp -= damage;
+        if(curHp>=0){
+        curHp -= damage;}
         if(curHp<=0) {
            enemyVelocityY = gravity;
            enemyInWalkMode = false;
@@ -116,6 +127,7 @@ public class Enemy3 extends Enemy{
 
     public void enemyDie(){
         if(Math.abs(enemyRect.bottom -(MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT))<=5){
+            enemyBoomSound.play(1,1,1,0,0,1);
             EnemyManager.killEnemy();
             enemyAlive = false;
 

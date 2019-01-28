@@ -7,11 +7,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 //import android.support.annotation.RequiresApi;
 
 public class EnemyReleaseBoom extends EnemyGunShot {
 
     private Bitmap bulletImageLeft;
+
+    public SoundPool bulletBoom;
+
 
 
 
@@ -21,6 +26,10 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         bulletWidth = 42;
         bulletHeight = 34;
         damage = 50;
+
+        bulletBoom= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+
+        bulletBoom.load(context,R.raw.enemyboom,1);
 
 
     }
@@ -59,22 +68,33 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
 
             }else if(!boomming){
-            boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6));
-            boomming= true;
-            boomFinished = false;
+            bulletBoom.play(1,1,1,0,0,1);
+         //   boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6,20));
+         //   boomming= true;
+        //    boomFinished = false;
         }
 
-            super.update();
+        if (bulletPos.x + bulletWidth >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulletHeight>= screenHeight - GamePanel.floorHeight -70|| bulletPos.y < 0) {
+            active = false;
+        }
+        bulletRect.set(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
+        collisionDetect();
 
      //   collisionDetect();
 
+    }
+
+
+    @Override
+    public String getTag(){
+        return "Enemy3";
     }
     @Override
     public void draw(Canvas canvas){
         Paint p = new Paint();
         super.draw(canvas);
         for(int i=0;i<boomEffections.size();i++){
-            if(!boomEffections.get(i).isEnd()) {
+            if(!boomEffections.get(i).isFished()) {
                 boomEffections.get(i).draw(canvas,p);
             }else{
                 boomming = false;
