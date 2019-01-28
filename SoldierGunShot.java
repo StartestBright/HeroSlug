@@ -22,7 +22,7 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         //super(context,velocityX,velocityY,xPos,yPos);
-        super(context,velocityX,velocityY,xPos,yPos);
+        super(context,velocityX,velocityY,xPos,yPos,false);
         radius = 10;
         gunShotDamage =25;
         active = true;

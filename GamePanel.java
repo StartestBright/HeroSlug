@@ -2,7 +2,6 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -19,23 +18,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static int GAMESTAGE = 1;
     public static int MAPSIZE =10000;
     public static float bgmVolume = 0.4f;
-
     private static boolean STAGECLEAR = false;
-    private MainThread thread;
     public static Hero HERO;
-    private Point playerPoint;
-    private Floor floor;
     public static Background BG;
     public static Payload PAYLOAD;
-    private PayloadMap payloadMap;
-
-    public static final int WIDTH = 1024,HEIGHT = 512;
-
     public static PlayerHP HEROHP;
     public static EnemyManager enemyManager;
+    private MainThread thread;
+    private Point playerPoint;
+    private PayloadMap payloadMap;
+
+
     Bitmap joystick;
 
     public static float floorHeight = Floor.FLOORHEIGHT;
+    public static Floor FLOOR;
     public static Rect floorRect;
 
     private MediaPlayer backgroundMusic;
@@ -104,8 +101,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //HERO = new RocketMan(new Point(100,100),context);
 
         playerPoint = new Point(150,150);
-        floor = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),this);
-        floorRect = floor.getFloorRect();
+        FLOOR = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),this);
+        floorRect = FLOOR.getFloorRect();
         enemyManager = new EnemyManager(context);
         PAYLOAD = new Payload(context);
 
@@ -164,7 +161,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             enemyManager.draw(canvas);
         PAYLOAD.draw(canvas);
         payloadMap.draw(canvas);
-        floor.draw(canvas);
+        FLOOR.draw(canvas);
         //Paint temp = new Paint();
         //temp.setColor(Color.GREEN);
         //canvas.drawRect(0,canvas.getHeight()-floorHeight,getWidth(),canvas.getHeight(),temp);
@@ -178,7 +175,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             HERO.update();
             HEROHP.update();
             BG.update();
-            floor.update();
+            FLOOR.update();
             enemyManager.update();
             PAYLOAD.update();
         }

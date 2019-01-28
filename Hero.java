@@ -491,6 +491,8 @@ public abstract class Hero implements Character{
             }
 
         }
+
+
     }
 
     public Point getHeroShotSpawnPoint(){

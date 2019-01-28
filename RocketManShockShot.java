@@ -9,7 +9,7 @@ public class RocketManShockShot extends HeroGunShot {
     private float shockPower = 500;
     private float shockRange = 400;
     public RocketManShockShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
-        super(context, velocityX, velocityY, xPos, yPos);
+        super(context, velocityX, velocityY, xPos, yPos,true);
         radius = 30;
         gunShotDamage =25;
         active = true;

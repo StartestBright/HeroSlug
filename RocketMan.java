@@ -149,7 +149,7 @@ public class RocketMan extends Hero {
         if(canFire&&!PlayerHP.HERODEAD) {
             RocketManGunShot newBullet = new RocketManGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y);
             newBullet.setBulletSpeed(bulletSpeed);
-            newBullet.setBulletDamage(bulletDamage);
+            //newBullet.setBulletDamage(bulletDamage);
             playerBullets.add(newBullet);
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
