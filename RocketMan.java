@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
@@ -23,10 +25,9 @@ public class RocketMan extends Hero {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public RocketMan(Point pos, Context context){
         super(pos);
-        heroMovingRightBitmaps = new Bitmap[2];
-        heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.testimage);
         heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
@@ -58,6 +59,73 @@ public class RocketMan extends Hero {
         ultimateSkillCoolTime = 30;
         ultimateSkillOnCoolTime = true;
         ultimateSkillLastingTime = 10;
+
+        heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r0);
+        heroMovingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r1);
+        heroMovingRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r2);
+        heroMovingRightBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r3);
+        heroMovingRightBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r4);
+        heroMovingRightBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r5);
+        heroMovingRightBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r6);
+        heroMovingRightBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r7);
+
+        heroMovingLeftBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r0);
+        heroMovingLeftBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r1);
+        heroMovingLeftBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r2);
+        heroMovingLeftBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r3);
+        heroMovingLeftBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r4);
+        heroMovingLeftBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r5);
+        heroMovingLeftBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r6);
+        heroMovingLeftBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_move_r7);
+
+        heroIdleRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle0r);
+        heroIdleRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle1r);
+        heroIdleRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle2r);
+        heroIdleRightBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle3r);
+        heroIdleRightBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle4r);
+        heroIdleRightBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle5r);
+        heroIdleRightBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle6r);
+        heroIdleRightBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle7r);
+        heroIdleRightBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle8r);
+
+        heroIdleLeftBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle0l);
+        heroIdleLeftBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle1l);
+        heroIdleLeftBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle2l);
+        heroIdleLeftBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle3l);
+        heroIdleLeftBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle4l);
+        heroIdleLeftBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle5l);
+        heroIdleLeftBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle6l);
+        heroIdleLeftBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle7l);
+        heroIdleLeftBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_idle8l);
+
+        heroDyingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r0);
+        heroDyingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r1);
+        heroDyingRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r2);
+        heroDyingRightBitmaps[3] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r3);
+        heroDyingRightBitmaps[4] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r4);
+        heroDyingRightBitmaps[5] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r5);
+        heroDyingRightBitmaps[6] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r6);
+        heroDyingRightBitmaps[7] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r7);
+        heroDyingRightBitmaps[8] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r8);
+        heroDyingRightBitmaps[9] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r9);
+        heroDyingRightBitmaps[10] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r10);
+        heroDyingRightBitmaps[11] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_r11);
+
+        heroDyingLeftBitmaps[0] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l0);
+        heroDyingLeftBitmaps[1] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l1);
+        heroDyingLeftBitmaps[2] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l2);
+        heroDyingLeftBitmaps[3] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l3);
+        heroDyingLeftBitmaps[4] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l4);
+        heroDyingLeftBitmaps[5] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l5);
+        heroDyingLeftBitmaps[6] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l6);
+        heroDyingLeftBitmaps[7] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l7);
+        heroDyingLeftBitmaps[8] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l8);
+        heroDyingLeftBitmaps[9] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l9);
+        heroDyingLeftBitmaps[10] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l10);
+        heroDyingLeftBitmaps[11] =BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_dying_l11);
+
+
+
 
 
     }
@@ -128,6 +196,12 @@ public class RocketMan extends Hero {
         if(shockShot!=null)
             shockShot.draw(canvas);
 
+        super.draw(canvas);
+        for(int i=0;i<playerBullets.size();i++){
+            SoldierGunShot gunShot = (SoldierGunShot)playerBullets.get(i);
+            if(gunShot.isActive())
+                gunShot.draw(canvas);
+        }
 
     }
 
