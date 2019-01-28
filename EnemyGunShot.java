@@ -4,15 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Build;
-//import android.support.annotation.RequiresApi;
-import android.view.View;
 
 import java.util.ArrayList;
+
+//mport tyrantgit.explosionfield.ExplosionField;
+
+//import android.support.annotation.RequiresApi;
 
 public abstract class EnemyGunShot implements GameObject {
     protected int bulletColor;
@@ -30,8 +30,7 @@ public abstract class EnemyGunShot implements GameObject {
     protected Rect bulletRect;
     protected  Canvas canvas;
     protected Context context;
-
-    protected Bitmap boomImage;
+    protected  Bitmap boomBitmap;
 
 
 
@@ -83,6 +82,8 @@ public abstract class EnemyGunShot implements GameObject {
         bulletRect.set(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
         collisionDetect();
 
+
+
     }
 
     //@Override
@@ -93,6 +94,7 @@ public abstract class EnemyGunShot implements GameObject {
             Paint paint = new Paint();
         //    paint.setColor(bulletColor);
             canvas.drawBitmap(bulletImage,null,bulletRect,paint);
+
 
         }
     }
@@ -122,6 +124,7 @@ public abstract class EnemyGunShot implements GameObject {
 
         bulletRect = new Rect(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
         bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+        boomBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
 
      //   bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
         //bulletImage.setWidth(800);
@@ -138,23 +141,8 @@ public abstract class EnemyGunShot implements GameObject {
                     bulletRect.left <= GamePanel.HERO.getHero().right &&
                     bulletRect.bottom>= GamePanel.HERO.getHero().top &&
                     bulletRect.top <= GamePanel.HERO.getHero().bottom) {
-                GamePanel.HERO.takeDamage(damage);
+                  GamePanel.HERO.takeDamage(damage);
                 active = false;
-  //              Point tempPoint = new Point(bulletPos.x,bulletPos.y);
-
- //               boomEffections.add(new BoomEffection(boomImage,tempPoint,7));
-   //             for (int i = 0; i < boomEffections.size(); i++) {
-    //                Paint p = new Paint();
-
-      //              boomEffections.get(i).draw(canvas, p);
-
-        //            if (boomEffections.get(i).isFished()) {
-
-     //                   boomEffections.remove(i);
-       //             } else {
-
-        //            }
-     //           }
 
             }
         }

@@ -16,6 +16,7 @@ public class EnemyGunShot1 extends EnemyGunShot {
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public EnemyGunShot1(Context context, float velocityX, float velocityY, Point pos, int speed) {
          super(context,velocityX,velocityY,pos,speed);
+        detectLeft();
 
 
         bulletWidth = 20;
@@ -25,7 +26,6 @@ public class EnemyGunShot1 extends EnemyGunShot {
 
     @Override
     public void update(){
-        detectLeft();
         super.update();
     }
 }
