@@ -10,7 +10,6 @@ public class RocketManShockShot extends HeroGunShot {
     private float shockRange = 400;
     public RocketManShockShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context, velocityX, velocityY, xPos, yPos,true);
-        radius = 30;
         gunShotDamage =25;
         active = true;
         bulletColor = Color.RED;
@@ -37,10 +36,10 @@ public class RocketManShockShot extends HeroGunShot {
             float x  = Math.abs(enemy.enemyPos.x-xPos);
             float y  = Math.abs(enemy.enemyPos.y-yPos);
             if(enemy.isAlive()&&x<=shockRange&&y<=shockRange){
-                if ((xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemyWidth()&& //if  collide with enemy
-                        xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemyWidth()&&
-                        yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemyHeight()&&
-                        yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemyHeight())||(yPos>=MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT)) {
+                if ((heroGunShotRect.left <=enemy.getEnemyPos().x+enemy.getEnemyWidth()&& //if  collide with enemy
+                        heroGunShotRect.right>=enemy.getEnemyPos().x-enemy.getEnemyWidth()&&
+                        heroGunShotRect.top<=enemy.getEnemyPos().y+enemy.getEnemyHeight()&&
+                        heroGunShotRect.bottom>=enemy.getEnemyPos().y-enemy.getEnemyHeight())||(yPos>=MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT)) {
 
                     enemy.takeShockShot(new Point((int)xPos,(int) yPos),shockPower,shockRange);
                     //EnemyManager.enemies.get(i).takeDamage(gunShotDamage);

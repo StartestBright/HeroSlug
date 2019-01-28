@@ -16,7 +16,6 @@ public class HeroGunShot extends View implements GameObject{
     protected boolean active = true;
     protected float bulletSpeed = 150f;
     protected float xPos ,yPos,velocityX=0,velocityY=0;
-    protected float radius;
     protected Bitmap bulletImage;
     protected boolean isRocket = false;
 
@@ -101,10 +100,10 @@ public class HeroGunShot extends View implements GameObject{
             if(!isRocket) {
                 for (int i = 0; i < EnemyManager.enemies.size(); i++) {
                     Enemy enemy = EnemyManager.enemies.get(i);
-                    if (xPos - radius <= enemy.getEnemyPos().x + enemy.getEnemyWidth() && //if  collide with enemy
-                            xPos + radius >= enemy.getEnemyPos().x - enemy.getEnemyWidth() &&
-                            yPos - radius <= enemy.getEnemyPos().y + enemy.getEnemyHeight() &&
-                            yPos + radius >= enemy.getEnemyPos().y - enemy.getEnemyHeight()
+                    if (heroGunShotRect.left <= enemy.getEnemyPos().x + enemy.getEnemyWidth() && //if  collide with enemy
+                            heroGunShotRect.right>= enemy.getEnemyPos().x - enemy.getEnemyWidth() &&
+                            heroGunShotRect.top <= enemy.getEnemyPos().y + enemy.getEnemyHeight() &&
+                            heroGunShotRect.bottom >= enemy.getEnemyPos().y - enemy.getEnemyHeight()
                             ) {
 
                         if (enemy.isAlive() && active && !isRocket) {
@@ -119,10 +118,10 @@ public class HeroGunShot extends View implements GameObject{
             }else if(isRocket){
                 for (int i = 0; i < EnemyManager.enemies.size(); i++) {
                     Enemy enemy = EnemyManager.enemies.get(i);
-                    if ((xPos - radius <= enemy.getEnemyPos().x + enemy.getEnemyWidth() && //if  collide with enemy
-                            xPos + radius >= enemy.getEnemyPos().x - enemy.getEnemyWidth() &&
-                            yPos - radius <= enemy.getEnemyPos().y + enemy.getEnemyHeight() &&
-                            yPos + radius >= enemy.getEnemyPos().y - enemy.getEnemyHeight())
+                    if ((heroGunShotRect.left <= enemy.getEnemyPos().x + enemy.getEnemyWidth() && //if  collide with enemy
+                            heroGunShotRect.right >= enemy.getEnemyPos().x - enemy.getEnemyWidth() &&
+                            heroGunShotRect.top <= enemy.getEnemyPos().y + enemy.getEnemyHeight() &&
+                            heroGunShotRect.bottom >= enemy.getEnemyPos().y - enemy.getEnemyHeight())
                             || heroGunShotRect.bottom>=GamePanel.FLOOR.getFloorRect().top) {
                         if (enemy.isAlive() && active && isRocket) {
                             for (int j = 0; j < EnemyManager.enemies.size(); j++) {

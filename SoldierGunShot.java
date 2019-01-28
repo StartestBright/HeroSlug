@@ -23,7 +23,9 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
     public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         //super(context,velocityX,velocityY,xPos,yPos);
         super(context,velocityX,velocityY,xPos,yPos,false);
-        radius = 10;
+        heroGunShotRectSizeX=20;
+        herogunShotRectSizeY=20;
+        heroGunShotBitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.joystick);
         gunShotDamage =25;
         active = true;
         bulletColor = Color.YELLOW;
