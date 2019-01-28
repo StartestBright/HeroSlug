@@ -57,7 +57,7 @@ public class Enemy1 extends Enemy {
             gunShotDelayStartTime = System.currentTimeMillis();
            // EnemyGunShot1 newBullet = new EnemyGunShot1( context,1, 0, enemyPos.x, enemyPos.y);
             Point tempPoint = new Point(enemyPos.x,enemyPos.y);
-            enemyGunShots.add(new EnemyGunShot1( context,1, 0, tempPoint,1));
+            enemyGunShots.add(new EnemyGunShot1( context,1, 0, tempPoint,2));
          }
     }
 

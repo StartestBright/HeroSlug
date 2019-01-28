@@ -15,12 +15,12 @@ import android.support.annotation.RequiresApi;
 import java.util.ArrayList;
 
 public class Soldier extends Hero{
-    public static int SOLDIERMAXHP = 11250;
+    public static int SOLDIERMAXHP = 500;
     private Context context;
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
-    private int snipingBulletDamage = 150,normalBulletDamage = 25;
+    private int snipingBulletDamage = 180,normalBulletDamage = 25;
 
 
     int rayLength = 3000;
@@ -120,7 +120,7 @@ public class Soldier extends Hero{
 
         playerPos = pos;
 
-        gunShotDelay = 3;
+        //gunShotDelay = 90;
         bulletSpeed = normalBulletSpeed;
         bulletDamge = normalBulletDamage;
         playerBullets = new ArrayList<SoldierGunShot>();
@@ -149,11 +149,11 @@ public class Soldier extends Hero{
 
         if(skill1On){
             canMove = false;
-            gunShotDelay = 10;
+            gunShotDelay = 100;
             bulletSpeed = snipingBulletSpeed;
             bulletDamge = snipingBulletDamage;
         }else{
-            gunShotDelay = 3;
+            gunShotDelay = 1;
             bulletSpeed =normalBulletSpeed;
             bulletDamge = normalBulletDamage;
         }
@@ -190,7 +190,7 @@ public class Soldier extends Hero{
                         Paint p = new Paint();
                         p.setColor(Color.RED);
                         p.setStrokeWidth(8);
-                        canvas.drawLine(playerPos.x, playerPos.y, enemy.getEnemyPos().x, enemy.getEnemyPos().y, p);
+                        canvas.drawLine(getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y, enemy.getEnemyPos().x, enemy.getEnemyPos().y, p);
 
                     }
                 }
@@ -255,6 +255,7 @@ public class Soldier extends Hero{
         if(!ultimateSkillOn && !skill1OnCoolTime) {
             super.setSkill1On();
             playerVelocityX = 0;
+            canMove= false;
         }
     }
 

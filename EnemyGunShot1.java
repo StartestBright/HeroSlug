@@ -26,6 +26,6 @@ public class EnemyGunShot1 extends EnemyGunShot {
 
     @Override
     public void update(){
-        super.update();
+        super.update();detectLeft();
     }
 }

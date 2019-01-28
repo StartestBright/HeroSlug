@@ -248,7 +248,7 @@ public abstract class Hero implements Character{
 
         heroMoveBeyondHalf();
 
-        if((System.currentTimeMillis()-gunShotDelayStartTime)/100 >=gunShotDelay){
+        if((System.currentTimeMillis()-gunShotDelayStartTime)/10 >=gunShotDelay){
             canFire =true;
         }
 
