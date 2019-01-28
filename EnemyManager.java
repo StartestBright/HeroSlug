@@ -37,7 +37,7 @@ public class EnemyManager {
         this.context = context;
 
 
-   //     Boss1(new Point(1000,500));
+   //    Boss1(new Point(1000,500));
 
         spawnEnemy1(new Point(800,200));
        spawnEnemy1(new Point(1600,100));
