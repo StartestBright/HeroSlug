@@ -5,49 +5,50 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.os.Build;
+import android.graphics.Rect;
 //import android.support.annotation.RequiresApi;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 
 public class HeroGunShot extends View implements GameObject{
-    protected int gunShotDamage = 25;
+    protected int gunShotDamage;
     protected int bulletColor;
     protected boolean active = true;
     protected float bulletSpeed = 150f;
     protected float xPos ,yPos,velocityX=0,velocityY=0;
     protected float radius;
     protected Bitmap bulletImage;
+    protected boolean isRocket = false;
 
     private int screenWidth = MainActivity.SCREEN_WIDTH;
     private int screenHeight = MainActivity.SCREEN_HEIGHT;
 
-    BitmapFactory.Options opt = new BitmapFactory.Options();
+
+    protected Rect heroGunShotRect;
+    protected int herogunShotRectSizeY;
+    protected int heroGunShotRectSizeX;
+    protected Bitmap heroGunShotBitmap;
+    protected float rocketmanRocketRange;
 
 
-    public HeroGunShot(Context context,float velocityX,float velocityY,float xPos,float yPos) {
+    public HeroGunShot(Context context,float velocityX,float velocityY,float xPos,float yPos,boolean isRocket){
         super(context);
+        heroGunShotRect = new Rect();
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.xPos = xPos;
         this.yPos = yPos;
+        this.isRocket = isRocket;
         init(context);
-
-
     }
 
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void init(Context context){
 
-        opt.inMutable = true;
-
         bulletImage = BitmapFactory.decodeResource(getResources(),R.drawable.gunshot);
         bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
-        bulletColor = Color.YELLOW;
 
 
 
@@ -61,10 +62,10 @@ public class HeroGunShot extends View implements GameObject{
             yPos += (velocityY * bulletSpeed);
             collisionDetect();
         }
+        heroGunShotRect.set((int)xPos- heroGunShotRectSizeX,(int)yPos- herogunShotRectSizeY,(int)xPos+ heroGunShotRectSizeX,(int)yPos+ herogunShotRectSizeY);
         if(xPos>screenWidth||xPos<0||yPos>screenHeight||yPos<0){
             active = false;
         }
-
     }
 
     @Override
@@ -72,9 +73,8 @@ public class HeroGunShot extends View implements GameObject{
         if(active) {
             super.draw(canvas);
             //canvas.drawBitmap(bulletImage,0,0,null);
-            Paint paint = new Paint();
-            paint.setColor(bulletColor);
-            canvas.drawCircle(xPos, yPos, radius, paint);
+            canvas.drawBitmap(heroGunShotBitmap,null,heroGunShotRect,null);
+
 
         }
 
@@ -98,21 +98,56 @@ public class HeroGunShot extends View implements GameObject{
     public void collisionDetect(){
         if(this.active){
 
-            for(int i=0;i<EnemyManager.enemies.size();i++) {
-                Enemy enemy = EnemyManager.enemies.get(i);
-                if(enemy.isAlive()&&active){
-                    if (xPos - radius <=enemy.getEnemyPos().x+enemy.getEnemyWidth()&& //if  collide with enemy
-                            xPos+radius>=enemy.getEnemyPos().x-enemy.getEnemyWidth()&&
-                            yPos-radius<=enemy.getEnemyPos().y+enemy.getEnemyHeight()&&
-                            yPos+radius>=enemy.getEnemyPos().y-enemy.getEnemyHeight()) {
+            if(!isRocket) {
+                for (int i = 0; i < EnemyManager.enemies.size(); i++) {
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    if (xPos - radius <= enemy.getEnemyPos().x + enemy.getEnemyWidth() && //if  collide with enemy
+                            xPos + radius >= enemy.getEnemyPos().x - enemy.getEnemyWidth() &&
+                            yPos - radius <= enemy.getEnemyPos().y + enemy.getEnemyHeight() &&
+                            yPos + radius >= enemy.getEnemyPos().y - enemy.getEnemyHeight()
+                            ) {
 
-                        EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
-                        active = false;
-                        return;
+                        if (enemy.isAlive() && active && !isRocket) {
+                            EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
+                            active = false;
+                            return;
+                        }
 
+                    }
+
+                }
+            }else if(isRocket){
+                for (int i = 0; i < EnemyManager.enemies.size(); i++) {
+                    Enemy enemy = EnemyManager.enemies.get(i);
+                    if ((xPos - radius <= enemy.getEnemyPos().x + enemy.getEnemyWidth() && //if  collide with enemy
+                            xPos + radius >= enemy.getEnemyPos().x - enemy.getEnemyWidth() &&
+                            yPos - radius <= enemy.getEnemyPos().y + enemy.getEnemyHeight() &&
+                            yPos + radius >= enemy.getEnemyPos().y - enemy.getEnemyHeight())
+                            || heroGunShotRect.bottom>=GamePanel.FLOOR.getFloorRect().top) {
+                        if (enemy.isAlive() && active && isRocket) {
+                            for (int j = 0; j < EnemyManager.enemies.size(); j++) {
+                                Enemy enemy1 = EnemyManager.enemies.get(j);
+                                double dist = Math.sqrt(((enemy1.enemyPos.x - xPos) * (enemy1.enemyPos.x - xPos)) + ((enemy1.enemyPos.y - yPos) * (enemy1.enemyPos.y - yPos)));
+                                //System.out.println("DIST is = "+dist);
+                                if (dist <= rocketmanRocketRange) {
+                                    enemy1.takeDamage((int) ((rocketmanRocketRange - dist) / rocketmanRocketRange * gunShotDamage));
+                                    //System.out.println(gunShotDamage);
+                                    //System.out.println(rocketmanRocketRange+" "+dist+" "+gunShotDamage);
+                                    //System.out.println((int) ( (rocketmanRocketRange-dist)/rocketmanRocketRange *gunShotDamage));
+                                }
+                            }
+
+                            active = false;
+                            return;
+                        }
                     }
                 }
             }
         }
     }
+    public void gunshotMoveByPlayer(int value){
+        xPos-= value;
+    }
+
+
 }

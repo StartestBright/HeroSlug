@@ -450,10 +450,19 @@ public abstract class Hero implements Character{
                     gunShot.moveByHero((float) playerVelocityX);
                 }
 
+                for(int i=0;i<playerBullets.size();i++){
+                    HeroGunShot gunShot = (HeroGunShot) playerBullets.get(i);
+                    if(gunShot.active&& gunShot!=null){
+                        gunShot.gunshotMoveByPlayer((int) playerVelocityX);
+
+                    }
+                }
+
                 if(getHeroTag()=="Soldier"){
                     if(healPack!=null)
                         healPack.moveByHero((float) playerVelocityX);
                 }
+
 
 
                 GamePanel.PAYLOAD.payloadMoveByPlayer((float) playerVelocityX);
@@ -487,6 +496,8 @@ public abstract class Hero implements Character{
             }
 
         }
+
+
     }
 
     public Point getHeroShotSpawnPoint(){
