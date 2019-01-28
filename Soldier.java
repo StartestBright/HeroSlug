@@ -28,7 +28,7 @@ public class Soldier extends Hero{
 
     Handler handler;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public Soldier(Point pos, Context context){
+    public Soldier(int color, Point pos, Context context, GamePanel gamePanel){
         super(pos);
         heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0r);
         heroMovingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1r);
@@ -116,6 +116,7 @@ public class Soldier extends Hero{
         heroSizeY =100;
         this.context = context;
         super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
+        super.heroColor = color;
 
         playerPos = pos;
 
@@ -152,7 +153,7 @@ public class Soldier extends Hero{
             bulletSpeed = snipingBulletSpeed;
             bulletDamge = snipingBulletDamage;
         }else{
-            gunShotDelay = 10;
+            gunShotDelay = 1;
             bulletSpeed =normalBulletSpeed;
             bulletDamge = normalBulletDamage;
         }
@@ -200,7 +201,6 @@ public class Soldier extends Hero{
         if(healPack!=null){
             healPack.draw(canvas);
         }
-
 
     }
 

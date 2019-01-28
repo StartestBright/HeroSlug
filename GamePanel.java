@@ -99,8 +99,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         HEROHP = MainActivity.playerHP;
         BG = new Background(getContext());
-        HERO = HeroChooseScreen.ChosenHero;
-        //HERO = new Soldier(Color.BLUE,new Point(100,100),context,this);
+
+        HERO = new Soldier(Color.BLUE,new Point(100,100),context,this);
         //HERO = new RocketMan(Color.YELLOW,new Point(100,100),context);
 
         playerPoint = new Point(150,150);

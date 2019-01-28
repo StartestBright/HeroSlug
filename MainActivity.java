@@ -2,7 +2,6 @@ package com.jknull.heroslug;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -10,7 +9,6 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.provider.SyncStateContract;
 //import android.support.annotation.RequiresApi;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.Constraints;
 //import android.support.v4.app.ActivityCompat;
 //import android.support.v4.app.FragmentManager;
@@ -40,9 +38,7 @@ public class MainActivity extends Activity {
     public static Skill3 ultimateSkill;
 
 
-
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -50,6 +46,7 @@ public class MainActivity extends Activity {
         //WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
         SCREEN_WIDTH =dm.widthPixels;
         SCREEN_HEIGHT=dm.heightPixels;
+
 
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
