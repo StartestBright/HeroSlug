@@ -1,42 +1,48 @@
 package com.jknull.heroslug;
 
 
-import android.graphics.Bitmap;
-        import android.graphics.Canvas;
-        import android.graphics.Paint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Build;
 
-public class BoomEffection {
+public class BoomEffection implements GameObject {
     private Bitmap bitmap;
     private Point boomPosition;
     private int totalFrame;
-    private int currentFrame;
+    private int currentFrame = 0;
     private int frameW,frameH;
     private boolean isFished;
+    protected  Canvas canvas;
+    private  Context context;
+    private  Rect boomRect;
 
 
 
-    public BoomEffection(Bitmap bitmap, Point boomPosition, int totalFrame) {
-
+    public BoomEffection(Context context,Bitmap bitmap, Point boomPosition, int totalFrame, Rect rect) {
+        this.context = context;
         this.bitmap = bitmap;
         this.boomPosition=boomPosition;
-        int a = Math.round(3.14f);
         this.totalFrame = totalFrame;
-        frameW = bitmap.getWidth()/totalFrame;
-        frameH = bitmap.getHeight();
+        boomRect = rect;
+
      //   intXPosition = Math.round(boomPosition.x);
     }
 
-    public void draw(Canvas canvas, Paint paint){
+    public void update(){
+        booming();
+    }
+
+
+
+    public void draw(Canvas canvas){
+        Paint paint = new Paint();
+        this.canvas = canvas;
         canvas.save();
-        canvas.clipRect(boomPosition.x,boomPosition.y,boomPosition.x+frameW,boomPosition.y+frameH);
-        canvas.drawBitmap(bitmap,boomPosition.x-currentFrame*frameW,boomPosition.y,paint);
+        canvas.clipRect(boomRect);
+        canvas.drawBitmap(bitmap,null,boomRect,paint);
         canvas.restore();
         booming();
     }

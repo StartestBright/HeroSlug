@@ -1,6 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,6 +30,8 @@ public class Boss extends Enemy {
         enemyHeight = 100;
         enemyVelocityX=0;
         enemyVelocityY=0;
+        enemyBitMapLeft = BitmapFactory.decodeResource(context.getResources(),R.drawable.bossleft);
+        enemyBitMapRight    = BitmapFactory.decodeResource(context.getResources(),R.drawable.bossright);
       //  EnemyManager enemyHelp;
     }
 
@@ -62,7 +65,9 @@ public class Boss extends Enemy {
 
             float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
             temp *= -1;
-            enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),enemyPos,2));
+            Point tempPos;
+            tempPos = new Point(enemyPos.x,enemyPos.y);
+            enemyGunShots.add(new BossGunShot( context, (float) Math.cos(temp), -(float) Math.sin(temp),tempPos,2));
             bulletIndex++;
     }
 
@@ -71,10 +76,6 @@ public class Boss extends Enemy {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        this.canvas = canvas;
-        Paint p = new Paint();
-        p.setColor(Color.rgb(255, 30, 30));
-        canvas.drawRect(enemyRect, p);
 
     }
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
