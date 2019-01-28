@@ -68,14 +68,14 @@ public abstract class Hero implements Character{
 
 
     protected SoundPool heroSoundEffects;
-    protected int maxStreamForHero=8;
+    protected int maxStreamForHero=9;
     protected int heroSounds[];
     protected AudioAttributes heroSoundEffectsAttributes;
 
 
     enum HeroSounds{
         GUNSHOT(0),JUMP(1),SKILL1(2),
-        SKILL2(3),ULTIMATE(4),SNIPINGSOUND(5),ATTACKED(6),SOLDIERULTI2(7);
+        SKILL2(3),ULTIMATE(4),SNIPINGSOUND(5),ATTACKED(6),SOLDIERULTI2(7),MOVEPAYLOAD(8);
 
         private final int x;
         HeroSounds(int i) {
