@@ -2,10 +2,7 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 
 public class Enemy2 extends Enemy {
 
@@ -17,8 +14,8 @@ public class Enemy2 extends Enemy {
     private long startedDashingTime;
 
 
-    public Enemy2(Context context, Point p, int enemyIndex) {
-        super(context, p, enemyIndex);
+    public Enemy2(Context context, Point p) {
+        super(context, p);
         enemyMaxHp = 300; // You didn't set each enemies' max hp..
         curHp = enemyMaxHp;
         enemyVelocityX = 2.0;
@@ -72,7 +69,7 @@ public class Enemy2 extends Enemy {
     public void takeDamage(int damage) {
         curHp -= damage;
         if (curHp <= 0) {
-            EnemyManager.killEnemy(enemyIndex);
+            EnemyManager.killEnemy();
             enemyAlive = false;
         }
     }

@@ -2,22 +2,17 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.os.Build;
-//import android.support.annotation.RequiresApi;
 
-import java.util.ArrayList;
+//import android.support.annotation.RequiresApi;
 
 public class Enemy3 extends Enemy{
 
 
 
 
-    public Enemy3(Context context,Point p, int enemyIndex) {
-        super(context,p, enemyIndex);
+    public Enemy3(Context context,Point p) {
+        super(context,p);
         enemyMaxHp = 100; // Again you didn't set max hp
         curHp = enemyMaxHp;
         enemyWidth = 200;
@@ -97,5 +92,20 @@ public class Enemy3 extends Enemy{
         else{
             enemy.enemyInWalkMode=true;
         }
+    }
+
+
+    @Override
+    public void takeDamage(int damage) {
+        curHp -= damage;
+        if(curHp<=0) {
+           enemyVelocityY = gravity;
+          //  EnemyManager.killEnemy();
+            //  enemyAlive = false;
+        }
+    }
+
+    public void enemyDie(){
+        if(la)
     }
 }

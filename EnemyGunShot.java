@@ -141,8 +141,8 @@ public abstract class EnemyGunShot implements GameObject {
                     bulletRect.left <= GamePanel.HERO.getHero().right &&
                     bulletRect.bottom>= GamePanel.HERO.getHero().top &&
                     bulletRect.top <= GamePanel.HERO.getHero().bottom) {
-                  GamePanel.HERO.takeDamage(damage);
-                active = false;
+                     GamePanel.HERO.takeDamage(damage);
+                     active = false;
 
             }
         }

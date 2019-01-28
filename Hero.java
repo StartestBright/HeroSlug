@@ -1,7 +1,6 @@
 package com.jknull.heroslug;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -87,9 +86,6 @@ public abstract class Hero implements Character{
     HeroAnimManager animManager;
     class HeroAnimManager extends Thread {
 
-        public HeroAnimManager(){
-            System.out.println(HeroSounds.SKILL2);
-        }
         @Override
         public void run() {
             if(!PlayerHP.HERODEAD) {

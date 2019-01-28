@@ -2,6 +2,7 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -33,6 +34,13 @@ public abstract class Enemy implements Character{
     protected  Bitmap enemyBitMapRight;
     protected  Bitmap enemyBitMapLeft;
     protected Canvas canvas;
+    protected  Bitmap enemyBoom;
+    protected  boolean boomStarted= false;
+
+//    protected  boolean BoomFinished;
+
+   // protected  ArrayList<Explosion> explosions = new ArrayList<Explosion>();
+
 
 
     public static ArrayList<EnemyGunShot> enemyGunShots= new ArrayList<EnemyGunShot>();
@@ -41,6 +49,17 @@ public abstract class Enemy implements Character{
 
 
     protected  int bulletIndex = 0;
+
+
+    protected boolean enemyIsDead(){
+        if(enemyAlive){
+            return false;
+        }else{
+    //        Explosion explosion = new Explosion(15000,enemyPos.x,enemyPos.y);
+        //    explosions.add(new Explosion(1500,enemyPos.x,enemyPos.y));
+            return true;
+        }
+    }
 
     public Point getEnemyPos(){
         return this.enemyPos;
@@ -51,7 +70,7 @@ public abstract class Enemy implements Character{
 
 
     public void enmyWalk(Enemy enemy){
-        if(enemyInWalkMode == true){
+        if(enemyInWalkMode){
             if(walkAlready<=walkLength) {
                 enemyVelocityX=-2;
                 walkAlready++;
@@ -86,7 +105,7 @@ public abstract class Enemy implements Character{
 
         }else if(Math.abs(GamePanel.HERO.getHeroPos().x-enemy.enemyPos.x)<=600){
 
-            if(canFire == true){
+            if(canFire){
                 this.attack();
             //    canFire = false;
            //     gunShotDelayStartTime = System.currentTimeMillis();
@@ -105,13 +124,14 @@ public abstract class Enemy implements Character{
         }
     }
 
-    public Enemy(Context context,Point p, int enemyIndex){
+    public Enemy(Context context,Point p){
         this.context = context;
         enemyPos = p;
         this.enemyIndex = enemyIndex;
         curHp = enemyMaxHp;
         enemyRect = new Rect(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         enemyAlive =true;
+        enemyBoom = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom,null);
     }
     public boolean isAlive(){
         return enemyAlive;
@@ -127,6 +147,7 @@ public abstract class Enemy implements Character{
             enemyVelocityY = 0;
             enemyPos.y = MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT-enemyHeight;
         }
+
     }
 
 
@@ -139,6 +160,8 @@ public abstract class Enemy implements Character{
             enemyGunShots.get(i).update();
             if(!enemyGunShots.get(i).isActive())
                 enemyGunShots.remove(i);
+       //          boomFinished = true;
+      //      System.out.println("removed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }
 
@@ -213,7 +236,8 @@ public abstract class Enemy implements Character{
     public void takeDamage(int damage) {
         curHp -= damage;
         if(curHp<=0) {
-            EnemyManager.killEnemy(enemyIndex);
+
+            EnemyManager.killEnemy();
             enemyAlive = false;
         }
     }
