@@ -1,6 +1,7 @@
 package com.jknull.heroslug;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,7 +15,7 @@ import android.support.annotation.RequiresApi;
 import java.util.ArrayList;
 
 public class RocketMan extends Hero {
-    public static int ROCKETMANMAXHP = 200;
+    public static int ROCKETMANMAXHP = 250;
     private int rocketSpeed = 30;
     private Context context;
     private boolean rockManFlying = false;
@@ -140,6 +141,16 @@ public class RocketMan extends Hero {
         rocketManFlyingBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocketman_flying_l);
 
 
+        heroSounds[HeroSounds.GUNSHOT.getValue()] = heroSoundEffects.load(context,R.raw.rocket_snd,1);
+        heroSounds[HeroSounds.SNIPINGSOUND.getValue()] = heroSoundEffects.load(context,R.raw.soldier_sniping_sound,1);
+        heroSounds[HeroSounds.SKILL1.getValue()] = heroSoundEffects.load(context,R.raw.temp_rocketman_skill1,1);
+        heroSounds[HeroSounds.ULTIMATE.getValue()]= heroSoundEffects.load(context,R.raw.justice_rain,1);
+        heroSounds[HeroSounds.SKILL2.getValue()] = heroSoundEffects.load(context,R.raw.get_out_of_the_way,1);
+        heroSounds[HeroSounds.JUMP.getValue()] = heroSoundEffects.load(context,R.raw.rocketman_jump,1);
+        heroSounds[HeroSounds.ATTACKED.getValue()] = heroSoundEffects.load(context,R.raw.rocketman_attacked,1);
+        heroSounds[HeroSounds.SOLDIERULTI2.getValue()] = heroSoundEffects.load(context,R.raw.justice_rain,1);
+        heroSounds[HeroSounds.MOVEPAYLOAD.getValue()] = heroSoundEffects.load(context,R.raw.soldier_movepayload_sound,1);
+        heroSoundEffects.play(heroSounds[HeroSounds.MOVEPAYLOAD.getValue()],1,1,1,0,1);
 
     }
 

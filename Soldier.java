@@ -97,6 +97,7 @@ public class Soldier extends Hero{
         soldierSnipingBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_sniping_bitmap_r);
         soldierSnipingBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_sniping_bitmap_l);
 
+
         heroSounds[HeroSounds.GUNSHOT.getValue()] = heroSoundEffects.load(context,R.raw.soldier_gunshot_sound,1);
         heroSounds[HeroSounds.SNIPINGSOUND.getValue()] = heroSoundEffects.load(context,R.raw.soldier_sniping_sound,1);
         heroSounds[HeroSounds.SKILL1.getValue()] = heroSoundEffects.load(context,R.raw.soldier_skill1on_sound,1);
@@ -104,7 +105,7 @@ public class Soldier extends Hero{
         heroSounds[HeroSounds.SKILL2.getValue()] = heroSoundEffects.load(context,R.raw.soldier_skill2on_sound,1);
         heroSounds[HeroSounds.JUMP.getValue()] = heroSoundEffects.load(context,R.raw.soldier_jump_sound,1);
         heroSounds[HeroSounds.ATTACKED.getValue()] = heroSoundEffects.load(context,R.raw.soldier_attacked_sound,1);
-        heroSounds[HeroSounds.SOLDIERULTI2.getValue()] = heroSoundEffects.load(context,R.raw.soldier_ultimate_sound2,1);
+        heroSounds[HeroSounds.SOLDIERULTI2.getValue()] = heroSoundEffects.load(context,R.raw.i_got_you_in_my_sight,1);
         heroSounds[HeroSounds.MOVEPAYLOAD.getValue()] = heroSoundEffects.load(context,R.raw.soldier_movepayload_sound,1);
         heroSoundEffects.play(heroSounds[HeroSounds.MOVEPAYLOAD.getValue()],1,1,1,0,1);
 
@@ -151,8 +152,13 @@ public class Soldier extends Hero{
             gunShotDelay = 100;
             bulletSpeed = snipingBulletSpeed;
             bulletDamge = snipingBulletDamage;
-        }else{
-            gunShotDelay = 10;
+        }else if(ultimateSkillOn){
+            gunShotDelay = 30;
+            bulletSpeed =normalBulletSpeed;
+            bulletDamge = normalBulletDamage;
+        }
+        else{
+            gunShotDelay = 1;
             bulletSpeed =normalBulletSpeed;
             bulletDamge = normalBulletDamage;
         }
@@ -211,24 +217,30 @@ public class Soldier extends Hero{
     public void attack() {
         if(canFire && !PlayerHP.HERODEAD) {
             if (ultimateSkillOn) {
-                for (int i = 0; i < EnemyManager.enemies.size(); i++) {
-                    Enemy enemy = EnemyManager.enemies.get(i);
-                    if (EnemyManager.enemies.get(i).isAlive()) {
-                        if(enemy.getEnemyPos().x<=MainActivity.SCREEN_WIDTH && enemy.getEnemyPos().x>=0
-                                && enemy.getEnemyPos().y<=MainActivity.SCREEN_HEIGHT && enemy.getEnemyPos().y>=0) {
-                            int x = enemy.getEnemyPos().x - playerPos.x;
-                            int y = enemy.getEnemyPos().y - playerPos.y;
-                            float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
-                            temp *= -1;
-                            SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y);
-                            newBullet.setBulletSpeed(bulletSpeed);
-                            newBullet.setBulletDamage(bulletDamge);
-                            playerBullets.add(newBullet);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < EnemyManager.enemies.size(); i++) {
+                            Enemy enemy = EnemyManager.enemies.get(i);
+                            if (EnemyManager.enemies.get(i).isAlive()) {
+                                if(enemy.getEnemyPos().x<=MainActivity.SCREEN_WIDTH && enemy.getEnemyPos().x>=0
+                                        && enemy.getEnemyPos().y<=MainActivity.SCREEN_HEIGHT && enemy.getEnemyPos().y>=0) {
+                                    int x = enemy.getEnemyPos().x - playerPos.x;
+                                    int y = enemy.getEnemyPos().y - playerPos.y;
+                                    float temp = (float) (Math.atan2(x, y) + Math.PI + Math.PI / 2);
+                                    temp *= -1;
+                                    SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(temp), (float) Math.sin(temp), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y);
+                                    newBullet.setBulletSpeed(bulletSpeed);
+                                    newBullet.setBulletDamage(bulletDamge);
+                                    playerBullets.add(newBullet);
 
-                            heroSoundEffects.play(heroSounds[HeroSounds.GUNSHOT.getValue()],1,1,1,0,1);
+                                    heroSoundEffects.play(heroSounds[HeroSounds.GUNSHOT.getValue()],1,1,1,0,1);
+                                }
+                            }
                         }
                     }
-                }
+                }).start();
+
             } else {
                 SoldierGunShot newBullet = new SoldierGunShot(context, (float) Math.cos(playerRotation), (float) Math.sin(playerRotation), getHeroShotSpawnPoint().x, getHeroShotSpawnPoint().y);
                 newBullet.setBulletSpeed(bulletSpeed);

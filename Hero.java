@@ -115,7 +115,7 @@ public abstract class Hero implements Character{
                     }
                     if(PlayerHP.HERODEAD){
                         if(heroTag=="Soldier"){
-                            while(heroDyingBitmapIndex<12){
+                            while(heroDyingBitmapIndex<11){
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException e) {
@@ -244,8 +244,10 @@ public abstract class Hero implements Character{
         //System.out.println(heroMovingBitmapIndex);
         playerBulletGarbageCollector();
 
-        if(PlayerHP.HERODEAD)
-            canMove= false;
+        if(PlayerHP.HERODEAD) {
+            canMove = false;
+            playerVelocityX = 0;
+        }
         heroWeaponRect.set(heroWeaponPos.x-heroWeaponSizeX/2,heroWeaponPos.y-heroWeaponSizeY/2,heroWeaponPos.x+heroWeaponSizeX/2,heroWeaponPos.y+heroWeaponSizeY/2);
         if(!playerLanded) {
             if(GamePanel.HERO.getHeroTag()!="RocketMan")
@@ -397,7 +399,7 @@ public abstract class Hero implements Character{
 
 
     public void moveHorizontal(double value){
-        if(!flying && canMove) {
+        if(!flying && canMove&&!PlayerHP.HERODEAD) {
             playerVelocityX = value;
             if (playerVelocityX >= PLAYERMAXHORIZONTALSPEED)
                 playerVelocityX = PLAYERMAXHORIZONTALSPEED;
