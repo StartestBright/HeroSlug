@@ -36,7 +36,7 @@ public abstract class Enemy implements Character{
     protected  Bitmap enemyBitMapRight;
     protected  Bitmap enemyBitMapLeft;
     protected Canvas canvas;
-    protected  Bitmap enemyBoom;
+    protected  Bitmap enemyBoom[];
     protected  boolean boomStarted= false;
 
     protected SoundPool enemyBoomSound;
@@ -128,6 +128,10 @@ public abstract class Enemy implements Character{
             enemy.enemyInWalkMode=true;
         }
     }
+    public void init(){
+        enemyBoom = new Bitmap[1];
+        enemyBoom[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom,null);
+    }
 
     public Enemy(Context context,Point p){
         this.context = context;
@@ -138,8 +142,9 @@ public abstract class Enemy implements Character{
         enemyAlive =true;
         enemyBoomSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
 
+
         enemyBoomSound.load(context,R.raw.enemyboom,1);
-        enemyBoom = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom,null);
+        init();
     }
     public boolean isAlive(){
         return enemyAlive;
@@ -294,6 +299,10 @@ public abstract class Enemy implements Character{
         else
             enemyVelocityY -= (shockRange - (enemyPos.y - shockPoint.y)) / shockRange * shockPower;
     }
+
+    public abstract String getCharacterTag();
+
+
 
 
 

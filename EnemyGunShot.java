@@ -30,7 +30,7 @@ public abstract class EnemyGunShot implements GameObject {
     protected Rect bulletRect;
     protected  Canvas canvas;
     protected Context context;
-    protected  Bitmap boomBitmap;
+    protected  Bitmap boomBitmap[];
     protected Boolean boomming = false;
     protected   Boolean boomFinished = false;
     protected  String enemyTag;
@@ -60,7 +60,8 @@ public abstract class EnemyGunShot implements GameObject {
         bulletVelocityY  = velocityY;
         bulletPos = pos;
         bulletSpeed = speed;
-        boomBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom);
+        boomBitmap = new Bitmap[1];
+        boomBitmap[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom);
 
         init(context);
      //   bulletRect = new Rect(bulletPos.x-bulltSize,bulletPos.y-bulltSize,bulletPos.x+bulltSize,bulletPos.y+bulltSize);
@@ -139,10 +140,11 @@ public abstract class EnemyGunShot implements GameObject {
   //      bulletPos.x= Math.round(bulletPos.x);
      //   bulletPos.y=Math.round(bulletPos.y);
       //  opt.inMutable = true;
+        boomBitmap = new Bitmap[1];
 
         bulletRect = new Rect(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
         bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
-        boomBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
+        boomBitmap[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
 
      //   bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);
         //bulletImage.setWidth(800);

@@ -1,5 +1,6 @@
 package com.jknull.heroslug;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -13,6 +14,25 @@ public class Enemy3 extends Enemy{
 
 
     protected SoundPool enemyRealsedBoomSound;
+
+
+    @Override
+    public void init(){
+        enemyBoom = new Bitmap[12];
+        enemyBoom[0]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_01);
+        enemyBoom[1]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_02);
+        enemyBoom[2]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_03);
+        enemyBoom[3]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_04);
+        enemyBoom[4]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_05);
+        enemyBoom[5]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_06);
+        enemyBoom[6]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_07);
+        enemyBoom[7]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_08);
+        enemyBoom[8]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_09);
+        enemyBoom[9]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_10);
+        enemyBoom[10]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_11);
+        enemyBoom[11]= BitmapFactory.decodeResource(context.getResources(),R.drawable.behit_jiguanpao_c_12);
+
+    }
 
 
 

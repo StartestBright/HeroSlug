@@ -6,43 +6,45 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class BoomEffection{
-    private Bitmap bitmap;
-    private int x,y;
-    private int totalFrame;
-    private int currentFrame;
-    private  int imageDelay = 0;
-    private  int delayTime =0;
-    private int frameW,frameH;
-    private boolean isFinished= false;
 
 
     public BoomEffection(Bitmap bitmap, int x, int y, int totalFrame, int imDelay) {
+    protected   long delayTime =30;
+    protected  int frameW,frameH;
+    protected  long startedTime;
+
+
+    public BoomEffection(Bitmap bitmap[], int x, int y, int totalFrame, int imDelay) {
         this.bitmap = bitmap;
         this.x = x;
         this.y = y;
         this.totalFrame = totalFrame;
         delayTime = imDelay;
-        frameW = bitmap.getWidth()/totalFrame;
-        frameH = bitmap.getHeight();
+        frameW = bitmap[0].getWidth()/totalFrame;
+        frameH = bitmap[0].getHeight();
     }
 
     public void draw(Canvas canvas, Paint paint){
-        canvas.save();
-        canvas.clipRect(x,y,x+frameW,y+frameH);
-        canvas.drawBitmap(bitmap,x-currentFrame*frameW,y,paint);
-        canvas.restore();
-        booming();
+        if(canDraw) {
+            canvas.save();
+            canvas.clipRect(x, y, x + frameW, y + frameH);
+            canvas.drawBitmap(bitmap[0], x - currentFrame * frameW, y, paint);
+            canvas.restore();
+            booming();
+        }
+
+
     }
 
     public void booming(){
-        if((currentFrame<totalFrame)&&imageDelay>=delayTime){
+        if((System.currentTimeMillis()-startedTime)/10>=delayTime){
             currentFrame++;
-            imageDelay = 0;
-        }else if(currentFrame<totalFrame) {
-            imageDelay++;
+            startedTime = System.currentTimeMillis();
         }
-            else{
+
+        if(currentFrame>=totalFrame){
             isFinished = true;
+            canDraw = false;
         }
     }
 
