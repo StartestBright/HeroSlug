@@ -6,11 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class BoomEffection{
-
-
-    public BoomEffection(Bitmap bitmap, int x, int y, int totalFrame, int imDelay) {
+    protected Bitmap bitmap[];
+    protected  int x,y;
+    protected  int totalFrame;
+    protected  int currentFrame;
+    protected   int imageDelay = 0;
     protected   long delayTime =30;
     protected  int frameW,frameH;
+    protected  boolean isFinished= false;
+    protected  boolean canDraw=true;
     protected  long startedTime;
 
 
