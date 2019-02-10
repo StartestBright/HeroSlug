@@ -282,7 +282,6 @@ public abstract class Enemy implements Character{
         curHp -= damage;
         if(curHp<=0) {
             enemyBoomSound.play(1,1,1,0,0,1);
-
             EnemyManager.killEnemy();
             enemyAlive = false;
         }
