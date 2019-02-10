@@ -36,6 +36,7 @@ public class EnemyManager {
     }
     EnemyManager(Context context){
         this.context = context;
+        boss1(new Point(1500,300));
 
     }
 
