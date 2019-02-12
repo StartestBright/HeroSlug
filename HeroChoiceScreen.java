@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-public class HeroChooseScreen extends AppCompatActivity {
+public class HeroChoiceScreen extends AppCompatActivity {
 
     public static Hero ChosenHero;
     Intent gameStartIntent;
@@ -99,5 +99,11 @@ public class HeroChooseScreen extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setLoadingPage(false);
     }
 }

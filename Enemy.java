@@ -131,6 +131,7 @@ public abstract class Enemy implements Character{
     public void init(){
         enemyBoom = new Bitmap[1];
         enemyBoom[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom,null);
+
     }
 
     public Enemy(Context context,Point p){

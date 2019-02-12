@@ -74,8 +74,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-        System.out.println("i will stop thread!!!!");
         enemyManager.clearEnemy();
         enemyManager.startClear=true;
 
@@ -100,7 +98,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         HEROHP = MainActivity.playerHP;
         BG = new Background(getContext());
-        HERO = HeroChooseScreen.ChosenHero;
+        HERO = HeroChoiceScreen.ChosenHero;
         playerPoint = new Point(150,150);
         FLOOR = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),this);
         floorRect = FLOOR.getFloorRect();
