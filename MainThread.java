@@ -50,12 +50,6 @@ public class MainThread extends Thread {
                 }
             }
 
-
-
-
-
-
-
             timeMillis = (System.nanoTime() -startTime)/1000000;
             waitTime = targetTime - timeMillis;
             try{
@@ -73,8 +67,11 @@ public class MainThread extends Thread {
             }
 
         }
+
     }
     public void setRunning(boolean running){
+        System.out.println("set false");
+      //  this.sleep(1000);
         this.running = running;
     }
 }

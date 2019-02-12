@@ -214,8 +214,8 @@ public class Boss extends Enemy {
             flashing = true;
             if(flashingFinished) {
                 canFlash = false;
-                final int randomX = new Random().nextInt(2); // [0, 60] + 20 => [20, 80]
-                final int random = new Random().nextInt(450) + 100; // [0, 60] + 20 => [20, 80]
+                final int randomX = new Random().nextInt(2);
+                final int random = new Random().nextInt(600) + 150;
                 if(!informationFinished){
                     canDrawInformation = true;
                 }
@@ -223,10 +223,12 @@ public class Boss extends Enemy {
 
                 if (randomX == 0) {
                     enemyPos.x = GamePanel.HERO.playerPos.x + random;
-                } else {
-                    enemyPos.x = GamePanel.HERO.playerPos.x - random;
+                } else if(GamePanel.HERO.playerPos.x<=600) {
+                    enemyPos.x = GamePanel.HERO.playerPos.x + random;
+                }else{
+                 enemyPos.x = GamePanel.HERO.playerPos.x - random;
                 }
-                enemyPos.y = GamePanel.HERO.playerPos.y - random;
+                enemyPos.y = GamePanel.floorRect.top- random;
 
 
                 flashStartedTime = System.currentTimeMillis();

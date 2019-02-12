@@ -1,12 +1,11 @@
 package com.jknull.heroslug;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +25,7 @@ public class HeroChooseScreen extends AppCompatActivity {
         soldierSelected =findViewById(R.id.choose_soldier);
         RocketManSelected = findViewById(R.id.choose_Rocketman);
         RainerSelected = findViewById(R.id.choose_Someone1);
+
 
         soldierSelected.setOnTouchListener(new View.OnTouchListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -61,7 +61,6 @@ public class HeroChooseScreen extends AppCompatActivity {
                 return true;
             }
         });
-
 
     }
 }
