@@ -22,6 +22,7 @@ public class HeroChoiceScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_hero_choose_screen);
 
         gameStartIntent = new Intent(getApplicationContext(),MainActivity.class);
