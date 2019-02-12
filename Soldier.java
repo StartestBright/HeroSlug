@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class Soldier extends Hero{
     public static int SOLDIERMAXHP = 500;
-    private Context context;
     private float bulletSpeed;
     private int bulletDamge;
     private float snipingBulletSpeed=120f,normalBulletSpeed= 80f;
@@ -29,7 +28,8 @@ public class Soldier extends Hero{
     Handler handler;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Soldier(Point pos, Context context){
-        super(pos);
+        super(pos,context);
+        super.context = context;
         heroMovingRightBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move0r);
         heroMovingRightBitmaps[1] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move1r);
         heroMovingRightBitmaps[2] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_move2r);
@@ -140,6 +140,7 @@ public class Soldier extends Hero{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void update() {
         super.update();

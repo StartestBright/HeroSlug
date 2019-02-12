@@ -1,5 +1,6 @@
 package com.jknull.heroslug;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 public abstract class Hero implements Character{
     public static int PLAYERMAXHORIZONTALSPEED = 15;
+    public static SoundPool rocketExplosionSoundPool;
     protected Rect heroRect;
     protected long gunShotDelay;
     protected long gunShotDelayStartTime;
@@ -70,6 +72,8 @@ public abstract class Hero implements Character{
     protected int maxStreamForHero=9;
     protected int heroSounds[];
     protected AudioAttributes heroSoundEffectsAttributes;
+
+    protected Context context;
 
 
     enum HeroSounds{
@@ -143,8 +147,9 @@ public abstract class Hero implements Character{
         }
     }
 
+    public static int ROCKETEXPLOSIONSOUND;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public Hero(Point heroSpawnPos){
+    public Hero(Point heroSpawnPos,Context context){
         animManager = new HeroAnimManager();
         playerPos = heroSpawnPos;
         rocketManFlyingBitmaps= new Bitmap[2];
@@ -178,8 +183,9 @@ public abstract class Hero implements Character{
 
         heroSoundEffectsAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
         heroSoundEffects = new SoundPool.Builder().setAudioAttributes(heroSoundEffectsAttributes).setMaxStreams(maxStreamForHero).build();
-
         heroSounds = new int[maxStreamForHero];
+        rocketExplosionSoundPool =new SoundPool.Builder().setAudioAttributes(new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()).setMaxStreams(100).build();
+        ROCKETEXPLOSIONSOUND = rocketExplosionSoundPool.load(context,R.raw.enemyboom,0);
 
 
 
@@ -240,6 +246,7 @@ public abstract class Hero implements Character{
                     playerBullets.remove(i);
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void update(){
         //System.out.println(heroMovingBitmapIndex);
         playerBulletGarbageCollector();
@@ -484,6 +491,12 @@ public abstract class Hero implements Character{
                 for(int i=0;i<Enemy.enemyGunShots.size();i++){
                     EnemyGunShot gunShot = Enemy.enemyGunShots.get(i);
                     gunShot.moveByHero((float) playerVelocityX);
+                }
+                for(int i=0;i<playerBullets.size();i++){
+                    HeroGunShot gunShot = (HeroGunShot) playerBullets.get(i);
+                    if(gunShot.active&& gunShot!=null){
+                        gunShot.gunshotMoveByPlayer((int) playerVelocityX);
+                    }
                 }
 
                 if(getHeroTag()=="Soldier"){

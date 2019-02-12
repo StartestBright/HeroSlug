@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class RocketMan extends Hero {
     public static int ROCKETMANMAXHP = 250;
     private int rocketSpeed = 30;
-    private Context context;
     private boolean rockManFlying = false;
     private int flyingGaze;
     private static int FLYINGMAXGAZE = 100;
@@ -28,13 +27,13 @@ public class RocketMan extends Hero {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public RocketMan(Point pos, Context context){
-        super(pos);
-        heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        super(pos,context);
+        //heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
         heroSizeX =60;
         heroSizeY =100;
-        this.context = context;
+        super.context = context;
         super.heroRect = new Rect(-heroSizeX,-heroSizeY,heroSizeX,heroSizeY);
 
         playerPos = pos;
@@ -53,7 +52,7 @@ public class RocketMan extends Hero {
         skill1CoolTime = 15;
         skill1LastingTime=5;
         skill2OnCoolTime=false;
-        skill2CoolTime = 1;
+        skill2CoolTime = 10;
         skill2LastingTime= 0;
 
 
@@ -150,6 +149,7 @@ public class RocketMan extends Hero {
         heroSounds[HeroSounds.ATTACKED.getValue()] = heroSoundEffects.load(context,R.raw.rocketman_attacked,1);
         heroSounds[HeroSounds.SOLDIERULTI2.getValue()] = heroSoundEffects.load(context,R.raw.justice_rain,1);
         heroSounds[HeroSounds.MOVEPAYLOAD.getValue()] = heroSoundEffects.load(context,R.raw.soldier_movepayload_sound,1);
+        heroSounds[HeroSounds.GUNSHOT.getValue()] = heroSoundEffects.load(context,R.raw.rocket_snd,1);
         heroSoundEffects.play(heroSounds[HeroSounds.MOVEPAYLOAD.getValue()],1,1,1,0,1);
 
     }
@@ -164,6 +164,7 @@ public class RocketMan extends Hero {
             playerBullets.add(newBullet);
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
+            heroSoundEffects.play(heroSounds[HeroSounds.GUNSHOT.getValue()],1,1,1,0,1);
         }
     }
 
@@ -188,6 +189,7 @@ public class RocketMan extends Hero {
     public void falling(){
         rockManFlying = false;
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void update() {
         super.update();
@@ -239,6 +241,7 @@ public class RocketMan extends Hero {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void setSkill2On() {
         if (!skill2OnCoolTime&&!PlayerHP.HERODEAD) {

@@ -5,10 +5,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 public class RocketManShockShot extends HeroGunShot {
     private float shockPower = 500;
     private float shockRange = 400;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public RocketManShockShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context, velocityX, velocityY, xPos, yPos,true);
         gunShotDamage =25;
@@ -20,6 +23,7 @@ public class RocketManShockShot extends HeroGunShot {
         bulletSpeed = 30;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void update() {
         super.update();
@@ -30,21 +34,34 @@ public class RocketManShockShot extends HeroGunShot {
         super.draw(canvas);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void collisionDetect() {
-        super.collisionDetect();
+        //super.collisionDetect();
 
 
         for(int i=0;i<EnemyManager.enemies.size();i++) {
             Enemy enemy = EnemyManager.enemies.get(i);
             float x  = Math.abs(enemy.enemyPos.x-xPos);
             float y  = Math.abs(enemy.enemyPos.y-yPos);
+
+            /*if (enemy.isAlive() && active) {
+                double dist = Math.sqrt(((enemy.enemyPos.x - xPos) * (enemy.enemyPos.x - xPos)) + ((enemy.enemyPos.y - yPos) * (enemy.enemyPos.y - yPos)));
+                if (dist <= rocketmanRocketRange) {
+                    enemy.takeDamage((int) ((rocketmanRocketRange - dist) / rocketmanRocketRange * gunShotDamage));
+                }
+
+            }*/
             if(enemy.isAlive()&&x<=shockRange&&y<=shockRange){
                 if ((heroGunShotRect.left <=enemy.getEnemyRect().right&& //if  collide with enemy
                         heroGunShotRect.right>=enemy.getEnemyRect().left&&
                         heroGunShotRect.top<=enemy.getEnemyRect().bottom&&
                         heroGunShotRect.bottom>=enemy.getEnemyRect().top)||(heroGunShotRect.bottom>=MainActivity.SCREEN_HEIGHT-Floor.FLOORHEIGHT)) {
 
+                    if(!explosionSoundPlayed) {
+                        Hero.rocketExplosionSoundPool.play(Hero.ROCKETEXPLOSIONSOUND, 1, 1, 1, 0, 1);
+                        explosionSoundPlayed = true;
+                    }
                     enemy.takeShockShot(new Point((int)xPos,(int) yPos),shockPower,shockRange);
                     //EnemyManager.enemies.get(i).takeDamage(gunShotDamage);
                     //(enemy.getEnemyPos().x-xPos)/shockRange*shockPower

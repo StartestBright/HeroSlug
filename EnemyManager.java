@@ -35,10 +35,7 @@ public class EnemyManager {
     }
     EnemyManager(Context context){
         this.context = context;
-
-
-       Boss1(new Point(9000,500));
-
+      // Boss1(new Point(9000,500));
       spawnEnemy1(new Point(800,200));
         spawnEnemy1(new Point(1100,100));
         spawnEnemy1(new Point(1200,100));
@@ -91,6 +88,7 @@ public class EnemyManager {
 
 
     }
+
     public void update(){
 
         for(int i=0;i<enemies.size();i++){
@@ -99,11 +97,9 @@ public class EnemyManager {
             else if((!enemies.get(i).boomStarted)&&(enemies.get(i).getCharacterTag()!="Enemy3")){
                 boomEffections.add(new BoomEffection(enemies.get(i).enemyBoom, enemies.get(i).enemyRect.left, enemies.get(i).enemyPos.y, 7,10));
                 enemies.get(i).boomStarted= true;
-                System.out.println("is dead");
             }else if((!enemies.get(i).boomStarted)&&(enemies.get(i).getCharacterTag()=="Enemy3")){
                 boomEffections.add(new BoomEffectionMultipleImages(enemies.get(i).enemyBoom, enemies.get(i).enemyRect.left, enemies.get(i).enemyPos.y, 11,7));
                 enemies.get(i).boomStarted= true;
-                System.out.println("is dead");
             }
         }
         for(int j=0;j<boomEffections.size();j++){
@@ -136,7 +132,6 @@ public class EnemyManager {
         for(int i =0;i<enemies.size();i++){
             if(enemies.get(i).enemyIsDead()){
                enemies.remove(i);
-               System.out.println("ENEMYREMOBVE");
             }
         }
     }

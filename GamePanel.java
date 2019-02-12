@@ -15,6 +15,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+    public static Context CONTEXT;
     public static int GAMESTAGE = 1;
     public static int MAPSIZE =10000;
     public static float bgmVolume = 0.4f;
@@ -36,19 +37,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static Rect floorRect;
 
     private MediaPlayer backgroundMusic;
-
-
-
-
-    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public GamePanel(Context context) {
         super(context);
         init(context);
 
     }
-
-    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public GamePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -78,28 +72,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        while(true){
+        /*while(true){
             try{
                 thread.setRunning(false);
                 thread.join();
             }catch (Exception e){e.printStackTrace();}
 
-        }
+        }*/
     }
 
-
-   // @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void init(Context context){
+        CONTEXT = context;
         getHolder().addCallback(this);
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
         HEROHP = MainActivity.playerHP;
         BG = new Background(getContext());
         HERO = HeroChooseScreen.ChosenHero;
-        //HERO = new Soldier(new Point(100,100),context);
-        //HERO = new RocketMan(new Point(100,100),context);
-
         playerPoint = new Point(150,150);
         FLOOR = new Floor(new Rect(0,MainActivity.SCREEN_HEIGHT-20,MainActivity.SCREEN_WIDTH,MainActivity.SCREEN_HEIGHT),this);
         floorRect = FLOOR.getFloorRect();
@@ -110,65 +100,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         backgroundMusic.setVolume(bgmVolume,bgmVolume);
         backgroundMusic.setLooping(true);
         backgroundMusic.start();
-        //payloadMap = MainActivity.payloadMap;
-        //joystick = BitmapFactory.decodeResource(getResources(),R.drawable.joystick);
-        //System.out.println(joystick);
-        //HEROHP = new PlayerHP(context,Player.PLAYERMAXHP);
-        //HEROHP.setAlpha(0.1f);
-
     }
 
-    float oldX,oldY,curX,curY;
-    /*@Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        curX = event.getX();
-        curY = event.getY();
-
-        switch (action){
-            case MotionEvent.ACTION_DOWN:
-                oldX = getX();
-                oldY = getY();
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                if(oldX>0 || oldY>0){
-                    player.moveHorizontal((int)(curX-oldX));
-                }
-                oldX= curX;
-                oldY= curY;
-
-
-                //playerPoint.set((int)event.getX(),(int)event.getY());
-                break;
-
-
-        }
-        return true;
-    }*/
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        //final float scaleFactorX = MainActivity.SCREEN_WIDTH/WIDTH;
-        //final float scaleFactorY = MainActivity.SCREEN_HEIGHT/HEIGHT;
-        //canvas.scale(scaleFactorX,scaleFactorY);
-
         canvas.drawColor(Color.WHITE);
         BG.draw(canvas);
         HERO.draw(canvas);
         HEROHP.draw(canvas);
-        if(!STAGECLEAR)
+        if (!STAGECLEAR)
             enemyManager.draw(canvas);
         PAYLOAD.draw(canvas);
         payloadMap.draw(canvas);
         FLOOR.draw(canvas);
-        //Paint temp = new Paint();
-        //temp.setColor(Color.GREEN);
-        //canvas.drawRect(0,canvas.getHeight()-floorHeight,getWidth(),canvas.getHeight(),temp);
-
-
-
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void update(){
 
         if(!STAGECLEAR) {
@@ -182,11 +129,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public static void ClearStage(){
+    public static void ClearStage() {
         STAGECLEAR = true;
-    }
-    public static void GameOver(){
-
     }
 
 }

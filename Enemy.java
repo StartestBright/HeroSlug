@@ -140,7 +140,7 @@ public abstract class Enemy implements Character{
         curHp = enemyMaxHp;
         enemyRect = new Rect(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         enemyAlive =true;
-        enemyBoomSound= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+        enemyBoomSound= new SoundPool(100,AudioManager.STREAM_SYSTEM,5);
 
 
         enemyBoomSound.load(context,R.raw.enemyboom,1);
@@ -281,7 +281,7 @@ public abstract class Enemy implements Character{
     public void takeDamage(int damage) {
         curHp -= damage;
         if(curHp<=0) {
-            enemyBoomSound.play(1,1,1,0,0,1);
+            enemyBoomSound.play(1,0.2f,0.2f,0,0,1);
 
             EnemyManager.killEnemy();
             enemyAlive = false;
