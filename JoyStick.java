@@ -83,8 +83,6 @@ public class JoyStick extends View{
 
         //gestureDetector.onTouchEvent(event);
 
-        System.out.println(JOYSTICK_XPOS+" "+JOYSTICK_YPOS+" done!");
-
 
         return true;
     }
