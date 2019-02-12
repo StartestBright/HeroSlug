@@ -50,7 +50,10 @@ public class HeroGunShot extends View implements GameObject{
     private int screenHeight = MainActivity.SCREEN_HEIGHT;
     //private long destroyStartTime,destroyDelayTime=1;
     private boolean destroy = false;
+    private boolean rotationSet =false;
     private boolean loaded = false;
+    private float heroGunShotRotation = (float) (GamePanel.HERO.playerRotation/Math.PI*180);
+
     //private Bitmap rocketExplosionBitmaps[];
     //private int rocketExplosionBitmapIndex = 0;
     //private RocketExplosionAnim explosionAnim;
@@ -99,6 +102,7 @@ public class HeroGunShot extends View implements GameObject{
                 loaded = true;
             }
         });
+
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
 
@@ -126,11 +130,11 @@ public class HeroGunShot extends View implements GameObject{
         if(active) {
             super.draw(canvas);
             if(!destroy&&heroGunShotBitmap!=null) {
-                //canvas.save();
-                //canvas.rotate((float) (GamePanel.HERO.playerRotation/Math.PI*180));
+                canvas.save();
+                canvas.rotate(heroGunShotRotation,xPos,yPos);
                 canvas.drawBitmap(heroGunShotBitmap, null, heroGunShotRect, null);
                 //canvas.drawBitmap(heroGunShotBitmap,);
-                //canvas.restore();
+                canvas.restore();
             }//else
                 //canvas.drawBitmap(rocketExplosionBitmaps[rocketExplosionBitmapIndex],null,heroGunShotRect,null);
         }

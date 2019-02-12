@@ -15,12 +15,12 @@ public class RocketManShockShot extends HeroGunShot {
     public RocketManShockShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         super(context, velocityX, velocityY, xPos, yPos,true);
         gunShotDamage =25;
-        heroGunShotRectSizeX=50;
+        heroGunShotRectSizeX=80;
         herogunShotRectSizeY=50;
         heroGunShotBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.rocket_shot);
         active = true;
         bulletColor = Color.RED;
-        bulletSpeed = 30;
+        bulletSpeed = 60;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

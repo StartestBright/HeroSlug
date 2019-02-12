@@ -104,7 +104,7 @@ public class Soldier extends Hero{
         heroSounds[HeroSounds.ULTIMATE.getValue()]= heroSoundEffects.load(context,R.raw.soldier_ultimate_sound,1);
         heroSounds[HeroSounds.SKILL2.getValue()] = heroSoundEffects.load(context,R.raw.soldier_skill2on_sound,1);
         heroSounds[HeroSounds.JUMP.getValue()] = heroSoundEffects.load(context,R.raw.soldier_jump_sound,1);
-        heroSounds[HeroSounds.ATTACKED.getValue()] = heroSoundEffects.load(context,R.raw.soldier_attacked_sound,1);
+        heroSounds[HeroSounds.ATTACKED.getValue()] = heroSoundEffects.load(context,R.raw.soldier_attcked_realsound,1);
         heroSounds[HeroSounds.SOLDIERULTI2.getValue()] = heroSoundEffects.load(context,R.raw.i_got_you_in_my_sight,1);
         heroSounds[HeroSounds.MOVEPAYLOAD.getValue()] = heroSoundEffects.load(context,R.raw.soldier_movepayload_sound,1);
         heroSoundEffects.play(heroSounds[HeroSounds.MOVEPAYLOAD.getValue()],1,1,1,0,1);
@@ -159,7 +159,7 @@ public class Soldier extends Hero{
             bulletDamge = normalBulletDamage;
         }
         else{
-            gunShotDelay = 1;
+            gunShotDelay = 25;
             bulletSpeed =normalBulletSpeed;
             bulletDamge = normalBulletDamage;
         }

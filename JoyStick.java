@@ -2,6 +2,10 @@ package com.jknull.heroslug;
 
 import android.content.Context;
 //import android.support.annotation.Nullable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,7 +15,11 @@ public class JoyStick extends View{
     public static int JOYSTICK_HEIGHT = 500;
     public static int JOYSTICK_LEFT_MARGIN = 100;
     public static int JOYSTICK_YPOS = MainActivity.SCREEN_HEIGHT - 500;
+    public static int JOYSTICK_XPOS = 100;
 
+
+    private Rect joystickRect;
+    private Bitmap joystickBitmap;
 
 
     GamePanel gamePanel;
@@ -27,7 +35,9 @@ public class JoyStick extends View{
 
     }
     public void init(Context context){
-        this.setBackgroundResource(R.drawable.joystick);
+        joystickBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.joystick);
+        joystickRect = new Rect(100,JOYSTICK_YPOS,JOYSTICK_XPOS+JOYSTICK_WIDTH,JOYSTICK_YPOS+JOYSTICK_HEIGHT);
+        //this.setBackgroundResource(R.drawable.joystick);
         hero = gamePanel.HERO;
 
     }
@@ -73,10 +83,33 @@ public class JoyStick extends View{
 
         //gestureDetector.onTouchEvent(event);
 
+        System.out.println(JOYSTICK_XPOS+" "+JOYSTICK_YPOS+" done!");
 
 
         return true;
     }
+
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        canvas.save();
+        canvas.rotate((float) (GamePanel.HERO.playerRotation/Math.PI*180),JOYSTICK_XPOS+JOYSTICK_WIDTH/2,JOYSTICK_YPOS+JOYSTICK_HEIGHT/2);
+        //System.out.println((float) (GamePanel.HERO.playerRotation/Math.PI*180));
+        canvas.drawBitmap(joystickBitmap,null,joystickRect,null);
+        canvas.restore();
+    }
+/*
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.save();
+        canvas.rotate((float) (GamePanel.HERO.playerRotation/Math.PI*180));
+        System.out.println((float) (GamePanel.HERO.playerRotation/Math.PI*180));
+        canvas.drawBitmap(joystickBitmap,null,joystickRect,null);
+        canvas.restore();
+    }
+*/
 
 
 }

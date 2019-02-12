@@ -114,6 +114,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         PAYLOAD.draw(canvas);
         payloadMap.draw(canvas);
         FLOOR.draw(canvas);
+        MainActivity.joyStick.draw(canvas);
+
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void update(){

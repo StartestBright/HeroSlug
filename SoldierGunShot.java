@@ -23,17 +23,7 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
     public SoldierGunShot(Context context, float velocityX, float velocityY, float xPos, float yPos) {
         //super(context,velocityX,velocityY,xPos,yPos);
         super(context,velocityX,velocityY,xPos,yPos,false);
-        heroGunShotRectSizeX=20;
-        herogunShotRectSizeY=20;
-        heroGunShotBitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_bullet_image);
-        gunShotDamage =25;
-        active = true;
-        bulletColor = Color.YELLOW;
-        bulletSpeed = 150f;
-
-
-
-        init(context);
+        init (context);
 
 
     }
@@ -41,11 +31,20 @@ public class SoldierGunShot extends HeroGunShot implements GameObject{
 
     public void init(Context context){
         //opt.inMutable = true;
-        bulletImage = BitmapFactory.decodeResource(getResources(),R.drawable.gunshot);
-        bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
+        //bulletImage = BitmapFactory.decodeResource(getResources(),R.drawable.soldier_bullet_image);
+        //bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888,true);
         //bulletImage.setWidth(800);
         //bulletImage.setHeight(800);
         //bulletColor = Color.YELLOW;
+        heroGunShotRectSizeX=20;
+        herogunShotRectSizeY=20;
+        if(velocityX>=0)
+            heroGunShotBitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_bullet_image);
+        else
+            heroGunShotBitmap= BitmapFactory.decodeResource(context.getResources(),R.drawable.soldier_bullet_imag_l);
+        gunShotDamage =25;
+        active = true;
+        bulletSpeed = 150f;
 
 
 

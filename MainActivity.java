@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 
     public static int SCREEN_WIDTH,SCREEN_HEIGHT;
     public static int RIGHT_MARGIN_OFFSET = 650;
+    public static JoyStick joyStick;
 
     public static GamePanel gamePanel;
     public static PlayerHP playerHP;
@@ -62,7 +63,7 @@ public class MainActivity extends Activity {
 
         gameWidgets.setAlpha(0.5f);
 
-        JoyStick joyStick = new JoyStick(this,gamePanel);
+        joyStick = new JoyStick(this,gamePanel);
         LinearLayout.LayoutParams layoutParamsForJoystick = new LinearLayout.LayoutParams(JoyStick.JOYSTICK_WIDTH,JoyStick.JOYSTICK_HEIGHT);
         joyStick.setY(JoyStick.JOYSTICK_YPOS);
         layoutParamsForJoystick.leftMargin = JoyStick.JOYSTICK_LEFT_MARGIN;
