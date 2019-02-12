@@ -107,4 +107,5 @@ public class HeroChoiceScreen extends AppCompatActivity {
         super.onResume();
         setLoadingPage(false);
     }
+
 }

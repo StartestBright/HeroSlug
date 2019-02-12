@@ -70,9 +70,9 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
             }else if(!boomming){
             bulletBoom.play(1,1,1,0,0,1);
-         //   boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6,20));
-         //   boomming= true;
-        //    boomFinished = false;
+            boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6,20));
+            boomming= true;
+            boomFinished = false;
         }
 
         if (bulletPos.x + bulletWidth >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulletHeight>= screenHeight - GamePanel.floorHeight -70|| bulletPos.y < 0) {

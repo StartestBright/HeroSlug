@@ -26,7 +26,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static Background BG;
     public static Payload PAYLOAD;
     public static PlayerHP HEROHP;
-    public  EnemyManager enemyManager;
+    public static EnemyManager enemyManager;
     private MainThread thread;
     private Point playerPoint;
     private PayloadMap payloadMap;

@@ -156,7 +156,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        GamePanel.enemyManager.clearEnemy();
+        finish();
     }
 
 
@@ -194,5 +195,11 @@ public class MainActivity extends Activity {
             unregisterReceiver(mRecevier);
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        GamePanel.enemyManager.clearEnemy();
     }
 }
