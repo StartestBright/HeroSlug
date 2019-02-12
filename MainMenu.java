@@ -1,15 +1,13 @@
 package com.jknull.heroslug;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class MainMenu extends AppCompatActivity {
+public class    MainMenu extends AppCompatActivity {
     Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +24,5 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

@@ -1,29 +1,24 @@
 package com.jknull.heroslug;
 
-import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Shader;
+import android.content.IntentFilter;
 import android.os.Build;
-import android.provider.SyncStateContract;
-//import android.support.annotation.RequiresApi;
-import android.support.annotation.RequiresApi;
-import android.support.constraint.Constraints;
-//import android.support.v4.app.ActivityCompat;
-//import android.support.v4.app.FragmentManager;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+//import android.support.annotation.RequiresApi;
+//import android.support.v4.app.ActivityCompat;
+//import android.support.v4.app.FragmentManager;
+//import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends Activity {
 
@@ -133,7 +128,13 @@ public class MainActivity extends Activity {
 
 
 
+        mRecevier = new FinishActivityRecevier();
+        registerFinishReciver();
+
+
+
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -145,9 +146,53 @@ public class MainActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+
+    public void update(){
+
+    }
+
+
+
     @Override
     protected void onPause() {
         super.onPause();
 
+    }
+
+
+
+
+    private FinishActivityRecevier mRecevier;
+   public static final String stopActivity = "stopActivity";
+
+
+    private void registerFinishReciver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(stopActivity);
+        registerReceiver(mRecevier, intentFilter);
+    }
+
+
+
+    private class FinishActivityRecevier extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //根据需求添加自己需要关闭页面的action
+            if (stopActivity.equals(intent.getAction())) {
+                 MainActivity.this.finish();
+
+             //    gamePanel = null;
+            //     MainActivity.this.onDestroy();
+                System.out.println("avtivity finished");
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mRecevier != null) {
+            unregisterReceiver(mRecevier);
+        }
+        super.onDestroy();
     }
 }

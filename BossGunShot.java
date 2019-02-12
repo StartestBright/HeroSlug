@@ -13,13 +13,13 @@ public class BossGunShot extends EnemyGunShot {
    //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public BossGunShot(Context context, float velocityX, float velocityY, Point pos, int speed) {
         super(context,velocityX,velocityY,pos,speed);
-        if(speed >=10){
+        if(speed <=5){
             bulletImage = BitmapFactory.decodeResource(context.getResources(),R.drawable.bossspecial);
             specialGunShot = true;
             enemyTag = "BossSpe";
             bulletWidth = 30;
             bulletHeight = 30;
-            bulletSpeed = 1;
+            bulletSpeed = 5;
         }
     }
 

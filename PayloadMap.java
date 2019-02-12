@@ -27,8 +27,6 @@ public class PayloadMap extends View {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-
-
         Paint paintForMapFrame = new Paint();
         paintForMapFrame.setStyle(Paint.Style.STROKE);
         paintForMapFrame.setColor(Color.rgb(132,144,132));

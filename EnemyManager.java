@@ -10,10 +10,11 @@ import java.util.ArrayList;
 public class EnemyManager {
     private Context context;
 //    public static ArrayList<BoomEffection> enemyBoomEffections= new ArrayList<BoomEffection>();
-    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    public  static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     //public static ArrayList<BoomEffection> boomEffections = new ArrayList<BoomEffection>();
 
  //   public static int enemyIndex= 0;
+
 
     public static ArrayList<BoomEffection> boomEffections = new ArrayList<BoomEffection>();
 
@@ -29,12 +30,13 @@ public class EnemyManager {
         enemies.add(new Enemy3(context,spawnPoint));
    //     enemyIndex++;
     }
-    public void Boss1(Point spawnPoint){
+    public void boss1(Point spawnPoint){
         enemies.add(new Boss(context,spawnPoint));
       //  enemyIndex++;
     }
     EnemyManager(Context context){
         this.context = context;
+
       // Boss1(new Point(9000,500));
       spawnEnemy1(new Point(800,200));
         spawnEnemy1(new Point(1100,100));
@@ -84,12 +86,19 @@ public class EnemyManager {
         spawnEnemy3(new Point(8500,-500));
         spawnEnemy3(new Point(9600,-500));
 
-
-
-
+        boss1(new Point(1500,300));
+        spawnEnemy1(new Point(1500,300));
+        spawnEnemy1(new Point(1200,300));
     }
 
     public void update(){
+        if(startClear){
+            clearEnemy();
+
+        }
+
+
+
 
         for(int i=0;i<enemies.size();i++){
             if(enemies.get(i).isAlive())
@@ -110,6 +119,7 @@ public class EnemyManager {
             }
         }
       //  for (int k=0;k<enemies.get(k).)
+
 
 
     }
@@ -134,6 +144,23 @@ public class EnemyManager {
                enemies.remove(i);
             }
         }
+    }
+    private boolean enemyCleared = false;
+    protected boolean startClear = false;
+
+    public void clearEnemy(){
+        for(int i =0;i<enemies.size();i++){
+            enemies.get(i).enemyAlive=false;
+           enemies.remove(i);
+        }
+        for(int i=0;i<boomEffections.size();i++){
+                boomEffections.remove(i);
+        }
+        System.out.println("enemy has been deleted");
+        enemyCleared = true;
+    }
+    public boolean isEnemyCleared(){
+        return enemyCleared;
     }
 
 }

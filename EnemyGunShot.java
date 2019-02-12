@@ -143,7 +143,7 @@ public abstract class EnemyGunShot implements GameObject {
         boomBitmap = new Bitmap[1];
 
         bulletRect = new Rect(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
-        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemybullet);
+        bulletImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemyshot);
         boomBitmap[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.gunshot);
 
      //   bulletImage = bulletImage.copy(Bitmap.Config.ARGB_8888, true);

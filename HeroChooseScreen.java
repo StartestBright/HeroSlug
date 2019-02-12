@@ -1,12 +1,11 @@
 package com.jknull.heroslug;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,11 +30,13 @@ public class HeroChooseScreen extends AppCompatActivity {
         RocketManSelected = findViewById(R.id.choose_Rocketman);
         RainerSelected = findViewById(R.id.choose_Someone1);
 
+
         loadingBar = findViewById(R.id.loadingBar);
         loadingPage = findViewById(R.id.loadingImage);
 
 
         setLoadingPage(false);
+
         soldierSelected.setOnTouchListener(new View.OnTouchListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -73,6 +74,7 @@ public class HeroChooseScreen extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void setLoadingPage(boolean b){
@@ -96,5 +98,6 @@ public class HeroChooseScreen extends AppCompatActivity {
             loadingPage.setVisibility(View.VISIBLE);
 
         }
+
     }
 }
