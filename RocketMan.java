@@ -21,6 +21,8 @@ public class RocketMan extends Hero {
     private int flyingGaze;
     private static int FLYINGMAXGAZE = 100;
     private RocketManShockShot shockShot;
+    private Paint rocketGazeBarPaintFilled;
+    private Paint rocketGazeBarPaintStroke;
 
 
 
@@ -29,6 +31,14 @@ public class RocketMan extends Hero {
     public RocketMan(Point pos, Context context){
         super(pos,context);
         //heroWeaponBitmaps[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.soldiergunimage);
+        rocketGazeBarPaintFilled = new Paint();
+        rocketGazeBarPaintFilled.setColor(Color.WHITE);
+        rocketGazeBarPaintFilled.setStyle(Paint.Style.FILL);
+        rocketGazeBarPaintStroke = new Paint();
+        rocketGazeBarPaintStroke.setStyle(Paint.Style.STROKE);
+        rocketGazeBarPaintStroke.setColor(Color.WHITE);
+        rocketGazeBarPaintStroke.setStrokeWidth(2);
+
         heroWeaponSizeX = 120;
         heroWeaponSizeY = 70;
         heroSizeX =60;
@@ -212,6 +222,7 @@ public class RocketMan extends Hero {
     }
 
 
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -222,8 +233,8 @@ public class RocketMan extends Hero {
         }
         if(shockShot!=null)
             shockShot.draw(canvas);
-
-
+        canvas.drawRect(heroRect.left,heroRect.top-30,(((float)flyingGaze/FLYINGMAXGAZE)*(heroRect.right-heroRect.left))+heroRect.left,heroRect.top-10,rocketGazeBarPaintFilled);
+        canvas.drawRect(heroRect.left,heroRect.top-30,heroRect.right,heroRect.top-10,rocketGazeBarPaintStroke);
     }
 
     @Override
