@@ -81,7 +81,7 @@ public class Enemy3 extends Enemy{
             canFire = false;
             gunShotDelayStartTime = System.currentTimeMillis();
             Point tempPoint = new Point(enemyPos.x,enemyPos.y+105);
-            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, tempPoint,2));
+            enemyGunShots.add(new EnemyReleaseBoom( context,0, 1, tempPoint,6));
             bulletIndex++;
             enemyRealsedBoomSound.play(1,1,1,0,0,1);
         }

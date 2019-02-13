@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.AudioManager;
@@ -17,6 +16,8 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
     public SoundPool bulletBoom;
 
+   // public static ArrayList<BoomEffection> boomEffections = new ArrayList<BoomEffection>();
+
 
 
 
@@ -27,6 +28,8 @@ public class EnemyReleaseBoom extends EnemyGunShot {
         bulletHeight = 34;
         damage = 50;
         enemyTag = "enemy3";
+        boomBitmap = new Bitmap[1];
+        boomBitmap[0] = BitmapFactory.decodeResource(context.getResources(),R.drawable.enemyboom);
 
         bulletBoom= new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
 
@@ -34,9 +37,25 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
 
     }
+    @Override
+    public void collisionDetect() {
+        if (this.active) {
+            if (bulletRect.right>= GamePanel.HERO.getHero().left && //if  collide with enemy
+                    bulletRect.left <= GamePanel.HERO.getHero().right &&
+                    bulletRect.bottom>= GamePanel.HERO.getHero().top &&
+                    bulletRect.top <= GamePanel.HERO.getHero().bottom) {
+                GamePanel.HERO.takeDamage(damage);
+                bulletBoom.play(1,1,1,0,0,1);
+                EnemyManager.boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,7,10));
+                boomFinished = false;
+                active = false;
+            }
+        }
+    }
 
 
 
+    private boolean boomEffection = true;
     //@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public  void   init(Context context){
@@ -68,14 +87,15 @@ public class EnemyReleaseBoom extends EnemyGunShot {
             bulletPos.y += (bulletVelocityY * bulletSpeed);
 
 
-            }else if(!boomming){
-            bulletBoom.play(1,1,1,0,0,1);
-         //   boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x,bulletPos.y,6,20));
-         //   boomming= true;
-        //    boomFinished = false;
-        }
+            }
 
         if (bulletPos.x + bulletWidth >= screenWidth || bulletPos.x < 0 || bulletPos.y + bulletHeight>= screenHeight - GamePanel.floorHeight -70|| bulletPos.y < 0) {
+          if(boomEffection){
+
+                bulletBoom.play(1,1,1,0,0,1);
+                EnemyManager.boomEffections.add(new BoomEffection(boomBitmap,bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,7,10));
+                boomFinished = false;
+            }
             active = false;
         }
         bulletRect.set(bulletPos.x-bulletWidth,bulletPos.y-bulletHeight,bulletPos.x+bulletWidth,bulletPos.y+bulletHeight);
@@ -89,16 +109,8 @@ public class EnemyReleaseBoom extends EnemyGunShot {
 
     @Override
     public void draw(Canvas canvas){
-        Paint p = new Paint();
+
         super.draw(canvas);
-        for(int i=0;i<boomEffections.size();i++){
-            if(!boomEffections.get(i).isFished()) {
-                boomEffections.get(i).draw(canvas,p);
-            }else{
-                boomming = false;
-                boomFinished = true;
-            }
-        }
 
     }
 
