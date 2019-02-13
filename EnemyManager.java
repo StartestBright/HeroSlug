@@ -37,38 +37,38 @@ public class EnemyManager {
     EnemyManager(Context context){
         this.context = context;
 
-        clearEnemy();
 
-
-        boss1(new Point(8000,700));
+        boss1(new Point(8000,500));
 
         spawnEnemy1(new Point(1700,200));
         spawnEnemy2(new Point(2000,100));
         spawnEnemy3(new Point(2500,100));
-
         spawnEnemy1(new Point(4700,200));
         spawnEnemy1(new Point(4900,200));
         spawnEnemy1(new Point(5100,200));
         spawnEnemy1(new Point(5300,200));
+        spawnEnemy1(new Point(4800,200));
+        spawnEnemy1(new Point(5600,200));
+        spawnEnemy1(new Point(5800,200));
+        spawnEnemy1(new Point(6000,200));
         spawnEnemy2(new Point(4600,200));
         spawnEnemy2(new Point(4900,200));
-        spawnEnemy2(new Point(4100,200));
+        spawnEnemy2(new Point(5100,200));
         spawnEnemy2(new Point(4400,200));
+        spawnEnemy2(new Point(5000,200));
+        spawnEnemy2(new Point(5300,200));
+        spawnEnemy2(new Point(5500,200));
+        spawnEnemy2(new Point(5600,200));
+
         spawnEnemy3(new Point(4800,200));
         spawnEnemy3(new Point(5100,200));
         spawnEnemy3(new Point(5300,200));
         spawnEnemy3(new Point(5500,200));
 
-        spawnEnemy2(new Point(3600,200));
-        spawnEnemy2(new Point(3900,200));
-        spawnEnemy2(new Point(3100,200));
-        spawnEnemy2(new Point(3400,200));
-        spawnEnemy3(new Point(3800,200));
-        spawnEnemy3(new Point(4100,200));
-        spawnEnemy3(new Point(4300,200));
-        spawnEnemy3(new Point(4500,200));
-
-
+        spawnEnemy3(new Point(5300,200));
+        spawnEnemy3(new Point(5500,200));
+        spawnEnemy3(new Point(5500,200));
+        spawnEnemy3(new Point(6000,200));
 
     }
 

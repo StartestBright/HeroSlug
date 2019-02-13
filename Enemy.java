@@ -180,7 +180,7 @@ public abstract class Enemy implements Character{
         enemyRect.set(enemyPos.x-enemyWidth,enemyPos.y-enemyHeight,enemyPos.x+enemyWidth,enemyPos.y+enemyHeight);
         for(int i=0;i<enemyGunShots.size();i++) {
             if (enemyGunShots.get(i).isActive()) {
-                enemyGunShots.get(i).update();
+            //    enemyGunShots.get(i).update();
             } else if ((!enemyGunShots.get(i).boomming)&&((enemyGunShots.get(i).getTag()=="Enemy3")||(enemyGunShots.get(i).getTag()=="BoosSpe"))) {
                 gunShotEffections.add(new BoomEffection(enemyGunShots.get(i).boomBitmap, enemyGunShots.get(i).bulletPos.x, enemyGunShots.get(i).bulletPos.y, 5,50));
                 enemyGunShots.get(i).boomming = true;
