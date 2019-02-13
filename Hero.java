@@ -3,7 +3,6 @@ package com.jknull.heroslug;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.AudioAttributes;
@@ -454,6 +453,11 @@ public abstract class Hero implements Character{
                     Enemy enemy = EnemyManager.enemies.get(i);
                     enemy.enemyMoveByPlayer((float) playerVelocityX);
                 }
+                for(int i=0;i<EnemyManager.boomEffections.size();i++){
+                    BoomEffection boomEffection = EnemyManager.boomEffections.get(i);
+                    boomEffection.effectionMoveByPlayer((float) playerVelocityX);
+                }
+
                 for(int i=0;i<Enemy.enemyGunShots.size();i++){
                     EnemyGunShot gunShot = Enemy.enemyGunShots.get(i);
                     gunShot.moveByHero((float) playerVelocityX);

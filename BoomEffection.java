@@ -39,6 +39,9 @@ public class BoomEffection{
 
 
     }
+    public void effectionMoveByPlayer(float playerVelocityX){
+        x-=playerVelocityX;
+    }
 
     public void booming(){
         if((System.currentTimeMillis()-startedTime)/10>=delayTime){
